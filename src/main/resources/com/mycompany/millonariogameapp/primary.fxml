@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="BorderPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.PrimaryController">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="BorderPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.PrimaryController">
    <top>
-      <Label text="Aplicacion " BorderPane.alignment="CENTER" />
+      <Label prefHeight="42.0" prefWidth="262.0" text="Juego de preguntas y respuestas" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="322.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Configuraciones" />
-            <Button contentDisplay="CENTER" mnemonicParsing="false" text="Nuevo Juego     " />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text=" Reporte            " />
-            <Button contentDisplay="CENTER" mnemonicParsing="false" text="Salir                   " />
+            <Label contentDisplay="TOP" text="Escoja una opcion" textAlignment="CENTER">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="30.0" top="-90.0" />
+               </VBox.margin>
+            </Label>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Configuraciones" textAlignment="CENTER">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin></Button>
+            <Button alignment="BOTTOM_CENTER" contentDisplay="CENTER" minWidth="102.4" mnemonicParsing="false" text="Nuevo Juego" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin></Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="102.4" mnemonicParsing="false" text=" Reporte" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin></Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="102.4" mnemonicParsing="false" text="Salir" textAlignment="CENTER" />
          </children>
       </VBox>
    </center>
