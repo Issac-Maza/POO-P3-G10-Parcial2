@@ -9,6 +9,7 @@
 
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="BorderPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.PrimaryController">
    <top>
+<<<<<<< HEAD
       <Label prefHeight="42.0" prefWidth="262.0" text="Juego de preguntas y respuestas" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
             <Font size="18.0" />
@@ -16,6 +17,15 @@
    </top>
    <center>
       <VBox alignment="CENTER" prefHeight="322.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+=======
+      <Label text="APLICACION" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0" BorderPane.alignment="CENTER">
+>>>>>>> 0f895fe6886f7051e8517176724f029178ccdbf7
          <children>
             <Label contentDisplay="TOP" text="Escoja una opcion" textAlignment="CENTER">
                <opaqueInsets>
