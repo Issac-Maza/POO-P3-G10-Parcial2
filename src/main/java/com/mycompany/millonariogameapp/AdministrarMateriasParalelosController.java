@@ -15,16 +15,17 @@ import javafx.scene.control.Button;
  *
  * @author USUARIO
  */
-public class ConfiguracionesController{
+public class AdministrarMateriasParalelosController{
 
     @FXML
-    private Button admTermAcad;
+    private Button ingresarMat;
     @FXML
-    private Button AdmMatPar;
+    private Button editarMat;
     @FXML
-    private Button AdmPreg;
+    private Button ingresarParalelo;
+    @FXML
+    private Button eliminarParalelo;
     @FXML
     private Button atras;
 
-    
 }

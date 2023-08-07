@@ -15,16 +15,16 @@ import javafx.scene.control.Button;
  *
  * @author USUARIO
  */
-public class ConfiguracionesController{
+public class AdministrarTerminosController{
 
     @FXML
-    private Button admTermAcad;
+    private Button ingresarTerm;
     @FXML
-    private Button AdmMatPar;
+    private Button editarTerm;
     @FXML
-    private Button AdmPreg;
+    private Button confTermJuego;
     @FXML
     private Button atras;
 
-    
+
 }
