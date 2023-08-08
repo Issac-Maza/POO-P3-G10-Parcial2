@@ -25,22 +25,22 @@
                   <Insets bottom="30.0" top="-90.0" />
                </VBox.margin>
             </Label>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Configuraciones" textAlignment="CENTER">
+            <Button fx:id="configuraciones" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Configuraciones" textAlignment="CENTER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin></Button>
-            <Button alignment="BOTTOM_CENTER" contentDisplay="CENTER" minWidth="102.4" mnemonicParsing="false" text="Nuevo Juego" textAlignment="CENTER">
+            <Button fx:id="nuevoJuego" alignment="BOTTOM_CENTER" contentDisplay="CENTER" minWidth="102.4" mnemonicParsing="false" text="Nuevo Juego" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin></Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="102.4" mnemonicParsing="false" text=" Reporte" textAlignment="CENTER">
+            <Button fx:id="reporte" alignment="CENTER" contentDisplay="CENTER" minWidth="102.4" mnemonicParsing="false" text=" Reporte" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin></Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="102.4" mnemonicParsing="false" text="Salir" textAlignment="CENTER" />
+            <Button fx:id="salir" alignment="CENTER" contentDisplay="CENTER" minWidth="102.4" mnemonicParsing="false" text="Salir" textAlignment="CENTER" />
          </children>
       </VBox>
    </center>

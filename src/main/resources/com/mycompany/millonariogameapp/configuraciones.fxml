@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.ConfiguracionesController">
+   <top>
+      <Label text="Menú Configuraciones" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="322.0" prefWidth="600.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Escoja una opción" />
+            <Button fx:id="admTermAcad" mnemonicParsing="false" text="Administrar términos académicos" />
+            <Button fx:id="AdmMatPar" mnemonicParsing="false" text="Administrar materias y paralelos" />
+            <Button fx:id="AdmPreg" mnemonicParsing="false" text="Administrar Preguntas" />
+            <Button fx:id="atras" mnemonicParsing="false" text="Atrás" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
