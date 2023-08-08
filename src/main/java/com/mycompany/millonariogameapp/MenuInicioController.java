@@ -50,7 +50,7 @@ public class MenuInicioController implements Initializable {
 
     @FXML
     private void obtnerReporte(ActionEvent event) throws IOException{
-        App.setRoot("menuConfiguracion");
+        App.setRoot("reporte");
     }
 
     @FXML
