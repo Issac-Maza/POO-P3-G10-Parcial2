@@ -13,17 +13,31 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    /**
+     * @return the scene
+     */
+    public static Scene getScene() {
+        return scene;
+    }
+
+    /**
+     * @param aScene the scene to set
+     */
+    public static void setScene(Scene aScene) {
+        scene = aScene;
+    }
+
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
+        setScene(new Scene(loadFXML("menuInicio"), 640, 480));
+        stage.setScene(getScene());
         stage.show();
     }
 
     static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        getScene().setRoot(loadFXML(fxml));
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

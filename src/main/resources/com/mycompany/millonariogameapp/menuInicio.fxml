@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuInicioController">
+   <top>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="52.0" prefWidth="74.0" text="Menú" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Escoja una opcion" textAlignment="CENTER">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="30.0" top="-90.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="btnConfiguraciones" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarMenuConfiguraciones" text="Configuraciones">
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnJuego" minWidth="100.0" mnemonicParsing="false" onAction="#NuevoJuego" text="Nuevo Juego">
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnReporte" minWidth="100.0" mnemonicParsing="false" onAction="#obtnerReporte" text="Reporte">
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnSalir" minWidth="100.0" mnemonicParsing="false" onAction="#salirDelAplicacion" text="Salir" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
