@@ -38,6 +38,12 @@ public class MenuAdministrarPreguntaController implements Initializable {
 
     @FXML
     private void viewQuestions(ActionEvent event) {
+        try{
+          App.setRoot("menuViewQuestions");  
+        }
+        catch(IOException io){
+            System.out.println("ERROR");
+        } 
     }
 
     @FXML
