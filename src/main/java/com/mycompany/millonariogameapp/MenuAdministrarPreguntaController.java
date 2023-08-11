@@ -37,17 +37,13 @@ public class MenuAdministrarPreguntaController implements Initializable {
     }    
 
     @FXML
-    private void viewQuestions(ActionEvent event) {
-        try{
-          App.setRoot("menuViewQuestions");  
-        }
-        catch(IOException io){
-            System.out.println("ERROR");
-        } 
+    private void viewQuestions(ActionEvent event) throws IOException {
+        App.setRoot("menuViewQuestions"); 
     }
 
     @FXML
-    private void addQuestions(ActionEvent event) {
+    private void addQuestions(ActionEvent event) throws IOException {
+        App.setRoot("menuAddQuestions"); 
     }
 
     @FXML

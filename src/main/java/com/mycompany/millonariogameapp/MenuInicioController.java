@@ -36,7 +36,7 @@ public class MenuInicioController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb){
         Materia POO = new Materia("002","Programacion Orientada a Objetos",3);
         POO.creacionDeNiveles();
         TerminoAcademico t3 = new TerminoAcademico(2023,03);

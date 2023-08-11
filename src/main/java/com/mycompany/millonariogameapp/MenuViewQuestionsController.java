@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import com.mycompany.millonariogameapp.modelo.*;
 import java.io.*;
 import java.util.ArrayList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -30,8 +31,6 @@ public class MenuViewQuestionsController implements Initializable {
     private VBox materiasVB;
     @FXML
     private VBox preguntasVB;
-    @FXML
-    private Button verificar;
 
     /**
      * Initializes the controller class.
@@ -85,7 +84,6 @@ public class MenuViewQuestionsController implements Initializable {
                     for(ArrayList<Pregunta> lista: matVerdadera.getLstOrdenadasxNivel()){
                         preguntasVB.getChildren().add(new Label("NIVEL "+(numNivel+1)));
                         for(Pregunta pregunta: lista){
-                            System.out.println("Pregunta n°"+ (numPreg+1)+ " " + pregunta.getEnunciado());
                             preguntasVB.getChildren().add(new Label("Pregunta n°"+ (numPreg+1)+ " " + pregunta.getEnunciado()));
                             numPreg++;
                         }
@@ -112,5 +110,10 @@ public class MenuViewQuestionsController implements Initializable {
         alert.setHeaderText("Notificacion");
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+    
+    @FXML
+    private void regresarMenuAnterior(ActionEvent event) throws IOException {
+        App.setRoot("menuAdministrarPregunta");
     }
 }
