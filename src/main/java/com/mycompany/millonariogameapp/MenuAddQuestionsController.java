@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import com.mycompany.millonariogameapp.modelo.*;
 import java.io.*;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 
 /**
@@ -65,22 +66,50 @@ public class MenuAddQuestionsController implements Initializable {
         }
     }
     
-    public void registrarPregunta(){
+    @FXML
+    public void registrarPregunta() throws Exception{
+        boolean permiso = condicionNivel();
+        Materia materia = buscarMateria();
+        
+        
+        if(permiso){
+            String enunciado = pregunta.getText().trim();
+            int nivel = Integer.parseInt(nivelPreg.getText().trim());
+            String respC = rCorrecta.getText().trim();
+            String respI1 = rIncorrecta_1.getText().trim();
+            String respI2 = rIncorrecta_2.getText().trim();
+            String respI3 = rIncorrecta_3.getText().trim();
+            
+            Pregunta preg = new Pregunta(enunciado,nivel,respC,respI1,respI2,respI3);
+            
+            materia.getLstOrdenadasxNivel().get(nivel-1).add(preg);
+            
+        }else{
+            nivelPreg.setText(null);
+            mostrarAlerta(Alert.AlertType.ERROR, "Nivel invalido pruebe poner desde el 1 hasta el "+materia.getCantidadNiveles());
+        }
         
     }
     
     public boolean condicionNivel() throws Exception{
-        String texto = nivelPreg.getText().trim();
-        int nivel = Integer.parseInt(texto);
+        int nivel = Integer.parseInt(nivelPreg.getText().trim());
         boolean permiso = true;
+        Materia m = buscarMateria();
+
+        if(nivel > m.getCantidadNiveles() || nivel < 1){
+            permiso = false;
+        }
         
+        return permiso;
+    }
+    
+    public Materia buscarMateria() throws Exception{
+        Materia mVerdadera = new Materia("","",0);
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.txt"))){
             Materia m;
             while((m = (Materia)in.readObject()) != null){
-                if(nivel > m.getCantidadNiveles() || nivel < 1){
-                    mostrarAlerta(Alert.AlertType.ERROR, "Nivel invalido pruebe poner desde el 1 hasta el "+(m.getCantidadNiveles()+1));
-                    nivelPreg.setText(null);
-                    permiso = false;
+                if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
+                    mVerdadera = m;
                 }
             }
         }
@@ -91,7 +120,22 @@ public class MenuAddQuestionsController implements Initializable {
             System.out.println("Error al abrir el archivo");
         }
         
-        return permiso;
+        return mVerdadera;  
+    }
+    
+    @FXML
+    public void borrar(){
+        materiaCMB.setValue(null);
+        pregunta.setText(null);
+        nivelPreg.setText(null);
+        rCorrecta.setText(null);
+        rIncorrecta_2.setText(null);
+        rIncorrecta_3.setText(null);
+    }
+    
+    @FXML
+    private void regresarMenuAnterior(ActionEvent event) throws IOException {
+        App.setRoot("menuAdministrarPregunta");
     }
     
     public void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
@@ -101,6 +145,5 @@ public class MenuAddQuestionsController implements Initializable {
         alert.setHeaderText("Notificacion");
         alert.setContentText(mensaje);
         alert.showAndWait();
-    }
-    
+    } 
 }

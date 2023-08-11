@@ -21,7 +21,7 @@ import java.io.*;
  *
  * @author maza-
  */
-public class MenuInicioController implements Initializable {
+public class MenuInicioController implements Initializable,Serializable {
 
     @FXML
     private Button btnConfiguraciones;

@@ -25,11 +25,11 @@
          <children>
             <HBox alignment="CENTER" prefHeight="128.0" prefWidth="600.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" text="Guardar" />
-                  <Button mnemonicParsing="false" text="Borrar" />
+                  <Button mnemonicParsing="false" onAction="#registrarPregunta" text="Guardar" />
+                  <Button mnemonicParsing="false" onAction="#borrar" text="Borrar" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" text="Regresar" />
+            <Button mnemonicParsing="false" onAction="#regresarMenuAnterior" text="Regresar" />
          </children>
       </VBox>
    </bottom>
