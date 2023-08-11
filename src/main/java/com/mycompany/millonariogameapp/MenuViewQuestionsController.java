@@ -8,14 +8,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import com.mycompany.millonariogameapp.modelo.*;
 import java.io.*;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -26,11 +25,9 @@ import javafx.scene.layout.VBox;
 public class MenuViewQuestionsController implements Initializable {
 
     @FXML
-    private TextField nomMateria;
-    @FXML
-    private VBox materiasVB;
-    @FXML
     private VBox preguntasVB;
+    @FXML
+    private ComboBox<String> materiaCMB;
 
     /**
      * Initializes the controller class.
@@ -38,7 +35,7 @@ public class MenuViewQuestionsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         try{
-           mostrarMaterias(); 
+           importarMaterias(); 
         }
         catch(Exception e){
             System.out.println("ERROR");
@@ -46,15 +43,12 @@ public class MenuViewQuestionsController implements Initializable {
         
     }    
     
-    public void mostrarMaterias() throws Exception{
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.txt"));){
-            int cont = 1;
+    public void importarMaterias() throws Exception{
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"));){
             Materia m;
             while((m = (Materia) in.readObject()) != null){
-                materiasVB.getChildren().add(new Label(cont+". "+m.getNombre()));
-                cont++;
+                materiaCMB.getItems().add(m.getNombre());
             }
-            materiasVB.getChildren().add(new Label("Buenas"));
         }
         catch(FileNotFoundException f){
             System.out.println("Error. No se encuentra el archivo");
@@ -66,40 +60,17 @@ public class MenuViewQuestionsController implements Initializable {
     
     @FXML
     public void mostrarPreguntas() throws Exception{
-        String nombre = nomMateria.getText().trim().toLowerCase();
-        boolean condicion = false;
         int numPreg = 0;
         int numNivel = 0;
-        Materia matVerdadera = new Materia("","",0);
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.txt"));){
-            Materia m;
-            while((m = (Materia) in.readObject()) != null){
-                if(m.getNombre().equalsIgnoreCase(nombre)){
-                    condicion = true;
-                    matVerdadera = m;
-                }
+        Materia matVerdadera = buscarMateria();
+        
+        for(ArrayList<Pregunta> lista: matVerdadera.getLstOrdenadasxNivel()){
+            preguntasVB.getChildren().add(new Label("NIVEL "+(numNivel+1)));
+            for(Pregunta pregunta: lista){
+                preguntasVB.getChildren().add(new Label("Pregunta n°"+ (numPreg+1)+ " " + pregunta.getEnunciado()));
+                numPreg++;
             }
-            
-            if(condicion){
-                    for(ArrayList<Pregunta> lista: matVerdadera.getLstOrdenadasxNivel()){
-                        preguntasVB.getChildren().add(new Label("NIVEL "+(numNivel+1)));
-                        for(Pregunta pregunta: lista){
-                            preguntasVB.getChildren().add(new Label("Pregunta n°"+ (numPreg+1)+ " " + pregunta.getEnunciado()));
-                            numPreg++;
-                        }
-                        numNivel++;
-                    }
-            }
-            else{
-                mostrarAlerta(Alert.AlertType.ERROR, "ERROR. Materia Ingresada no valida. Intente de Nuevo.");
-                nomMateria.setText(null);
-            }
-        }
-        catch(FileNotFoundException f){
-            System.out.println("Error. No se encuentra el archivo");
-        }
-        catch(IOException io){
-            System.out.println("Error al abrir el archivo");
+            numNivel++;
         }
     }
     
@@ -110,6 +81,26 @@ public class MenuViewQuestionsController implements Initializable {
         alert.setHeaderText("Notificacion");
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+    
+    public Materia buscarMateria() throws Exception{
+        Materia mVerdadera = new Materia("","",0);
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))){
+            Materia m;
+            while((m = (Materia)in.readObject()) != null){
+                if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
+                    mVerdadera = m;
+                }
+            }
+        }
+        catch(FileNotFoundException f){
+            System.out.println("Error. No se encuentra el archivo");
+        }
+        catch(IOException io){
+            System.out.println("Error al abrir el archivo");
+        }
+        
+        return mVerdadera;  
     }
     
     @FXML

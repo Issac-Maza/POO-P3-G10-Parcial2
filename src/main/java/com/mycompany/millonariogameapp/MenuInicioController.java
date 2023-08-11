@@ -37,6 +37,32 @@ public class MenuInicioController implements Initializable,Serializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        
+        try{
+          materiaPorDefecto();  
+        }
+        catch(IOException io){
+            System.out.println("ERROR");
+        }
+        
+    }    
+
+    @FXML
+    private void mostrarMenuConfiguraciones(ActionEvent event) throws IOException{
+        App.setRoot("menuConfiguracion");
+    }
+
+    @FXML
+    private void NuevoJuego(ActionEvent event) throws IOException{
+        App.setRoot("nuevoJuego");
+    }
+
+    @FXML
+    private void obtnerReporte(ActionEvent event) throws IOException{
+        App.setRoot("reporte");
+    }
+    
+    private void materiaPorDefecto()throws IOException{
         Materia POO = new Materia("002","Programacion Orientada a Objetos",3);
         POO.creacionDeNiveles();
         TerminoAcademico t3 = new TerminoAcademico(2023,03);
@@ -71,31 +97,25 @@ public class MenuInicioController implements Initializable,Serializable {
         POO.getLstOrdenadasxNivel().get(2).add(p8_POO);
         POO.getLstOrdenadasxNivel().get(2).add(p9_POO);
         
-        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/materias.txt"))){
-            out.writeObject(POO);
-            out.flush();
-        }
-        catch(FileNotFoundException f){
-            System.out.println("ERROR. No se encontro el archivo");
-        }
-        catch(IOException io){
-            System.out.println("Error al abrir el archivo");
-        }
-    }    
-
-    @FXML
-    private void mostrarMenuConfiguraciones(ActionEvent event) throws IOException{
-        App.setRoot("menuConfiguracion");
-    }
-
-    @FXML
-    private void NuevoJuego(ActionEvent event) throws IOException{
-        App.setRoot("nuevoJuego");
-    }
-
-    @FXML
-    private void obtnerReporte(ActionEvent event) throws IOException{
-        App.setRoot("reporte");
+        ObjectOutputStream out3 = new ObjectOutputStream(new FileOutputStream("archivos/terminos.ser"));
+        out3.writeObject(t3);
+        out3.flush();
+        out3.close();  
+        
+        ObjectOutputStream out0 = new ObjectOutputStream(new FileOutputStream("archivos/"+POO.getCodigo()+".ser"));
+        out0.writeObject(POO.getLstOrdenadasxNivel());
+        out0.flush();
+        out0.close();
+        
+        ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream("archivos/paralelos.ser"));
+        out2.writeObject(P3);
+        out2.flush();
+        out2.close();
+        
+        ObjectOutputStream out1 = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"));
+        out1.writeObject(POO);
+        out1.flush();
+        out1.close();    
     }
 
     @FXML

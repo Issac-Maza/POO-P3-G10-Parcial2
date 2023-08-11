@@ -52,7 +52,7 @@ public class MenuAddQuestionsController implements Initializable {
     }
     
     public void importarMaterias() throws Exception{
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.txt"))){
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))){
             Materia m;
             while((m = (Materia)in.readObject()) != null){
                 materiaCMB.getItems().add(m.getNombre());
@@ -105,7 +105,7 @@ public class MenuAddQuestionsController implements Initializable {
     
     public Materia buscarMateria() throws Exception{
         Materia mVerdadera = new Materia("","",0);
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.txt"))){
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))){
             Materia m;
             while((m = (Materia)in.readObject()) != null){
                 if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
