@@ -47,7 +47,8 @@ public class MenuAdministrarPreguntaController implements Initializable {
     }
 
     @FXML
-    private void deleteQuestions(ActionEvent event) {
+    private void deleteQuestions(ActionEvent event) throws IOException{
+        App.setRoot("menuDeleteQuestion"); 
     }
 
     @FXML
