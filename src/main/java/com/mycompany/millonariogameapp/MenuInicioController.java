@@ -54,7 +54,7 @@ public class MenuInicioController implements Initializable,Serializable {
 
     @FXML
     private void NuevoJuego(ActionEvent event) throws IOException{
-        App.setRoot("nuevoJuego");
+        App.setRoot("datosJuego");
     }
 
     @FXML
