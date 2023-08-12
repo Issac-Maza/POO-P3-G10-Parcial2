@@ -53,14 +53,13 @@
             <Label text="Jugador Participante:" GridPane.rowIndex="3" />
             <Label text="Jugador Acompañante:" GridPane.rowIndex="4" />
             <TextField fx:id="termino" maxWidth="-Infinity" onAction="#asignacionTermino" GridPane.columnIndex="1" />
-            <ComboBox fx:id="paraleloMateriaCMB" onAction="#importarParaleloMateria" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="numPregxNivel" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="167.0">
                      <children>
                         <Label text="Matrícula" />
-                        <ComboBox fx:id="participanteCMB" onAction="#importarEstudianteMatricula" prefHeight="25.0" prefWidth="155.0" />
+                        <ComboBox fx:id="participanteCMB" prefHeight="25.0" prefWidth="155.0" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="169.0">
@@ -76,7 +75,7 @@
                   <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="155.0">
                      <children>
                         <Label text="Matrícula" />
-                        <ComboBox fx:id="acompCMB" onAction="#importarEstudianteMatricula" prefWidth="150.0" />
+                        <ComboBox fx:id="acompCMB" prefWidth="150.0" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="141.0">
@@ -85,6 +84,12 @@
                         <Button mnemonicParsing="false" onAction="#estudianteAleatorio" text="Aleatorio" />
                      </children>
                   </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ComboBox fx:id="paraleloMateriaCMB" onAction="#importarParaleloMateria" prefWidth="150.0" />
+                  <Button mnemonicParsing="false" onAction="#importarEstudianteMatricula" text="Cargar Estudiantes" />
                </children>
             </HBox>
          </children>

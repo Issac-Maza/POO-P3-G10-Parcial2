@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import com.mycompany.millonariogameapp.modelo.*;
@@ -54,7 +53,6 @@ public class MenuDatosJuegoController implements Initializable {
         
         try{
             importarParaleloMateria();
-            importarEstudianteMatricula();
         }
         catch(Exception e){
             System.out.println("ERROR");
