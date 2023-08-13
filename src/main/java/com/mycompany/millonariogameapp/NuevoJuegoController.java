@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import com.mycompany.millonariogameapp.modelo.*;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -26,8 +28,12 @@ public class NuevoJuegoController implements Initializable {
     private Button opcionB;
     @FXML
     private Button opcionD;
+    @FXML
+    private Label pregunta;
+    @FXML
+    private VBox preguntasVB;
     
-    //private TerminoAcademico termino = MenuDatosJuegoController.getTerminoSeleccionado();
+    private Juego juego;
 
     /**
      * Initializes the controller class.

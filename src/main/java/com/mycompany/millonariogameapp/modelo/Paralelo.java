@@ -14,7 +14,7 @@ public class Paralelo {
     private Materia materia;
     private TerminoAcademico termino;
     private int numero;
-    private ArrayList<Estudiante> estudiantes;
+    private ArrayList<Estudiante> estudiantes = new ArrayList<>();
     
     public Paralelo(Materia materia, TerminoAcademico termino, int numero){
         this.materia = materia;

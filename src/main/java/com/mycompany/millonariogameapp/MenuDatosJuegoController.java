@@ -18,6 +18,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import java.io.*;
 
 /**
  * FXML Controller class
@@ -43,6 +44,7 @@ public class MenuDatosJuegoController implements Initializable {
     private Estudiante jugadorPrincipal;
     private Estudiante jugadorSecundario;
     private ArrayList<Estudiante> estudiantesUtilizados;
+    public Juego juego;
 
     /**
      * Initializes the controller class.
@@ -67,21 +69,15 @@ public class MenuDatosJuegoController implements Initializable {
     }
     
     @FXML
-    public void importarParaleloMateria() throws Exception{
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"))){
-            Paralelo p;
-            while((p = (Paralelo)in.readObject()) != null){
-                if(terminoSeleccionado.equals(p.getTermino())){
-                    paraleloMateriaCMB.getItems().add("P"+p.getNumero()+" - "+p.getMateria().getNombre());
-                }
+    public void importarParaleloMateria() throws Exception{   
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"));
+        Paralelo p;
+        while((p = (Paralelo)in.readObject()) != null){
+            if(terminoSeleccionado.equals(p.getTermino())){
+                paraleloMateriaCMB.getItems().add("P"+p.getNumero()+" - "+p.getMateria().getNombre());
             }
         }
-        catch(FileNotFoundException f){
-            System.out.println("Error. No se encuentra el archivo");
-        }
-        catch(IOException io){
-            System.out.println("Error al abrir el archivo");
-        }
+        in.close();
     }
     
     public void seleccionMateriaParalelo() throws Exception{
@@ -91,21 +87,15 @@ public class MenuDatosJuegoController implements Initializable {
         int numP = Integer.parseInt(num);
         String nomMat = paraleloMateria[1];
         
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"))){
-            Paralelo p;
-            while((p = (Paralelo)in.readObject()) != null){
-                if((p.getNumero() == numP) && (p.getMateria().getNombre().equalsIgnoreCase(nomMat))){
-                    paraleloSeleccionado = p;
-                    materiaSeleccionada = p.getMateria();
-                }
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"));
+        Paralelo p;
+        while((p = (Paralelo)in.readObject()) != null){
+            if((p.getNumero() == numP) && (p.getMateria().getNombre().equalsIgnoreCase(nomMat))){
+                paraleloSeleccionado = p;
+                materiaSeleccionada = p.getMateria();
             }
         }
-        catch(FileNotFoundException f){
-            System.out.println("Error. No se encuentra el archivo");
-        }
-        catch(IOException io){
-            System.out.println("Error al abrir el archivo");
-        }
+        in.close();
     }
     
     public boolean validacionNivel(){
@@ -161,6 +151,8 @@ public class MenuDatosJuegoController implements Initializable {
         if(validacionNivel()){
             seleccionEstudiantes();
             if(jugadorPrincipal != null && jugadorSecundario != null){
+                Juego();
+                serializarJuego();
                 App.setRoot("nuevoJuego");
             }
             else if(jugadorPrincipal == null || jugadorSecundario == null){
@@ -194,6 +186,18 @@ public class MenuDatosJuegoController implements Initializable {
         alert.setHeaderText("Notificacion");
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+    
+    public void Juego(){
+        int nivel = Integer.parseInt(numPregxNivel.getText().trim());
+        juego = new Juego(terminoSeleccionado,paraleloSeleccionado,materiaSeleccionada,nivel,jugadorPrincipal,jugadorSecundario);
+    }
+    
+    public void serializarJuego() throws Exception{
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/juegos.ser"));
+        out.writeObject(juego);
+        out.flush();
+        out.close(); 
     }
     
     public TerminoAcademico getTerminoSeleccionado() {

@@ -31,20 +31,26 @@ public class MenuInicioController implements Initializable,Serializable {
     private Button btnSalir;
     @FXML
     private Button btnJuego;
+    
+    Materia POO = new Materia("002","Programacion Orientada a Objetos",3);
+    TerminoAcademico t3 = new TerminoAcademico(2023,03);
+    Paralelo P3 = new Paralelo(POO,t3,3);
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        
+        cargaPorDefecto(); 
         try{
-          materiaPorDefecto();  
+          serializarPreguntas();
+          serializarParalelo();
+          serializarTermino();
+          serializarMateria();
         }
-        catch(IOException io){
+        catch(Exception e){
             System.out.println("ERROR");
-        }
-        
+        }  
     }    
 
     @FXML
@@ -62,11 +68,11 @@ public class MenuInicioController implements Initializable,Serializable {
         App.setRoot("reporte");
     }
     
-    private void materiaPorDefecto()throws IOException{
-        Materia POO = new Materia("002","Programacion Orientada a Objetos",3);
+    private void cargaPorDefecto(){
+        //POO = new Materia("002","Programacion Orientada a Objetos",3);
         POO.creacionDeNiveles();
-        TerminoAcademico t3 = new TerminoAcademico(2023,03);
-        Paralelo P3 = new Paralelo(POO,t3,3);
+        //t3 = new TerminoAcademico(2023,03);
+        //P3 = new Paralelo(POO,t3,3);
         POO.getParalelos().add(P3);
         
         //PREGUNTAS PARA LA MATERIA PROGRAMACION ORIENTADA A OBJETOS
@@ -97,26 +103,47 @@ public class MenuInicioController implements Initializable,Serializable {
         POO.getLstOrdenadasxNivel().get(2).add(p8_POO);
         POO.getLstOrdenadasxNivel().get(2).add(p9_POO);
         
+        P3.getEstudiantes().add(new Estudiante("202202552","LINO INDACOCHEA STEVEN MOISES","stemlino@espol.edu.ec"));
+        P3.getEstudiantes().add(new Estudiante("202001244","MAZA PUNINE ISSAC ALEXANDER","issamaza@espol.edu.ec"));
+        P3.getEstudiantes().add(new Estudiante("202203428","ROMERO ALMEIDA EMILIO JOSE","emjorome@espol.edu.ec"));
+        P3.getEstudiantes().add(new Estudiante("202104816","AZU PERLAZA NICOLE FERNANDA","nfazu@espol.edu.ec"));
+        P3.getEstudiantes().add(new Estudiante("202010278","ESPINOZA PINELA ANGELO ALEXANDER","angepine@espol.edu.ec"));
+        P3.getEstudiantes().add(new Estudiante("202109328","BASILIO ACEBO DANIELA MILENA","dmbasili@espol.edu.ec"));
+        P3.getEstudiantes().add(new Estudiante("202208260","ZARUMA GAME JOSHUA ANDRES","jazaruma@espol.edu.ec"));
+        P3.getEstudiantes().add(new Estudiante("202111589","RIVAS PINCAY EMMANUEL GERARDO","egrivas@espol.edu.ec"));
+        P3.getEstudiantes().add(new Estudiante("202107645","VARGAS ISA GENESIS DAYANNA","gdvargas@espol.edu.ec"));
+        P3.getEstudiantes().add(new Estudiante("202110136","ACELDO TORRES MARIA GRAZIA","maactorr@espol.edu.ec"));    
+    }
+    
+    public void serializarMateria() throws Exception{
+        ObjectOutputStream out1 = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"));
+        out1.writeObject(POO);
+        out1.flush();
+        out1.close();
+    }
+    
+    public void serializarTermino() throws Exception{
         ObjectOutputStream out3 = new ObjectOutputStream(new FileOutputStream("archivos/terminos.ser"));
         out3.writeObject(t3);
         out3.flush();
-        out3.close();  
-        
-        ObjectOutputStream out0 = new ObjectOutputStream(new FileOutputStream("archivos/"+POO.getCodigo()+".ser"));
-        out0.writeObject(POO.getLstOrdenadasxNivel());
-        out0.flush();
-        out0.close();
-        
+        out3.close(); 
+    }
+    
+    public void serializarParalelo() throws Exception{
         ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream("archivos/paralelos.ser"));
         out2.writeObject(P3);
         out2.flush();
         out2.close();
-        
-        ObjectOutputStream out1 = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"));
-        out1.writeObject(POO);
-        out1.flush();
-        out1.close();    
     }
+    
+    public void serializarPreguntas() throws Exception{
+        ObjectOutputStream out0 = new ObjectOutputStream(new FileOutputStream("archivos/"+POO.getCodigo()+".ser"));
+        out0.writeObject(POO.getLstOrdenadasxNivel());
+        out0.flush();
+        out0.close();
+    }
+    
+    
 
     @FXML
     private void salirDelAplicacion(ActionEvent event) throws IOException{

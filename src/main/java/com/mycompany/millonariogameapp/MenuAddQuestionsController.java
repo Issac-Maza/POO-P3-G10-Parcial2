@@ -51,19 +51,13 @@ public class MenuAddQuestionsController implements Initializable {
         
     }
     
-    public void importarMaterias() throws Exception{
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))){
-            Materia m;
-            while((m = (Materia)in.readObject()) != null){
-                materiaCMB.getItems().add(m.getNombre());
-            }
+    public void importarMaterias() throws Exception{     
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"));
+        Materia m;
+        while((m = (Materia)in.readObject()) != null){
+            materiaCMB.getItems().add(m.getNombre());
         }
-        catch(FileNotFoundException f){
-            System.out.println("Error. No se encuentra el archivo");
-        }
-        catch(IOException io){
-            System.out.println("Error al abrir el archivo");
-        }
+        in.close();
     }
     
     @FXML
@@ -105,20 +99,14 @@ public class MenuAddQuestionsController implements Initializable {
     
     public Materia buscarMateria() throws Exception{
         Materia mVerdadera = new Materia("","",0);
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))){
-            Materia m;
-            while((m = (Materia)in.readObject()) != null){
-                if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
-                    mVerdadera = m;
-                }
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"));
+        Materia m;
+        while((m = (Materia)in.readObject()) != null){
+            if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
+                mVerdadera = m;
             }
         }
-        catch(FileNotFoundException f){
-            System.out.println("Error. No se encuentra el archivo");
-        }
-        catch(IOException io){
-            System.out.println("Error al abrir el archivo");
-        }
+        in.close();
         
         return mVerdadera;  
     }
