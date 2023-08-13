@@ -196,6 +196,26 @@ public class MenuDatosJuegoController implements Initializable {
         alert.showAndWait();
     }
     
+    public TerminoAcademico getTerminoSeleccionado() {
+        return terminoSeleccionado;
+    }
+
+    public Paralelo getParaleloSeleccionado() {
+        return paraleloSeleccionado;
+    }
+
+    public Materia getMateriaSeleccionada() {
+        return materiaSeleccionada;
+    }
+
+    public Estudiante getJugadorPrincipal() {
+        return jugadorPrincipal;
+    }
+
+    public Estudiante getJugadorSecundario() {
+        return jugadorSecundario;
+    }
+    
     
     
 }
