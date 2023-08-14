@@ -39,19 +39,23 @@ public class MenuMateriaYParaleloController implements Initializable {
     }    
 
     @FXML
-    private void ingresarMateria(ActionEvent event) {
+    private void ingresarMateria(ActionEvent event) throws IOException {
+        App.setRoot("ingresarMateria");
     }
 
     @FXML
-    private void editarMateria(ActionEvent event) {
+    private void editarMateria(ActionEvent event) throws IOException {
+        App.setRoot("menuConfiguracion");
     }
 
     @FXML
-    private void addParalelo(ActionEvent event) {
+    private void addParalelo(ActionEvent event) throws IOException {
+        App.setRoot("menuConfiguracion");
     }
 
     @FXML
-    private void deleteParalelo(ActionEvent event) {
+    private void deleteParalelo(ActionEvent event) throws IOException {
+        App.setRoot("menuConfiguracion");
     }
 
     @FXML

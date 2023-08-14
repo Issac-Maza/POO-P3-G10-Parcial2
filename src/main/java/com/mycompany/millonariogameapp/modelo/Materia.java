@@ -50,7 +50,7 @@ public class Materia {
         this.cantidadNiveles = cantidadNiveles;
     }
     
-    public boolean Equals(Object obj){
+    public boolean equals(Object obj){
         if( this == obj){
             return true;
         }
