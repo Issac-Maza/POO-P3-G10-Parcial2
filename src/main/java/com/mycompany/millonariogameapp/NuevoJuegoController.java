@@ -10,8 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import com.mycompany.millonariogameapp.modelo.*;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import java.util.ArrayList;
 
 /**
  * FXML Controller class
@@ -43,4 +46,22 @@ public class NuevoJuegoController implements Initializable {
         // TODO
     }    
     
+    public void deserializarJuego() throws Exception{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/juegos.ser"));
+        Juego j;
+        while((j = (Juego)in.readObject()) != null){
+            juego = j;
+        }
+    }
+    
+    public void rellenarPreguntasVB(){
+        int i = 1;
+        for(ArrayList<Pregunta> lst: juego.getMateria().getLstOrdenadasxNivel()){
+            for(Pregunta p: lst){
+                preguntasVB.getChildren().add(new Label("Preguntas "+i));
+                i++;
+            }
+        }
+    }
+
 }
