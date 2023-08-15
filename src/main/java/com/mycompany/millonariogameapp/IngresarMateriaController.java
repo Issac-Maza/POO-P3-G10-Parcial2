@@ -7,11 +7,13 @@ package com.mycompany.millonariogameapp;
 import com.mycompany.millonariogameapp.modelo.Materia;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -47,7 +49,7 @@ public class IngresarMateriaController implements Initializable {
     @FXML
     private TableColumn<Materia, ?> columParalelos;
     @FXML
-    private TableColumn<Materia, ?> columPreguntas;
+    private TableColumn<Materia, String> columPreguntas;
     @FXML
     private TableView<Materia> tablaMateria;
     
@@ -63,7 +65,12 @@ public class IngresarMateriaController implements Initializable {
         this.columNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
         this.columNivel.setCellValueFactory(new PropertyValueFactory("nivel"));
         this.columParalelos.setCellValueFactory(new PropertyValueFactory("paralelos"));
-        this.columPreguntas.setCellValueFactory(new PropertyValueFactory("preguntas"));
+        this.columPreguntas.setCellValueFactory(cellData -> {
+            Materia materia = cellData.getValue();
+            boolean tienePreguntas = !materia.getLstOrdenadasxNivel().isEmpty();
+            String respuesta = tienePreguntas ? "Sí" : "No";
+            return new ReadOnlyStringWrapper(respuesta);
+        });
         // TODO
     }    
 
@@ -78,8 +85,23 @@ public class IngresarMateriaController implements Initializable {
         if(!this.materias.contains(materiaPD)){
             this.materias.add(materiaPD);
             this.tablaMateria.setItems(materias);
+            mostrarAlerta("Materia ingresada", "La materia ha sido ingresada exitosamente.", Alert.AlertType.INFORMATION);
             
+        }else{
+            mostrarAlerta("Ya existe esa materia", "La materia que ha ingresado ya se registro.", Alert.AlertType.WARNING);
         }
+        // Limpiar los campos del formulario
+        textfieldcodigo.clear();
+        textfieldNombre.clear();
+        textfieldNivel.clear();
+    }
+    
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
     
 }
