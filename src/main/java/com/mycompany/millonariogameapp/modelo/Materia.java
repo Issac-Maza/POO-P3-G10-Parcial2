@@ -4,13 +4,14 @@
  */
 package com.mycompany.millonariogameapp.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author maza-
  */
-public class Materia {
+public class Materia implements Serializable{
     private String codigo;
     private String nombre;
     private int cantidadNiveles;

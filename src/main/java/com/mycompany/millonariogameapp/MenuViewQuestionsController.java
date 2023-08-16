@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
  *
  * @author USUARIO
  */
-public class MenuViewQuestionsController implements Initializable {
+public class MenuViewQuestionsController implements Serializable {
 
     @FXML
     private VBox preguntasVB;
@@ -32,8 +32,8 @@ public class MenuViewQuestionsController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb){
+
+    public void initialize(){
         try{
            importarMaterias(); 
         }
@@ -43,17 +43,25 @@ public class MenuViewQuestionsController implements Initializable {
         
     }    
     
-    public void importarMaterias() throws Exception{
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"));
-        Materia m;
-        while((m = (Materia) in.readObject()) != null){
-            materiaCMB.getItems().add(m.getNombre());
+    public void importarMaterias() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
+            Materia m;
+            while((m = (Materia) in.readObject()) != null){
+                materiaCMB.getItems().add(m.getNombre());
+            }
+            System.out.println("yes");
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        in.close();
+        
     }
     
     @FXML
-    public void mostrarPreguntas() throws Exception{
+    public void mostrarPreguntas(){
         int numPreg = 0;
         int numNivel = 0;
         Materia matVerdadera = buscarMateria();
@@ -65,6 +73,7 @@ public class MenuViewQuestionsController implements Initializable {
                 numPreg++;
             }
             numNivel++;
+            preguntasVB.getChildren().add(new Label(""));
         }
     }
     
@@ -77,16 +86,22 @@ public class MenuViewQuestionsController implements Initializable {
         alert.showAndWait();
     }
     
-    public Materia buscarMateria() throws Exception{
+    public Materia buscarMateria(){
         Materia mVerdadera = new Materia("","",0);        
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"));
-        Materia m;
-        while((m = (Materia)in.readObject()) != null){
-            if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
-                mVerdadera = m;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
+            Materia m;
+            while((m = (Materia)in.readObject()) != null){
+                if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
+                    mVerdadera = m;
+                }
             }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        in.close();
         
         return mVerdadera;  
     }

@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
@@ -25,18 +26,20 @@ import javafx.scene.control.CheckBox;
  *
  * @author USUARIO
  */
-public class MenuDeleteQuestionController implements Initializable {
+public class MenuDeleteQuestionController implements Serializable {
 
     @FXML
     private ComboBox<String> materiaCMB;
     @FXML
     private VBox preguntasVB;
+    
+    Materia materia = new Materia("","",0);
 
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+
+    public void initialize() {
         try{
             importarMaterias();
         }
@@ -46,32 +49,44 @@ public class MenuDeleteQuestionController implements Initializable {
         
     }    
     
-    public void importarMaterias() throws Exception{
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"));
-        Materia m;
-        while((m = (Materia)in.readObject()) != null){
-            materiaCMB.getItems().add(m.getNombre());
+    public void importarMaterias() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
+            Materia m;
+            while((m = (Materia)in.readObject()) != null){
+                materiaCMB.getItems().add(m.getNombre());
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        in.close();
     }
     
-    public Materia buscarMateria() throws Exception{
+    public Materia buscarMateria() {
         Materia mVerdadera = new Materia("","",0);
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"));
-        Materia m;
-        while((m = (Materia)in.readObject()) != null){
-            if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
-                mVerdadera = m;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
+            Materia m;
+            while((m = (Materia)in.readObject()) != null){
+                if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
+                    mVerdadera = m;
+                }
             }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        in.close();
         
         return mVerdadera;  
     }
     
-    public ArrayList<Pregunta> preguntas() throws Exception{
+    public ArrayList<Pregunta> preguntas() {
         ArrayList<Pregunta> preguntas = new ArrayList<>();
-        Materia materia = buscarMateria();
+        materia = buscarMateria();
         
         for(ArrayList<Pregunta> lst: materia.getLstOrdenadasxNivel()){
             for(Pregunta p: lst){
@@ -82,31 +97,35 @@ public class MenuDeleteQuestionController implements Initializable {
     }
     
     @FXML
-    public void mostrarPreguntas() throws Exception{
+    public void mostrarPreguntas() {
         ArrayList<Pregunta> lstpreguntas = preguntas();
         
         for(Pregunta p: lstpreguntas){
             CheckBox check = new CheckBox(p.getEnunciado());
             preguntasVB.getChildren().add(check);
         }
+        preguntasVB.setSpacing(10);
     }
     
     @FXML
-    public void eliminarPreguntas() throws Exception{
+    public void eliminarPreguntas() {
         for(int i = 0; i<preguntas().size(); i++){
             CheckBox check = (CheckBox)preguntasVB.getChildren().get(i);
             
             if(check.isSelected()){
                 int pos = 0;
-                for(ArrayList<Pregunta> lst: buscarMateria().getLstOrdenadasxNivel()){
+                for(ArrayList<Pregunta> lst: materia.getLstOrdenadasxNivel()){
                     if(lst.contains(preguntas().get(i))){
-                        buscarMateria().getLstOrdenadasxNivel().get(pos).remove(preguntas().get(i));
+                        materia.getLstOrdenadasxNivel().get(pos).remove(preguntas().get(i));
                     }
                     pos++;
                 }
             }
         }
+        preguntasVB.getChildren().clear();
+        mostrarPreguntas();
     }
+    
     
     @FXML
     private void regresarMenuAnterior(ActionEvent event) throws IOException {

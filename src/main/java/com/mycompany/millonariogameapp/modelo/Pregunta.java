@@ -4,6 +4,7 @@
  */
 package com.mycompany.millonariogameapp.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -11,7 +12,7 @@ import java.util.Random;
  *
  * @author maza-
  */
-public class Pregunta {
+public class Pregunta implements Serializable{
     private String enunciado;
     private int nivel;
     private String respuestaCorrecta;

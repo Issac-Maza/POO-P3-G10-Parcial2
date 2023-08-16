@@ -4,13 +4,14 @@
  */
 package com.mycompany.millonariogameapp.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author maza-
  */
-public class Paralelo {
+public class Paralelo implements Serializable{
     private Materia materia;
     private TerminoAcademico termino;
     private int numero;

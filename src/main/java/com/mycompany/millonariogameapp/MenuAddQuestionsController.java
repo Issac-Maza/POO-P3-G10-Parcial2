@@ -20,7 +20,7 @@ import javafx.scene.control.Alert;
  *
  * @author USUARIO
  */
-public class MenuAddQuestionsController implements Initializable {
+public class MenuAddQuestionsController implements Serializable {
 
     @FXML
     private ComboBox<String> materiaCMB;
@@ -40,8 +40,8 @@ public class MenuAddQuestionsController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+
+    public void initialize() {
         try{
             importarMaterias();
         }
@@ -51,13 +51,19 @@ public class MenuAddQuestionsController implements Initializable {
         
     }
     
-    public void importarMaterias() throws Exception{     
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"));
-        Materia m;
-        while((m = (Materia)in.readObject()) != null){
-            materiaCMB.getItems().add(m.getNombre());
+    public void importarMaterias() {     
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
+            Materia m;
+            while((m = (Materia)in.readObject()) != null){
+                materiaCMB.getItems().add(m.getNombre());
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        in.close();
     }
     
     @FXML
@@ -78,6 +84,8 @@ public class MenuAddQuestionsController implements Initializable {
             
             materia.getLstOrdenadasxNivel().get(nivel-1).add(preg);
             
+            mostrarAlerta(Alert.AlertType.INFORMATION,"La datos se ha guardado correctamente");
+            borrar();   
         }else{
             nivelPreg.setText(null);
             mostrarAlerta(Alert.AlertType.ERROR, "Nivel invalido pruebe poner desde el 1 hasta el "+materia.getCantidadNiveles());
@@ -97,16 +105,22 @@ public class MenuAddQuestionsController implements Initializable {
         return permiso;
     }
     
-    public Materia buscarMateria() throws Exception{
+    public Materia buscarMateria() {
         Materia mVerdadera = new Materia("","",0);
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"));
-        Materia m;
-        while((m = (Materia)in.readObject()) != null){
-            if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
-                mVerdadera = m;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
+            Materia m;
+            while((m = (Materia)in.readObject()) != null){
+                if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
+                    mVerdadera = m;
+                }
             }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        in.close();
         
         return mVerdadera;  
     }
@@ -117,6 +131,7 @@ public class MenuAddQuestionsController implements Initializable {
         pregunta.setText(null);
         nivelPreg.setText(null);
         rCorrecta.setText(null);
+        rIncorrecta_1.setText(null);
         rIncorrecta_2.setText(null);
         rIncorrecta_3.setText(null);
     }

@@ -4,11 +4,13 @@
  */
 package com.mycompany.millonariogameapp.modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author maza-
  */
-public class Estudiante {
+public class Estudiante implements Serializable{
     private String nMatricula;
     private String nombre;
     private String correo;

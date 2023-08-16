@@ -3,13 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.millonariogameapp.modelo;
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
  *
  * @author maza-
  */
-public class TerminoAcademico {
+public class TerminoAcademico implements Serializable{
     private int anio;
     private int numero;
 

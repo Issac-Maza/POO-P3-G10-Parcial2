@@ -21,7 +21,7 @@ import java.io.*;
  *
  * @author maza-
  */
-public class MenuInicioController implements Initializable,Serializable {
+public class MenuInicioController implements Serializable {
 
     @FXML
     private Button btnConfiguraciones;
@@ -39,14 +39,15 @@ public class MenuInicioController implements Initializable,Serializable {
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb){
+
+    public void initialize(){
         cargaPorDefecto(); 
         try{
-          serializarPreguntas();
-          serializarParalelo();
-          serializarTermino();
-          serializarMateria();
+            serializarMateria();
+            serializarPreguntas();
+            serializarParalelo();
+            serializarTermino();
+          
         }
         catch(Exception e){
             System.out.println("ERROR");
@@ -115,11 +116,15 @@ public class MenuInicioController implements Initializable,Serializable {
         P3.getEstudiantes().add(new Estudiante("202110136","ACELDO TORRES MARIA GRAZIA","maactorr@espol.edu.ec"));    
     }
     
-    public void serializarMateria() throws Exception{
-        ObjectOutputStream out1 = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"));
-        out1.writeObject(POO);
-        out1.flush();
-        out1.close();
+    public void serializarMateria() {
+        try (ObjectOutputStream out1 = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))) {
+            out1.writeObject(POO);
+            out1.flush();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     public void serializarTermino() throws Exception{
