@@ -25,7 +25,7 @@ import java.io.*;
  *
  * @author USUARIO
  */
-public class MenuDatosJuegoController implements Initializable {
+public class MenuDatosJuegoController implements Serializable {
 
     @FXML
     private TextField termino;
@@ -43,67 +43,93 @@ public class MenuDatosJuegoController implements Initializable {
     private Materia materiaSeleccionada;
     private Estudiante jugadorPrincipal;
     private Estudiante jugadorSecundario;
-    private ArrayList<Estudiante> estudiantesUtilizados;
     public Juego juego;
 
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+
+    public void initialize() {
         asignacionTermino();
-        
-        try{
+        if(!termino.getText().equalsIgnoreCase("")){
             importarParaleloMateria();
         }
-        catch(Exception e){
-            System.out.println("ERROR");
+        else{
+            try {
+                mostrarAlerta(Alert.AlertType.ERROR,"Termino No Seleccionado. Por favor vaya a Configuraciones");
+                App.setRoot("menuInicio");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
         
+
     }
     
     @FXML
     public void asignacionTermino(){
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/terminos.ser"))){
+            terminoSeleccionado = (TerminoAcademico) in.readObject();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
         
-        
+        termino.setText(terminoSeleccionado.nombreTermino());
+        termino.setEditable(false);     
     }
     
     @FXML
-    public void importarParaleloMateria() throws Exception{   
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"));
-        Paralelo p;
-        while((p = (Paralelo)in.readObject()) != null){
-            if(terminoSeleccionado.equals(p.getTermino())){
-                paraleloMateriaCMB.getItems().add("P"+p.getNumero()+" - "+p.getMateria().getNombre());
+    public void importarParaleloMateria() {   
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"))) {
+            Paralelo p;
+            while((p = (Paralelo)in.readObject()) != null){
+                if(terminoSeleccionado.equals(p.getTermino())){
+                    paraleloMateriaCMB.getItems().add("P"+p.getNumero()+" - "+p.getMateria().getNombre());
+                }
             }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        in.close();
     }
     
-    public void seleccionMateriaParalelo() throws Exception{
+    public void seleccionMateriaParalelo() {
         String datos = (String) paraleloMateriaCMB.getValue();
         String[] paraleloMateria = datos.split(" - ");
         String num = paraleloMateria[0].replace("P", "");
         int numP = Integer.parseInt(num);
         String nomMat = paraleloMateria[1];
         
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"));
-        Paralelo p;
-        while((p = (Paralelo)in.readObject()) != null){
-            if((p.getNumero() == numP) && (p.getMateria().getNombre().equalsIgnoreCase(nomMat))){
-                paraleloSeleccionado = p;
-                materiaSeleccionada = p.getMateria();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"))) {
+            Paralelo p;
+            while((p = (Paralelo)in.readObject()) != null){
+                if((p.getNumero() == numP) && (p.getMateria().getNombre().equalsIgnoreCase(nomMat))){
+                    paraleloSeleccionado = p;
+                    materiaSeleccionada = p.getMateria();
+                }
             }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        in.close();
     }
     
     public boolean validacionNivel(){
         int nivel = Integer.parseInt(numPregxNivel.getText().trim());
-        boolean esValido = true;
+        boolean esValido = false;
         for(ArrayList<Pregunta> preguntas: materiaSeleccionada.getLstOrdenadasxNivel()){
                 if(preguntas.size() >= nivel && nivel >= 1){
-                    esValido = false;
+                    esValido = true;
             }
         }
         return esValido;
@@ -111,49 +137,68 @@ public class MenuDatosJuegoController implements Initializable {
     
     @FXML
     public void importarEstudianteMatricula(){
+        seleccionMateriaParalelo();
         for(Estudiante e: paraleloSeleccionado.getEstudiantes()){
             participanteCMB.getItems().add(e.getnMatricula());
             acompCMB.getItems().add(e.getnMatricula());
         }
     }
     
-    public Estudiante estudianteMatricula(){
+    public ArrayList<Estudiante> buscarEstudiantes(){
+        ArrayList<Estudiante> lst = new ArrayList<>();
         String codigo = (String)participanteCMB.getValue();
-        for(Estudiante e: paraleloSeleccionado.getEstudiantes()){
-            if((codigo.equalsIgnoreCase(e.getnMatricula())) && !(estudiantesUtilizados.contains(e))){
-                estudiantesUtilizados.add(e);
-                return e;
+        String codigo2 = (String)acompCMB.getValue();
+        if(!codigo.equalsIgnoreCase(codigo2)){
+            for(Estudiante e: paraleloSeleccionado.getEstudiantes()){
+                if(codigo.equalsIgnoreCase(e.getnMatricula())){
+                    lst.add(e);
+                }
+            }
+            for(Estudiante e: paraleloSeleccionado.getEstudiantes()){
+                if(codigo2.equalsIgnoreCase(e.getnMatricula())){
+                    lst.add(e);
+                }
             }
         }
-        return null;
+        else{
+            lst.add(null);
+            lst.add(null);
+        }
+
+        return lst;
     }
     
     @FXML
     public void estudianteAleatorio(){
         boolean conseguido = false;
         while (!conseguido){
-            int posE = (int)(paraleloSeleccionado.getEstudiantes().size()*Math.random());
-            if (!estudiantesUtilizados.contains(paraleloSeleccionado.getEstudiantes().get(posE))){
-                participanteCMB.setValue((String)participanteCMB.getItems().get(posE));
+            int pos1 = (int)(paraleloSeleccionado.getEstudiantes().size()*Math.random());
+            int pos2 = (int)(paraleloSeleccionado.getEstudiantes().size()*Math.random());
+            if (pos1 != pos2){
+                participanteCMB.setValue((String)participanteCMB.getItems().get(pos1));
+                acompCMB.setValue((String)participanteCMB.getItems().get(pos2));
                 conseguido = true;
             }
         }
     }
     
     public void seleccionEstudiantes(){
-        jugadorPrincipal = estudianteMatricula();
-        jugadorSecundario = estudianteMatricula();
+        jugadorPrincipal = buscarEstudiantes().get(0);
+        jugadorSecundario = buscarEstudiantes().get(1);
     }
     
     @FXML
-    public void comenzarJuego() throws Exception{
-        seleccionMateriaParalelo();
+    public void comenzarJuego() {
         if(validacionNivel()){
             seleccionEstudiantes();
             if(jugadorPrincipal != null && jugadorSecundario != null){
-                Juego();
+                creacionJuego();
                 serializarJuego();
-                App.setRoot("nuevoJuego");
+                try {
+                    App.setRoot("nuevoJuego");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
             else if(jugadorPrincipal == null || jugadorSecundario == null){
                 acompCMB.setValue(null);
@@ -188,38 +233,19 @@ public class MenuDatosJuegoController implements Initializable {
         alert.showAndWait();
     }
     
-    public void Juego(){
+    public void creacionJuego(){
         int nivel = Integer.parseInt(numPregxNivel.getText().trim());
         juego = new Juego(terminoSeleccionado,paraleloSeleccionado,materiaSeleccionada,nivel,jugadorPrincipal,jugadorSecundario);
     }
     
-    public void serializarJuego() throws Exception{
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/juegos.ser"));
-        out.writeObject(juego);
-        out.flush();
-        out.close(); 
+    public void serializarJuego() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/juegos.ser"))) {
+            out.writeObject(juego);
+            out.flush();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
     }
-    
-    public TerminoAcademico getTerminoSeleccionado() {
-        return terminoSeleccionado;
-    }
-
-    public Paralelo getParaleloSeleccionado() {
-        return paraleloSeleccionado;
-    }
-
-    public Materia getMateriaSeleccionada() {
-        return materiaSeleccionada;
-    }
-
-    public Estudiante getJugadorPrincipal() {
-        return jugadorPrincipal;
-    }
-
-    public Estudiante getJugadorSecundario() {
-        return jugadorSecundario;
-    }
-    
-    
-    
 }

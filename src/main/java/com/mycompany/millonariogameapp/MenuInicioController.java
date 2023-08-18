@@ -42,16 +42,10 @@ public class MenuInicioController implements Serializable {
 
     public void initialize(){
         cargaPorDefecto(); 
-        try{
-            serializarMateria();
-            serializarPreguntas();
-            serializarParalelo();
-            serializarTermino();
-          
-        }
-        catch(Exception e){
-            System.out.println("ERROR");
-        }  
+        serializarMateria();
+        serializarPreguntas();
+        serializarParalelo();
+        serializarTermino();
     }    
 
     @FXML
@@ -61,7 +55,7 @@ public class MenuInicioController implements Serializable {
 
     @FXML
     private void NuevoJuego(ActionEvent event) throws IOException{
-        App.setRoot("menuDatosJuego");
+        App.setRoot("datosJuego");
     }
 
     @FXML
@@ -127,25 +121,37 @@ public class MenuInicioController implements Serializable {
         }
     }
     
-    public void serializarTermino() throws Exception{
-        ObjectOutputStream out3 = new ObjectOutputStream(new FileOutputStream("archivos/terminos.ser"));
-        out3.writeObject(t3);
-        out3.flush();
-        out3.close(); 
+    public void serializarTermino() {
+        try (ObjectOutputStream out3 = new ObjectOutputStream(new FileOutputStream("archivos/terminos.ser"))) {
+            out3.writeObject(t3);
+            out3.flush();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
     }
     
-    public void serializarParalelo() throws Exception{
-        ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream("archivos/paralelos.ser"));
-        out2.writeObject(P3);
-        out2.flush();
-        out2.close();
+    public void serializarParalelo() {
+        try (ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream("archivos/paralelos.ser"))) {
+            out2.writeObject(P3);
+            out2.flush();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
-    public void serializarPreguntas() throws Exception{
-        ObjectOutputStream out0 = new ObjectOutputStream(new FileOutputStream("archivos/"+POO.getCodigo()+".ser"));
-        out0.writeObject(POO.getLstOrdenadasxNivel());
-        out0.flush();
-        out0.close();
+    public void serializarPreguntas() {
+        try (ObjectOutputStream out0 = new ObjectOutputStream(new FileOutputStream("archivos/"+POO.getCodigo()+".ser"))) {
+            out0.writeObject(POO.getLstOrdenadasxNivel());
+            out0.flush();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     

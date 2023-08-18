@@ -4,18 +4,36 @@
  */
 package com.mycompany.millonariogameapp.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author maza-
  */
-public class Reporte {
+public class Reporte implements Serializable{
     private String fecha;
     private String estudianteParticipante;
     private int nivelMaximoAlcanzado;
     //private int tiempo;
     private String premio;
+    private int puntaje;
+
+    public int getNivelMaximoAlcanzado() {
+        return nivelMaximoAlcanzado;
+    }
+
+    public void setNivelMaximoAlcanzado(int nivelMaximoAlcanzado) {
+        this.nivelMaximoAlcanzado = nivelMaximoAlcanzado;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
 
     public Reporte(String fecha , String participante, int level, String premio){
         this.fecha=fecha;
