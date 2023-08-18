@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuIngresarTerminoController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Ingresar Término">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Label text="Ingrese el año: " />
+            <TextField fx:id="txtAnio" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="218.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Label text="Ingrese el numero:" />
+            <TextField fx:id="txtNumero" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="268.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button fx:id="botonGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+            <Button fx:id="botonBorrar" mnemonicParsing="false" onAction="#borrar" text="Borrar" />
+         </children>
+      </HBox>
+      <Button fx:id="botonVolver" mnemonicParsing="false" onAction="#volver" prefHeight="59.0" prefWidth="95.0" text="Volver">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
+</VBox>
