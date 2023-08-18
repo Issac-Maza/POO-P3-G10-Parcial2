@@ -29,6 +29,10 @@ public class App extends Application {
 
     private static Scene scene;
 
+    static void setScene(String menuInicio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         setScene(new Scene(loadFXML("menuInicio"), 640, 480));

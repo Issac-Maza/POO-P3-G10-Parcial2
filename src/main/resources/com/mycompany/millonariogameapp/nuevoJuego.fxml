@@ -25,7 +25,7 @@
                   <Button mnemonicParsing="false" style="-fx-background-color: yellow; -fx-border-color: black;" text="Llamada" />
                </children>
             </HBox>
-            <VBox prefHeight="335.0" prefWidth="189.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" />
+            <VBox alignment="TOP_CENTER" prefHeight="335.0" prefWidth="189.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" />
          </children>
       </VBox>
    </right>
@@ -46,14 +46,39 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="opcionA" mnemonicParsing="false" prefHeight="88.0" prefWidth="206.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Button" />
-                  <Button fx:id="opcionC" mnemonicParsing="false" prefHeight="127.0" prefWidth="206.0" style="-fx-background-color: black; -fx-border-color: yellow;" text="Button" textFill="#e1ff00" GridPane.rowIndex="1" />
-                  <Button fx:id="opcionB" mnemonicParsing="false" prefHeight="86.0" prefWidth="205.0" style="-fx-background-color: black; -fx-border-color: yellow;" text="Button" textFill="#fffd00" GridPane.columnIndex="1" />
-                  <Button fx:id="opcionD" mnemonicParsing="false" prefHeight="85.0" prefWidth="205.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="opcionA" mnemonicParsing="false" onAction="#seleccionA" prefHeight="88.0" prefWidth="206.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Button" />
+                  <Button fx:id="opcionC" mnemonicParsing="false" onAction="#seleccionC" prefHeight="127.0" prefWidth="206.0" style="-fx-background-color: black; -fx-border-color: yellow;" text="Button" textFill="#e1ff00" GridPane.rowIndex="1" />
+                  <Button fx:id="opcionB" mnemonicParsing="false" onAction="#seleccionB" prefHeight="86.0" prefWidth="205.0" style="-fx-background-color: black; -fx-border-color: yellow;" text="Button" textFill="#fffd00" GridPane.columnIndex="1" />
+                  <Button fx:id="opcionD" mnemonicParsing="false" onAction="#seleccionD" prefHeight="85.0" prefWidth="205.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <HBox fx:id="contenedorPremio" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" />
          </children>
       </VBox>
    </center>
+   <bottom>
+      <HBox alignment="BOTTOM_LEFT" prefHeight="27.0" prefWidth="600.0" spacing="70.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label style="-fx-background-color: yellow;" text="Tiempo: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="tiempo" alignment="CENTER" prefHeight="27.0" prefWidth="108.0" style="-fx-background-color: yellow;">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" onAction="#iniciar" style="-fx-background-color: yellow;" text="INICIAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -46,20 +47,23 @@ public class NuevoJuegoController implements Serializable {
     private VBox preguntasVB;
     @FXML
     private HBox contenedorPremio;
+    @FXML
+    private Label tiempo;
     
     private Juego juego;
     private ArrayList<ArrayList<Pregunta>> preguntasParaJuego;
     private int puntaje;
-    private Pregunta preguntaActual;
     private String literalSeleccionado;
     private int numPregMax;
     private int numPregActual;
-    private int numPregArray;
     private String premio;
     private boolean correcto;
     private boolean noTerminado;
-    private int nivelActual;
+    private int posNivelActual;
     private Reporte reporte;
+    private int posNumPregArray;
+    private String literalVerdadero;
+    
 
     /**
      * Initializes the controller class.
@@ -67,17 +71,21 @@ public class NuevoJuegoController implements Serializable {
     
     public void initialize() {
         puntaje = 0;
-        numPregArray = 1;
-        nivelActual = 1;
+        posNivelActual = 0;
+        numPregActual = 0;
         correcto = true;
         noTerminado = true;
         premio = "nada";
-        puntaje = 0;
+        posNumPregArray = 0;
         deserializarJuego();
         ajustesParaPreguntas();
         rellenarPreguntasVB();
-        cambioDePregunta(nivelActual-1,numPregArray-1);
-    }    
+    }
+
+    @FXML
+    public void iniciar(){
+        programaPrincipal3();
+    }
     
     public void deserializarJuego() {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/juegos.ser"))){
@@ -102,7 +110,7 @@ public class NuevoJuegoController implements Serializable {
                 i++;
             }
         }
-        numPregMax = i;
+        numPregMax = i-1;
     }
     
     public void ajustesParaPreguntas(){
@@ -122,58 +130,68 @@ public class NuevoJuegoController implements Serializable {
             }
             cont += 1;
         }
+
         preguntasParaJuego = lstAjustes;
-    }
-    
-    public boolean contestoBien(){
-        boolean esCorrecta = false;
-        
-        if(literalSeleccionado.equalsIgnoreCase("a")) esCorrecta = CorrectaOIncorrecta(opcionA);
-        else if(literalSeleccionado.equalsIgnoreCase("b")) esCorrecta = CorrectaOIncorrecta(opcionB);
-        else if(literalSeleccionado.equalsIgnoreCase("c")) esCorrecta = CorrectaOIncorrecta(opcionC);
-        else if(literalSeleccionado.equalsIgnoreCase("d")) esCorrecta = CorrectaOIncorrecta(opcionD);
-        
-        return esCorrecta;
-    }
-    
-    public void seleccionA(){
-        literalSeleccionado = "a";
-    }
-    
-    public void seleccionB(){
-        literalSeleccionado = "b";
-    }
-    
-    public void seleccionC(){
-        literalSeleccionado = "c";
-    }
-    
-    public void seleccionD(){
-        literalSeleccionado = "d";
-    }
-    
-    public boolean CorrectaOIncorrecta(Button b){
-        String[] extraido = b.getText().trim().split(". ");
-        String respuestaJugador = extraido[1];
-        boolean esCorrecta = false;
-        
-        if(respuestaJugador.equalsIgnoreCase(preguntaActual.getRespuestaCorrecta())){
-            esCorrecta = true;
+        for(ArrayList<Pregunta> lst: preguntasParaJuego){
+            for(Pregunta p: lst){
+                System.out.println(p.getEnunciado());
+                System.out.println(p.getRespuestaCorrecta());
+                System.out.println("");
+            }
         }
         
-        return esCorrecta;
+        
     }
     
-    public void cambioDePregunta(int posNivel, int posPreg){
-        Pregunta p = preguntasParaJuego.get(posNivel).get(posPreg);
+    public void contestoBien(){
+
+        if(literalSeleccionado.equals(literalVerdadero)) correcto = true;
+        else correcto = false;
+
+    }
+    
+    @FXML
+    public void seleccionA(){
+        literalSeleccionado = "a";
+        contestoBien();
+        programaPrincipal3();
+    }
+    
+    @FXML
+    public void seleccionB(){
+        literalSeleccionado = "b";
+        contestoBien();
+        programaPrincipal3();
+    }
+    
+    @FXML
+    public void seleccionC(){
+        literalSeleccionado = "c";
+        contestoBien();
+        programaPrincipal3();
+    }
+    
+    @FXML
+    public void seleccionD(){
+        literalSeleccionado = "d";
+        contestoBien();
+        programaPrincipal3();
+    }
+
+    public void cambioDePregunta2(Pregunta p){
         pregunta.setText(p.getEnunciado());
         opcionA.setText("a. "+p.getPosiblesRespuestas().get(0));
         opcionB.setText("b. "+p.getPosiblesRespuestas().get(1));
         opcionC.setText("c. "+p.getPosiblesRespuestas().get(2));
         opcionD.setText("d. "+p.getPosiblesRespuestas().get(3));
         
-        if((numPregActual-1) == 0){
-            preguntasVB.getChildren().get(numPregActual-1).setStyle("-fx-control-inner-background: yellow;");
+        if(p.getPosiblesRespuestas().get(0).equals(p.getRespuestaCorrecta())) literalVerdadero = "a";
+        else if (p.getPosiblesRespuestas().get(1).equals(p.getRespuestaCorrecta())) literalVerdadero = "b";
+        else if (p.getPosiblesRespuestas().get(2).equals(p.getRespuestaCorrecta())) literalVerdadero = "c";
+        else if (p.getPosiblesRespuestas().get(3).equals(p.getRespuestaCorrecta())) literalVerdadero = "d";
+        
+        if(numPregActual == 0){
+            preguntasVB.getChildren().get(numPregActual).setStyle("-fx-control-inner-background: yellow;");
         }
         else{
             preguntasVB.getChildren().get(numPregActual-1).setStyle("-fx-control-inner-background: green;");
@@ -181,7 +199,7 @@ public class NuevoJuegoController implements Serializable {
         }
     }
     
-    public void programaPrincipal(){
+    /*public void programaPrincipal(){
         correcto = contestoBien();
         if(correcto){
             if(juego.getPreguntasPorNivel() == numPregArray){
@@ -209,6 +227,122 @@ public class NuevoJuegoController implements Serializable {
             creacionReporte();
             serializarReporte();
         }
+    }*/
+    
+    /*public void programaPrincipal2(){
+        for(ArrayList<Pregunta> arrayNivel:preguntasParaJuego){
+            if(correcto && noTerminado){
+                for(Pregunta p: arrayNivel){
+                    if(correcto){
+                        preguntaActual = p;
+                        cambioDePregunta2(p);
+                        int i = 60;
+                        for(i = 60; i>0; i--){
+                            tiempo.setText(""+i);
+                            try{
+                                if(correcto && i>0){
+                                   Thread.sleep(1000);
+                                }
+                                else{
+                                    mostrarAlerta(Alert.AlertType.INFORMATION,"Pregunta Incorrecta. Perdiste");
+                                    creacionReporte();
+                                    serializarReporte();
+                                    App.setRoot("menuInicio");
+                                }
+
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        
+                        
+                        class Temporizador extends Thread{
+                            boolean tiempoAgotado = false;
+                            @Override
+                            public void run(){
+                                int i;
+                                for(i = 60; i>0; i--){
+                                    if(correcto){
+                                        tiempo.setText(""+i);
+                                        try{
+                                            Thread.sleep(1000);
+                                        } catch (InterruptedException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }   
+                                }
+                                
+                                if(i == 0) tiempoAgotado = true;
+                            }
+                        }
+                        
+                        Temporizador temp = new Temporizador();
+                        temp.start();
+                        
+                        if(!correcto){
+                            try {
+                                mostrarAlerta(Alert.AlertType.INFORMATION,"Pregunta Incorrecta. Perdiste");
+                                creacionReporte();
+                                serializarReporte();
+                                App.setRoot("menuInicio");
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        if(temp.tiempoAgotado){
+                            try {
+                                correcto = false;
+                                mostrarAlerta(Alert.AlertType.INFORMATION,"Se te acabo el tiempo. Perdiste");
+                                creacionReporte();
+                                serializarReporte();
+                                App.setRoot("menuInicio");
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        } else {
+                            numPregActual++;
+                            puntaje += (nivelActual*10); 
+                        }
+                    } 
+                }
+            }
+            
+            if((numPregActual == numPregMax) && correcto){
+                mostrarAlerta(Alert.AlertType.INFORMATION,"GANASTE!!!!! \n Ahora el Profe eligira el premio");
+                creacionPremio();
+            } else{
+                nivelActual++;
+            }
+        }
+    }*/
+    
+    public void programaPrincipal3(){
+        if(correcto && numPregMax != numPregActual){
+            cambioDePregunta2(preguntasParaJuego.get(posNivelActual).get(posNumPregArray));
+            
+            if(posNumPregArray == (juego.getPreguntasPorNivel()-1)){
+                posNumPregArray = 0;
+                posNivelActual++;
+            } else posNumPregArray++;
+            
+            numPregActual++; 
+        }
+        else if(correcto && numPregMax == numPregActual){
+            mostrarAlerta(Alert.AlertType.INFORMATION,"GANASTE!!!!! \n Ahora el Profe eligira el premio");
+            creacionPremio();
+        }
+        else if(correcto == false){
+            try {
+                mostrarAlerta(Alert.AlertType.INFORMATION,"Pregunta Incorrecta. Perdiste");
+                creacionReporte();
+                serializarReporte();
+                App.setRoot("menuInicio");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
     
     public void creacionPremio(){
@@ -220,15 +354,20 @@ public class NuevoJuegoController implements Serializable {
         Button b = new Button("Aceptar");
         b.setStyle("-fx-control-inner-background: yellow;");
         b.setOnAction(eh -> {
-            premio = (String)text.getText().trim();
-            creacionReporte();
-            serializarReporte();
+            try {
+                premio = (String)text.getText().trim();
+                creacionReporte();
+                serializarReporte();
+                App.setRoot("menuInicio");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
         contenedorPremio.getChildren().add(b);
     }
     
     public void creacionReporte(){
-        reporte = new Reporte(fecha(),juego.getParticipante().getNombre(),nivelActual,premio);
+        reporte = new Reporte(fecha(),juego.getParticipante().getNombre(),posNivelActual+1,premio);
         reporte.setPuntaje(puntaje);
     }
     
@@ -259,5 +398,9 @@ public class NuevoJuegoController implements Serializable {
         alert.setHeaderText("Notificacion");
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+    
+    public void regresarMenuAnterior(ActionEvent event) throws IOException {
+        App.setRoot("menuAdministrarPregunta");
     }
 }
