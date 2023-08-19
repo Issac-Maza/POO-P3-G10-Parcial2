@@ -4,6 +4,7 @@
  */
 package com.mycompany.millonariogameapp.modelo;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -55,5 +56,10 @@ public class TerminoAcademico implements Serializable{
         }else{
             return false;
         }
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(anio, numero);
     }
 }
