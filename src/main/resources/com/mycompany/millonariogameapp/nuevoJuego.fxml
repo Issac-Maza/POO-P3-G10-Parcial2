@@ -20,9 +20,9 @@
                </font></Label>
             <HBox alignment="CENTER" prefHeight="56.0" prefWidth="189.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" style="-fx-background-color: yellow; -fx-border-color: black;" text="50:50" />
+                  <Button mnemonicParsing="false" onAction="#comodin50_50" style="-fx-background-color: yellow; -fx-border-color: black;" text="50:50" />
                   <Button mnemonicParsing="false" style="-fx-background-color: black; -fx-border-color: yellow;" text="Público" textFill="#e5ff00" />
-                  <Button mnemonicParsing="false" style="-fx-background-color: yellow; -fx-border-color: black;" text="Llamada" />
+                  <Button mnemonicParsing="false" onAction="#comodinLlamada" style="-fx-background-color: yellow; -fx-border-color: black;" text="Llamada" />
                </children>
             </HBox>
             <VBox alignment="TOP_CENTER" prefHeight="335.0" prefWidth="189.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" />

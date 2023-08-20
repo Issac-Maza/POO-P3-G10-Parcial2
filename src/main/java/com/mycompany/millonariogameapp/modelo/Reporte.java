@@ -18,6 +18,15 @@ public class Reporte implements Serializable{
     //private int tiempo;
     private String premio;
     private int puntaje;
+    private ArrayList<String> comodinesUsados;
+
+    public ArrayList<String> getComodinesUsados() {
+        return comodinesUsados;
+    }
+
+    public void setComodinesUsados(ArrayList<String> comodinesUsados) {
+        this.comodinesUsados = comodinesUsados;
+    }
 
     public int getNivelMaximoAlcanzado() {
         return nivelMaximoAlcanzado;
@@ -40,6 +49,7 @@ public class Reporte implements Serializable{
         this.nivelMaximoAlcanzado = level;
         this.estudianteParticipante =participante;
         this.premio=premio;
+        this.comodinesUsados = new ArrayList<>();
     }
 
     public String getFecha() {

@@ -63,6 +63,11 @@ public class NuevoJuegoController implements Serializable {
     private Reporte reporte;
     private int posNumPregArray;
     private String literalVerdadero;
+    private boolean boolean50_50;
+    private boolean booleanLlamada;
+    private boolean booleanGrupo;
+    private String nombreComodin;
+    private ArrayList<String> comodinesUsadosJuego;
     
 
     /**
@@ -70,6 +75,10 @@ public class NuevoJuegoController implements Serializable {
      */
     
     public void initialize() {
+        nombreComodin = "nada";
+        boolean50_50 = true;
+        booleanLlamada = true;
+        booleanGrupo = true;
         puntaje = 0;
         posNivelActual = 0;
         numPregActual = 0;
@@ -77,6 +86,7 @@ public class NuevoJuegoController implements Serializable {
         noTerminado = true;
         premio = "nada";
         posNumPregArray = 0;
+        comodinesUsadosJuego = new ArrayList<>();
         deserializarJuego();
         ajustesParaPreguntas();
         rellenarPreguntasVB();
@@ -144,15 +154,14 @@ public class NuevoJuegoController implements Serializable {
     }
     
     public void contestoBien(){
-
         if(literalSeleccionado.equals(literalVerdadero)) correcto = true;
         else correcto = false;
-
     }
     
     @FXML
     public void seleccionA(){
         literalSeleccionado = "a";
+        deteccionDeComodines();
         contestoBien();
         programaPrincipal3();
     }
@@ -160,6 +169,7 @@ public class NuevoJuegoController implements Serializable {
     @FXML
     public void seleccionB(){
         literalSeleccionado = "b";
+        deteccionDeComodines();
         contestoBien();
         programaPrincipal3();
     }
@@ -167,6 +177,7 @@ public class NuevoJuegoController implements Serializable {
     @FXML
     public void seleccionC(){
         literalSeleccionado = "c";
+        deteccionDeComodines();
         contestoBien();
         programaPrincipal3();
     }
@@ -174,6 +185,7 @@ public class NuevoJuegoController implements Serializable {
     @FXML
     public void seleccionD(){
         literalSeleccionado = "d";
+        deteccionDeComodines();
         contestoBien();
         programaPrincipal3();
     }
@@ -345,6 +357,44 @@ public class NuevoJuegoController implements Serializable {
         }
     }
     
+    @FXML
+    public void comodin50_50(){
+        if(boolean50_50){
+            String[] resp = {"a","b","c","d"};
+            ArrayList<String> respEliminar = new ArrayList<>();
+            int i;
+            for(int j = 0; j<2; j++){
+                do{
+                    i = (int) (resp.length*Math.random());
+                } while(resp[i].equals(literalVerdadero) && respEliminar.contains(resp[i]));
+                respEliminar.add(resp[i]);
+            }
+            
+            for(String literal: respEliminar){
+                if(literal.equals("a")) opcionA.setText("");
+                else if(literal.equals("b")) opcionB.setText("");
+                else if(literal.equals("c")) opcionC.setText("");
+                else if(literal.equals("d")) opcionD.setText("");
+            }
+            boolean50_50 = false;
+            nombreComodin = "50/50";
+        }
+    }
+    
+    @FXML
+    public void comodinLlamada(){
+        if(booleanLlamada){
+            booleanLlamada = false;
+            nombreComodin = "Llamada";
+            mostrarAlerta(Alert.AlertType.INFORMATION,juego.getAcompañante()+" esta seguro que la respuesta es el literal "+literalVerdadero);
+        }
+    }
+    
+    public void deteccionDeComodines(){
+        comodinesUsadosJuego.add(nombreComodin);
+        nombreComodin = "nada";
+    }
+    
     public void creacionPremio(){
         Label l = new Label("Escriba el premio: ");
         l.setStyle("-fx-control-inner-background: yellow;");
@@ -369,6 +419,7 @@ public class NuevoJuegoController implements Serializable {
     public void creacionReporte(){
         reporte = new Reporte(fecha(),juego.getParticipante().getNombre(),posNivelActual+1,premio);
         reporte.setPuntaje(puntaje);
+        reporte.setComodinesUsados(comodinesUsadosJuego);
     }
     
     public void serializarReporte(){
