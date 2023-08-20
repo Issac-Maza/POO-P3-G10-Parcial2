@@ -42,7 +42,8 @@ public class MenuAdministrarTerminosController implements Initializable {
     }
 
     @FXML
-    private void editarTermino(ActionEvent event) {
+    private void editarTermino(ActionEvent event) throws IOException {
+        App.setRoot("menuEditarTermino");
     }
 
     @FXML
