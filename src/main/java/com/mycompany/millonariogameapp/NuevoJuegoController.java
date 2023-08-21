@@ -58,7 +58,6 @@ public class NuevoJuegoController implements Serializable {
     private int numPregActual;
     private String premio;
     private boolean correcto;
-    private boolean noTerminado;
     private int posNivelActual;
     private Reporte reporte;
     private int posNumPregArray;
@@ -68,13 +67,16 @@ public class NuevoJuegoController implements Serializable {
     private boolean booleanGrupo;
     private String nombreComodin;
     private ArrayList<String> comodinesUsadosJuego;
-    
+    private int tiempoI;
+    private boolean tiempoSigue;
 
     /**
      * Initializes the controller class.
      */
     
     public void initialize() {
+        tiempoSigue = true;
+        tiempoI = 60;
         nombreComodin = "nada";
         boolean50_50 = true;
         booleanLlamada = true;
@@ -83,7 +85,6 @@ public class NuevoJuegoController implements Serializable {
         posNivelActual = 0;
         numPregActual = 0;
         correcto = true;
-        noTerminado = true;
         premio = "nada";
         posNumPregArray = 0;
         comodinesUsadosJuego = new ArrayList<>();
@@ -94,9 +95,41 @@ public class NuevoJuegoController implements Serializable {
 
     @FXML
     public void iniciar(){
+        tiempo();
         programaPrincipal3();
     }
     
+    public void tiempo(){
+        class Temporizador extends Thread{
+            @Override
+            public void run(){
+                do{
+                    tiempo.setText(""+tiempoI);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                    
+                    tiempoI--; 
+                    System.out.println(tiempoI);
+                    if(tiempoI == 0){
+                        //mostrarAlerta(Alert.AlertType.INFORMATION,"Se acabo el tiempo");
+                        creacionReporte();
+                        serializarReporte();
+                        try {
+                            App.setRoot("menuInicio");
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }                 
+                } while(tiempoI > 0 && tiempoSigue);         
+            }
+        }
+        Temporizador temp = new Temporizador();
+        temp.start();
+    }
+
     public void deserializarJuego() {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/juegos.ser"))){
             Juego j;
@@ -211,36 +244,6 @@ public class NuevoJuegoController implements Serializable {
         }
     }
     
-    /*public void programaPrincipal(){
-        correcto = contestoBien();
-        if(correcto){
-            if(juego.getPreguntasPorNivel() == numPregArray){
-                if(numPregMax == numPregActual){
-                    noTerminado = false;
-                } else{
-                    numPregArray = 0;
-                    nivelActual++; 
-                }
-            }
-            if(noTerminado){
-                puntaje += (nivelActual*100);
-                numPregArray++;
-                numPregActual++;
-                preguntaActual = preguntasParaJuego.get(nivelActual-1).get(numPregArray-1);
-                cambioDePregunta(nivelActual-1,numPregArray-1);
-            }
-            else{
-                mostrarAlerta(Alert.AlertType.INFORMATION,"GANASTE!!!!! \n Ahora el Profe eligira el premio");
-                creacionPremio();
-            }
-        }
-        else{
-            mostrarAlerta(Alert.AlertType.INFORMATION,"Pregunta Incorrecta. Perdiste");
-            creacionReporte();
-            serializarReporte();
-        }
-    }*/
-    
     /*public void programaPrincipal2(){
         for(ArrayList<Pregunta> arrayNivel:preguntasParaJuego){
             if(correcto && noTerminado){
@@ -332,6 +335,7 @@ public class NuevoJuegoController implements Serializable {
     
     public void programaPrincipal3(){
         if(correcto && numPregMax != numPregActual){
+            tiempoI = 60;
             cambioDePregunta2(preguntasParaJuego.get(posNivelActual).get(posNumPregArray));
             
             if(posNumPregArray == (juego.getPreguntasPorNivel()-1)){
@@ -342,11 +346,13 @@ public class NuevoJuegoController implements Serializable {
             numPregActual++; 
         }
         else if(correcto && numPregMax == numPregActual){
+            tiempoSigue = false;
             mostrarAlerta(Alert.AlertType.INFORMATION,"GANASTE!!!!! \n Ahora el Profe eligira el premio");
             creacionPremio();
         }
         else if(correcto == false){
             try {
+                tiempoSigue = false;
                 mostrarAlerta(Alert.AlertType.INFORMATION,"Pregunta Incorrecta. Perdiste");
                 creacionReporte();
                 serializarReporte();
@@ -366,7 +372,7 @@ public class NuevoJuegoController implements Serializable {
             for(int j = 0; j<2; j++){
                 do{
                     i = (int) (resp.length*Math.random());
-                } while(resp[i].equals(literalVerdadero) && respEliminar.contains(resp[i]));
+                } while(resp[i].equals(literalVerdadero) || respEliminar.contains(resp[i]));
                 respEliminar.add(resp[i]);
             }
             
@@ -386,7 +392,39 @@ public class NuevoJuegoController implements Serializable {
         if(booleanLlamada){
             booleanLlamada = false;
             nombreComodin = "Llamada";
-            mostrarAlerta(Alert.AlertType.INFORMATION,juego.getAcompañante()+" esta seguro que la respuesta es el literal "+literalVerdadero);
+            mostrarAlerta(Alert.AlertType.INFORMATION,juego.getAcompañante().getNombre()+" esta seguro que la respuesta es el literal "+literalVerdadero);
+        }
+    }
+    
+    @FXML
+    public void comodinGrupo(){
+        if(booleanGrupo){
+            String[] resp = {"a","b","c","d"};
+            int[] porc1 = {70,20,5,5};
+            int[] porc2 = {40,30,10,10};
+            int[] porc3 = {50,20,20,10};
+            ArrayList<int[]> baraja = new ArrayList<>();
+            baraja.add(porc1);
+            baraja.add(porc2);
+            baraja.add(porc3);
+            
+            int pos = (int) (baraja.size()*Math.random());
+            int[] porcUsar = baraja.get(pos);
+            ArrayList<String> porcMostrar = new ArrayList<>();
+            
+            int cont = 1;
+            for(String opcion: resp){
+                if(opcion.equals(literalVerdadero)){
+                    porcMostrar.add(opcion+" - "+porcUsar[0]+"%");
+                }
+                else{
+                    porcMostrar.add(opcion+" - "+porcUsar[cont]+"%");
+                    cont++;
+                }
+            }
+            booleanGrupo = false;
+            nombreComodin = "Público";
+            mostrarAlerta(Alert.AlertType.INFORMATION,"Este es el porcentaje de personas que ha escogido cada opcion: "+porcMostrar.get(0)+" / "+porcMostrar.get(1)+" / "+porcMostrar.get(2)+" / "+porcMostrar.get(3));
         }
     }
     
