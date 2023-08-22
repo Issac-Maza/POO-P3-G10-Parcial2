@@ -1,11 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.EditarMateriaController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.mycompany.millonariogameapp.EditarMateriaController">
+   <children>
+      <Button fx:id="btnVolver" layoutX="25.0" layoutY="14.0" mnemonicParsing="false" text="Volver" />
+      <Button fx:id="btnModificar" layoutX="66.0" layoutY="341.0" mnemonicParsing="false" onAction="#editarMateria" text="Modificar">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="85.0" layoutY="65.0" text="Codigo">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="textCodigo" layoutX="91.0" layoutY="106.0" text="Label">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="77.0" layoutY="149.0" text="Nombre: ">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textNombre" layoutX="33.0" layoutY="196.0" prefHeight="31.0" prefWidth="150.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Label layoutX="91.0" layoutY="243.0" text="Nivel">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textNivel" layoutX="34.0" layoutY="288.0" prefHeight="31.0" prefWidth="150.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <TableView fx:id="tablaMateria" layoutX="207.0" layoutY="40.0" onMouseClicked="#seleccionarMateria" prefHeight="344.0" prefWidth="381.0">
+        <columns>
+          <TableColumn fx:id="columnaCodigo" prefWidth="67.20001220703125" text="Codigo" />
+          <TableColumn fx:id="columnaNombre" prefWidth="76.79998779296875" text="Nombre" />
+            <TableColumn fx:id="columnaNivel" prefWidth="53.60003662109375" text="Nivel" />
+            <TableColumn fx:id="columnaPreguntas" prefWidth="70.39996337890625" text="Preguntas" />
+            <TableColumn fx:id="columnaParalelos" prefWidth="110.40008544921875" text="Paralelos" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>
