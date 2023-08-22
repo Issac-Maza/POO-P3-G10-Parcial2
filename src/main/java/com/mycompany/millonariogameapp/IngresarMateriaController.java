@@ -132,7 +132,14 @@ public class IngresarMateriaController implements Initializable {
     private void agregarMateria(ActionEvent event) {
         String codigo = textfieldcodigo.getText();
         String nombre = textfieldNombre.getText();
+        String nivelText = textfieldNivel.getText();
         Integer nivel = Integer.parseInt(textfieldNivel.getText());
+        
+        if (codigo.isEmpty() || nombre.isEmpty() || nivelText.isEmpty()) {
+            mostrarAlerta("Campos incompletos", "Por favor complete todos los campos.", Alert.AlertType.ERROR);
+            return; // Sale del método sin guardar la materia
+        }
+
         
         Materia materiaPD = new Materia(codigo,nombre,nivel);
         
