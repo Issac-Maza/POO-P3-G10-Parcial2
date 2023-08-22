@@ -42,7 +42,7 @@ public class TerminoAcademico implements Serializable{
     
     @Override
     public String toString(){
-        return "Año: " + anio + ", Número: " + numero;
+        return "Año: " + anio + ", Número: " + numero +"T";
     }
     
     @Override
