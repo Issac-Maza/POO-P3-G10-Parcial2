@@ -19,6 +19,42 @@ public class Reporte implements Serializable{
     private String premio;
     private int puntaje;
     private ArrayList<String> comodinesUsados;
+    private int contadorComodines;
+    private String tiempoPasados;
+    private int numPregAlcanzada;
+    private int pregXNivel;
+
+    public int getPregXNivel() {
+        return pregXNivel;
+    }
+
+    public void setPregXNivel(int pregXNivel) {
+        this.pregXNivel = pregXNivel;
+    }
+
+    public int getNumPregAlcanzada() {
+        return numPregAlcanzada;
+    }
+
+    public void setNumPregAlcanzada(int numPregAlcanzada) {
+        this.numPregAlcanzada = numPregAlcanzada;
+    }
+
+    public String getTiempoPasados() {
+        return tiempoPasados;
+    }
+
+    public void setTiempoPasados(String tiempoPasados) {
+        this.tiempoPasados = tiempoPasados;
+    }
+
+    public int getContadorComodines() {
+        return contadorComodines;
+    }
+
+    public void setContadorComodines(int contadorComodines) {
+        this.contadorComodines = contadorComodines;
+    }
 
     public ArrayList<String> getComodinesUsados() {
         return comodinesUsados;

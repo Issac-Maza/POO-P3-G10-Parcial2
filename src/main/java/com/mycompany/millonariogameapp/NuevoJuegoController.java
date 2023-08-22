@@ -69,12 +69,18 @@ public class NuevoJuegoController implements Serializable {
     private ArrayList<String> comodinesUsadosJuego;
     private int tiempoI;
     private boolean tiempoSigue;
+    private int contadorComodines;
+    private int segundosPasados;
+    private int minutosPasados;
 
     /**
      * Initializes the controller class.
      */
     
     public void initialize() {
+        segundosPasados = 0;
+        minutosPasados = 0;
+        contadorComodines = 0;
         tiempoSigue = true;
         tiempoI = 60;
         nombreComodin = "nada";
@@ -110,6 +116,11 @@ public class NuevoJuegoController implements Serializable {
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
+
+                    if(segundosPasados == 60){
+                        segundosPasados = 0;
+                        minutosPasados++;
+                    } else segundosPasados++;
                     
                     tiempoI--; 
                     System.out.println(tiempoI);
@@ -382,6 +393,7 @@ public class NuevoJuegoController implements Serializable {
                 else if(literal.equals("c")) opcionC.setText("");
                 else if(literal.equals("d")) opcionD.setText("");
             }
+            contadorComodines += 1;
             boolean50_50 = false;
             nombreComodin = "50/50";
         }
@@ -390,6 +402,7 @@ public class NuevoJuegoController implements Serializable {
     @FXML
     public void comodinLlamada(){
         if(booleanLlamada){
+            contadorComodines += 1;
             booleanLlamada = false;
             nombreComodin = "Llamada";
             mostrarAlerta(Alert.AlertType.INFORMATION,juego.getAcompañante().getNombre()+" esta seguro que la respuesta es el literal "+literalVerdadero);
@@ -422,6 +435,7 @@ public class NuevoJuegoController implements Serializable {
                     cont++;
                 }
             }
+            contadorComodines += 1;
             booleanGrupo = false;
             nombreComodin = "Público";
             mostrarAlerta(Alert.AlertType.INFORMATION,"Este es el porcentaje de personas que ha escogido cada opcion: "+porcMostrar.get(0)+" / "+porcMostrar.get(1)+" / "+porcMostrar.get(2)+" / "+porcMostrar.get(3));
@@ -455,7 +469,11 @@ public class NuevoJuegoController implements Serializable {
     }
     
     public void creacionReporte(){
-        reporte = new Reporte(fecha(),juego.getParticipante().getNombre(),posNivelActual+1,premio);
+        reporte = new Reporte(fecha(),juego.getParticipante().getNombre(),posNivelActual,premio);
+        reporte.setNumPregAlcanzada(numPregActual);
+        reporte.setPregXNivel(juego.getPreguntasPorNivel());
+        reporte.setContadorComodines(contadorComodines);
+        reporte.setTiempoPasados(minutosPasados+":"+segundosPasados);
         reporte.setPuntaje(puntaje);
         reporte.setComodinesUsados(comodinesUsadosJuego);
     }
