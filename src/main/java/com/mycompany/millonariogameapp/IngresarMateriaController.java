@@ -5,8 +5,18 @@
 package com.mycompany.millonariogameapp;
 
 import com.mycompany.millonariogameapp.modelo.Materia;
+import com.mycompany.millonariogameapp.modelo.Paralelo;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,8 +39,6 @@ import javafx.scene.layout.AnchorPane;
 public class IngresarMateriaController implements Initializable {
 
     @FXML
-    private AnchorPane anchorPane;
-    @FXML
     private TextField textfieldcodigo;
     @FXML
     private TextField textfieldNombre;
@@ -47,13 +55,14 @@ public class IngresarMateriaController implements Initializable {
     @FXML
     private TableColumn<Materia, Integer> columNivel;
     @FXML
-    private TableColumn<Materia, ?> columParalelos;
+    private TableColumn<Materia, String> columParalelos;
     @FXML
     private TableColumn<Materia, String> columPreguntas;
     @FXML
     private TableView<Materia> tablaMateria;
     
     private ObservableList<Materia> materias;
+    
 
     /**
      * Initializes the controller class.
@@ -61,10 +70,45 @@ public class IngresarMateriaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         materias = FXCollections.observableArrayList();
+        
+        File file = new File(App.rutaMateria);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                materias.addAll((List<Materia>) ois.readObject());
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        
+        
+        tablaMateria.setItems(materias);
+        
         this.columCodigo.setCellValueFactory(new PropertyValueFactory("codigo"));
         this.columNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
-        this.columNivel.setCellValueFactory(new PropertyValueFactory("nivel"));
-        this.columParalelos.setCellValueFactory(new PropertyValueFactory("paralelos"));
+        this.columNivel.setCellValueFactory(new PropertyValueFactory("cantidadNiveles"));
+        this.columParalelos.setCellValueFactory(cellData -> {
+            Materia materia = cellData.getValue();
+            ArrayList<Paralelo> paralelos = materia.getParalelos();
+            StringBuilder paraleloString = new StringBuilder();
+            if(!paralelos.isEmpty()){  
+                for(int i = 0; i<paralelos.size();i++){
+                    if(i>0){
+                        paraleloString.append("P-").append(paralelos.get(i).getNumero()).append("; ");
+                        
+                        
+                    }else{
+                        paraleloString.append("P-").append(paralelos.get(i).getNumero());
+                        //texto+=previo;
+                    }
+                }
+            }else{
+                return new ReadOnlyStringWrapper("NO POSEE PARALELOS");
+            }
+            
+            //String numeroParalelo = "P-" + paralelo.getNumero();
+            return new ReadOnlyStringWrapper(paraleloString.toString());
+        });
         this.columPreguntas.setCellValueFactory(cellData -> {
             Materia materia = cellData.getValue();
             boolean tienePreguntas = !materia.getLstOrdenadasxNivel().isEmpty();
@@ -72,6 +116,16 @@ public class IngresarMateriaController implements Initializable {
             return new ReadOnlyStringWrapper(respuesta);
         });
         // TODO
+        
+        btnVolver.setOnAction(eh->{
+            try {
+                guardarListaEnArchivo(materias);
+                
+                App.setRoot("menuConfiguracion");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }    
 
     @FXML
@@ -102,6 +156,21 @@ public class IngresarMateriaController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+    
+    private void guardarListaEnArchivo(ObservableList<Materia> listaMaterias) {
+        ArrayList<Materia> lista = (ArrayList<Materia>) listaMaterias.stream().collect(Collectors.toList());
+        
+        try (ObjectOutputStream out  = new ObjectOutputStream(new FileOutputStream(App.rutaMateria))) {
+            out.writeObject(lista);
+            App.materias = lista;
+            out.close();
+            
+
+            System.out.println("Lista de materias guardada exitosamente en " + App.rutaMateria);
+        } catch (IOException e) {
+            System.out.println("Error al guardar la lista de materias en el archivo: " + e.getMessage());
+        }
     }
     
 }
