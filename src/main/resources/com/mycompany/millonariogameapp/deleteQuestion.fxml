@@ -31,11 +31,6 @@
       <VBox fx:id="preguntasVB" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="44.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" onAction="#eliminarPreguntas" text="Eliminar" />
-            <Button mnemonicParsing="false" onAction="#regresarMenuAnterior" text="Regresar" />
-         </children>
-      </HBox>
+      <Button mnemonicParsing="false" onAction="#regresarMenuAnterior" text="Volver" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

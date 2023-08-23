@@ -10,15 +10,20 @@ import javafx.fxml.Initializable;
 import com.mycompany.millonariogameapp.modelo.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 
 
 /**
@@ -33,25 +38,23 @@ public class MenuDeleteQuestionController implements Serializable {
     @FXML
     private VBox preguntasVB;
     
-    Materia materia = new Materia("","",0);
+    private ComboBox<String> combo;
+    private ArrayList<Materia> lstMaterias; 
+    private int posMateria;
+    private ArrayList<Pregunta> lstPreguntas;
 
     /**
      * Initializes the controller class.
      */
 
     public void initialize() {
-        try{
-            importarMaterias();
-        }
-        catch(Exception e){
-            System.out.println("ERROR");
-        }
-        
+        importarMaterias();
     }    
     
     public void importarMaterias() {
+        lstMaterias = new ArrayList<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
+            lstMaterias = (ArrayList<Materia>)in.readObject();
             for(Materia m: lstMaterias){
                 materiaCMB.getItems().add(m.getNombre());
             }
@@ -64,71 +67,80 @@ public class MenuDeleteQuestionController implements Serializable {
         }
     }
     
-    public Materia buscarMateria() {
-        Materia mVerdadera = new Materia("","",0);        
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
-            for(Materia m: lstMaterias){
-                if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
-                    mVerdadera = m;
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+    public void buscarMateria() {   
+        int cont = 0;
+        for(Materia m: lstMaterias){
+            if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())) posMateria = cont;
+            cont++;
         }
-        
-        return mVerdadera;
     }
     
-    public ArrayList<Pregunta> preguntas() {
-        ArrayList<Pregunta> preguntas = new ArrayList<>();
-        materia = buscarMateria();
-        
-        for(ArrayList<Pregunta> lst: materia.getLstOrdenadasxNivel()){
+    public void preguntas() {
+        lstPreguntas = new ArrayList<>();
+        for(ArrayList<Pregunta> lst: lstMaterias.get(posMateria).getLstOrdenadasxNivel()){
             for(Pregunta p: lst){
-                preguntas.add(p);
+                lstPreguntas.add(p);
             }
         }
-        return preguntas;
     }
     
     @FXML
     public void mostrarPreguntas() {
-        ArrayList<Pregunta> lstpreguntas = preguntas();
+        buscarMateria();
+        preguntas();
+        combo = new ComboBox();
+        Button b = new Button("Eliminar");
+        int cont = 1;
         
-        for(Pregunta p: lstpreguntas){
-            CheckBox check = new CheckBox(p.getEnunciado());
-            preguntasVB.getChildren().add(check);
+        for(Pregunta p: lstPreguntas){
+            preguntasVB.getChildren().add(new Label(cont+". "+p.getEnunciado()));
+            combo.getItems().add(""+cont);
+            cont++;
         }
+        b.setOnAction(eh -> {
+            eliminarPregunta();
+        });
+        
+        HBox contenedor = new HBox(10);
+        contenedor.getChildren().add(combo);
+        contenedor.getChildren().add(b);
+        preguntasVB.getChildren().add(contenedor);
         preguntasVB.setSpacing(10);
     }
     
-    @FXML
-    public void eliminarPreguntas() {
-        for(int i = 0; i<preguntas().size(); i++){
-            CheckBox check = (CheckBox)preguntasVB.getChildren().get(i);
-            
-            if(check.isSelected()){
-                int pos = 0;
-                for(ArrayList<Pregunta> lst: materia.getLstOrdenadasxNivel()){
-                    if(lst.contains(preguntas().get(i))){
-                        materia.getLstOrdenadasxNivel().get(pos).remove(preguntas().get(i));
-                    }
-                    pos++;
+    public void eliminarPregunta() {
+        int posNivel = 0;
+        int numSeleccionado = Integer.parseInt(combo.getValue());
+        int numPregActual = 1;
+        for(ArrayList<Pregunta> lst: lstMaterias.get(posMateria).getLstOrdenadasxNivel()){
+            for(Pregunta p: lst){
+                if(numPregActual == numSeleccionado){
+                    lstMaterias.get(posMateria).getLstOrdenadasxNivel().get(posNivel).remove(p);
+                } else{
+                    numPregActual++;
                 }
             }
+            posNivel++;
         }
+        actualizarMateria();
+        importarMaterias();
         preguntasVB.getChildren().clear();
-        mostrarPreguntas();
+    }
+    
+    public void actualizarMateria(){
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))){
+            out.writeObject(lstMaterias);
+            out.flush();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     
     @FXML
-    private void regresarMenuAnterior(ActionEvent event) throws IOException {
+    public void regresarMenuAnterior() throws IOException {
         App.setRoot("menuAdministrarPregunta");
     }
     

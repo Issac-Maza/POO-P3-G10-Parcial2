@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Reporte implements Serializable{
     private String fecha;
     private String estudianteParticipante;
+    private String estudianteApoyo; 
     private int nivelMaximoAlcanzado;
-    //private int tiempo;
     private String premio;
     private int puntaje;
     private ArrayList<String> comodinesUsados;
@@ -23,6 +23,14 @@ public class Reporte implements Serializable{
     private String tiempoPasados;
     private int numPregAlcanzada;
     private int pregXNivel;
+    
+    public String getEstudianteApoyo() {
+        return estudianteApoyo;
+    }
+
+    public void setEstudianteApoyo(String estudianteApoyo) {
+        this.estudianteApoyo = estudianteApoyo;
+    }
 
     public int getPregXNivel() {
         return pregXNivel;

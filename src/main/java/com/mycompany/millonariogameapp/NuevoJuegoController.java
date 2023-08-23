@@ -84,7 +84,7 @@ public class NuevoJuegoController implements Serializable {
         contadorComodines = 0;
         tiempoSigue = true;
         tiempoI = 60;
-        nombreComodin = "nada";
+        nombreComodin = "";
         boolean50_50 = true;
         booleanLlamada = true;
         booleanGrupo = true;
@@ -412,7 +412,7 @@ public class NuevoJuegoController implements Serializable {
     
     public void deteccionDeComodines(){
         comodinesUsadosJuego.add(nombreComodin);
-        nombreComodin = "nada";
+        nombreComodin = "";
     }
     
     public void creacionPremio(){
@@ -439,6 +439,7 @@ public class NuevoJuegoController implements Serializable {
     
     public void creacionReporte(){
         reporte = new Reporte(fecha(),juego.getParticipante().getNombre(),posNivelActual,premio);
+        reporte.setEstudianteApoyo(juego.getAcompañante().getNombre());
         reporte.setNumPregAlcanzada(numPregActual);
         reporte.setPregXNivel(juego.getPreguntasPorNivel());
         reporte.setContadorComodines(contadorComodines);
