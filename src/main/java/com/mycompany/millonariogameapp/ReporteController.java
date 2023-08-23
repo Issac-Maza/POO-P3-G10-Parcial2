@@ -60,10 +60,7 @@ public class ReporteController implements Serializable {
     
     public void deserializarReportes() {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/reportes.ser"))){
-            Reporte r;
-            while((r = (Reporte)in.readObject()) != null){
-                lstReportes.add(r);
-            }  
+            lstReportes = (ArrayList<Reporte>)in.readObject();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

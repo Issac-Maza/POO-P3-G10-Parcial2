@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import com.mycompany.millonariogameapp.modelo.*;
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * FXML Controller class
@@ -35,6 +36,9 @@ public class MenuInicioController implements Serializable {
     Materia POO = new Materia("002","Programacion Orientada a Objetos",3);
     TerminoAcademico t3 = new TerminoAcademico(2023,03);
     Paralelo P3 = new Paralelo(POO,t3,3);
+    ArrayList<Materia> lstMaterias = new ArrayList<>();
+    ArrayList<Paralelo> lstParalelos = new ArrayList<>();
+    ArrayList<TerminoAcademico> lstTerminos = new ArrayList<>();
 
     /**
      * Initializes the controller class.
@@ -42,6 +46,9 @@ public class MenuInicioController implements Serializable {
 
     public void initialize(){
         cargaPorDefecto(); 
+        lstMaterias.add(POO);
+        lstParalelos.add(P3);
+        lstTerminos.add(t3);
         serializarMateria();
         serializarPreguntas();
         serializarParalelo();
@@ -112,7 +119,7 @@ public class MenuInicioController implements Serializable {
     
     public void serializarMateria() {
         try (ObjectOutputStream out1 = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))) {
-            out1.writeObject(POO);
+            out1.writeObject(lstMaterias);
             out1.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -123,7 +130,7 @@ public class MenuInicioController implements Serializable {
     
     public void serializarTermino() {
         try (ObjectOutputStream out3 = new ObjectOutputStream(new FileOutputStream("archivos/terminos.ser"))) {
-            out3.writeObject(t3);
+            out3.writeObject(lstTerminos);
             out3.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -134,7 +141,7 @@ public class MenuInicioController implements Serializable {
     
     public void serializarParalelo() {
         try (ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream("archivos/paralelos.ser"))) {
-            out2.writeObject(P3);
+            out2.writeObject(lstParalelos);
             out2.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();

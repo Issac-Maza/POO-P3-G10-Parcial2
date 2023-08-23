@@ -72,6 +72,7 @@ public class NuevoJuegoController implements Serializable {
     private int contadorComodines;
     private int segundosPasados;
     private int minutosPasados;
+    private ArrayList<Reporte> lstReportes;
 
     /**
      * Initializes the controller class.
@@ -93,6 +94,7 @@ public class NuevoJuegoController implements Serializable {
         correcto = true;
         premio = "nada";
         posNumPregArray = 0;
+        lstReportes = new ArrayList<>();
         comodinesUsadosJuego = new ArrayList<>();
         deserializarJuego();
         ajustesParaPreguntas();
@@ -106,47 +108,14 @@ public class NuevoJuegoController implements Serializable {
     }
     
     public void tiempo(){
-        class Temporizador extends Thread{
-            @Override
-            public void run(){
-                do{
-                    tiempo.setText(""+tiempoI);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-
-                    if(segundosPasados == 60){
-                        segundosPasados = 0;
-                        minutosPasados++;
-                    } else segundosPasados++;
-                    
-                    tiempoI--; 
-                    System.out.println(tiempoI);
-                    if(tiempoI == 0){
-                        //mostrarAlerta(Alert.AlertType.INFORMATION,"Se acabo el tiempo");
-                        creacionReporte();
-                        serializarReporte();
-                        try {
-                            App.setRoot("menuInicio");
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                    }                 
-                } while(tiempoI > 0 && tiempoSigue);         
-            }
-        }
         Temporizador temp = new Temporizador();
         temp.start();
     }
 
     public void deserializarJuego() {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/juegos.ser"))){
-            Juego j;
-            while((j = (Juego)in.readObject()) != null){
-                juego = j;
-            }  
+            ArrayList<Juego> lstJuegos = (ArrayList<Juego>)in.readObject();
+            juego = lstJuegos.get(lstJuegos.size()-1);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -192,9 +161,7 @@ public class NuevoJuegoController implements Serializable {
                 System.out.println(p.getRespuestaCorrecta());
                 System.out.println("");
             }
-        }
-        
-        
+        }    
     }
     
     public void contestoBien(){
@@ -365,6 +332,7 @@ public class NuevoJuegoController implements Serializable {
             try {
                 tiempoSigue = false;
                 mostrarAlerta(Alert.AlertType.INFORMATION,"Pregunta Incorrecta. Perdiste");
+                deserializarReportes();
                 creacionReporte();
                 serializarReporte();
                 App.setRoot("menuInicio");
@@ -458,6 +426,7 @@ public class NuevoJuegoController implements Serializable {
         b.setOnAction(eh -> {
             try {
                 premio = (String)text.getText().trim();
+                deserializarReportes();
                 creacionReporte();
                 serializarReporte();
                 App.setRoot("menuInicio");
@@ -476,17 +445,30 @@ public class NuevoJuegoController implements Serializable {
         reporte.setTiempoPasados(minutosPasados+":"+segundosPasados);
         reporte.setPuntaje(puntaje);
         reporte.setComodinesUsados(comodinesUsadosJuego);
+        lstReportes.add(reporte);
     }
     
     public void serializarReporte(){
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/reportes.ser"))){
-            out.writeObject(reporte);
+            out.writeObject(lstReportes);
             out.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         } 
+    }
+    
+    public void deserializarReportes(){
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/reportes.ser"))){
+            lstReportes = (ArrayList<Reporte>) in.readObject();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
     
     public String fecha(){
@@ -509,5 +491,38 @@ public class NuevoJuegoController implements Serializable {
     
     public void regresarMenuAnterior(ActionEvent event) throws IOException {
         App.setRoot("menuAdministrarPregunta");
+    }
+    
+    class Temporizador extends Thread{
+        @Override
+        public void run(){
+            do{
+                tiempo.setText(""+tiempoI);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                if(segundosPasados == 60){
+                    segundosPasados = 0;
+                    minutosPasados++;
+                } else segundosPasados++;
+
+                tiempoI--; 
+                System.out.println(tiempoI);
+                if(tiempoI == 0){
+                    //mostrarAlerta(Alert.AlertType.INFORMATION,"Se acabo el tiempo");
+                    deserializarReportes();
+                    creacionReporte();
+                    serializarReporte();
+                    try {
+                        App.setRoot("menuInicio");
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }                 
+            } while(tiempoI > 0 && tiempoSigue);         
+        }
     }
 }

@@ -34,22 +34,15 @@ public class MenuViewQuestionsController implements Serializable {
      */
 
     public void initialize(){
-        try{
-           importarMaterias(); 
-        }
-        catch(Exception e){
-            System.out.println("ERROR");
-        }
-        
+        importarMaterias(); 
     }    
     
     public void importarMaterias() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            Materia m;
-            while((m = (Materia) in.readObject()) != null){
+            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
+            for(Materia m: lstMaterias){
                 materiaCMB.getItems().add(m.getNombre());
             }
-            System.out.println("yes");
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -89,8 +82,8 @@ public class MenuViewQuestionsController implements Serializable {
     public Materia buscarMateria(){
         Materia mVerdadera = new Materia("","",0);        
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            Materia m;
-            while((m = (Materia)in.readObject()) != null){
+            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
+            for(Materia m: lstMaterias){
                 if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
                     mVerdadera = m;
                 }

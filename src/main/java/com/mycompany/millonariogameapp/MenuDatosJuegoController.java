@@ -44,14 +44,17 @@ public class MenuDatosJuegoController implements Serializable {
     private Estudiante jugadorPrincipal;
     private Estudiante jugadorSecundario;
     public Juego juego;
+    private ArrayList<Juego> lstJuegos;
 
     /**
      * Initializes the controller class.
      */
 
     public void initialize() {
+        lstJuegos = new ArrayList<>();
         asignacionTermino();
         if(!termino.getText().equalsIgnoreCase("")){
+            deserializarJuego();
             importarParaleloMateria();
         }
         else{
@@ -69,7 +72,8 @@ public class MenuDatosJuegoController implements Serializable {
     @FXML
     public void asignacionTermino(){
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/terminos.ser"))){
-            terminoSeleccionado = (TerminoAcademico) in.readObject();
+            ArrayList<TerminoAcademico> lstTerminos = (ArrayList<TerminoAcademico>) in.readObject();
+            terminoSeleccionado = lstTerminos.get(0);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -85,8 +89,8 @@ public class MenuDatosJuegoController implements Serializable {
     @FXML
     public void importarParaleloMateria() {   
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"))) {
-            Paralelo p;
-            while((p = (Paralelo)in.readObject()) != null){
+            ArrayList<Paralelo> lstParalelos = (ArrayList<Paralelo>)in.readObject();
+            for(Paralelo p: lstParalelos){
                 if(terminoSeleccionado.equals(p.getTermino())){
                     paraleloMateriaCMB.getItems().add("P"+p.getNumero()+" - "+p.getMateria().getNombre());
                 }
@@ -108,8 +112,8 @@ public class MenuDatosJuegoController implements Serializable {
         String nomMat = paraleloMateria[1];
         
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"))) {
-            Paralelo p;
-            while((p = (Paralelo)in.readObject()) != null){
+            ArrayList<Paralelo> lstParalelos = (ArrayList<Paralelo>)in.readObject();
+            for(Paralelo p: lstParalelos){
                 if((p.getNumero() == numP) && (p.getMateria().getNombre().equalsIgnoreCase(nomMat))){
                     paraleloSeleccionado = p;
                     materiaSeleccionada = p.getMateria();
@@ -236,16 +240,29 @@ public class MenuDatosJuegoController implements Serializable {
     public void creacionJuego(){
         int nivel = Integer.parseInt(numPregxNivel.getText().trim());
         juego = new Juego(terminoSeleccionado,paraleloSeleccionado,materiaSeleccionada,nivel,jugadorPrincipal,jugadorSecundario);
+        lstJuegos.add(juego);
     }
     
     public void serializarJuego() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/juegos.ser"))) {
-            out.writeObject(juego);
+            out.writeObject(lstJuegos);
             out.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         } 
+    }
+    
+    public void deserializarJuego(){
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/juegos.ser"))){
+            lstJuegos = (ArrayList<Juego>) in.readObject();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import com.mycompany.millonariogameapp.modelo.*;
 import java.io.*;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 
@@ -42,19 +43,13 @@ public class MenuAddQuestionsController implements Serializable {
      */
 
     public void initialize() {
-        try{
-            importarMaterias();
-        }
-        catch(Exception e){
-            System.out.println("ERROR");
-        }
-        
+        importarMaterias();     
     }
     
     public void importarMaterias() {     
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            Materia m;
-            while((m = (Materia)in.readObject()) != null){
+            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
+            for(Materia m: lstMaterias){
                 materiaCMB.getItems().add(m.getNombre());
             }
         } catch (FileNotFoundException ex) {
@@ -67,11 +62,10 @@ public class MenuAddQuestionsController implements Serializable {
     }
     
     @FXML
-    public void registrarPregunta() throws Exception{
+    public void registrarPregunta() {
         boolean permiso = condicionNivel();
         Materia materia = buscarMateria();
-        
-        
+
         if(permiso){
             String enunciado = pregunta.getText().trim();
             int nivel = Integer.parseInt(nivelPreg.getText().trim());
@@ -89,11 +83,10 @@ public class MenuAddQuestionsController implements Serializable {
         }else{
             nivelPreg.setText(null);
             mostrarAlerta(Alert.AlertType.ERROR, "Nivel invalido pruebe poner desde el 1 hasta el "+materia.getCantidadNiveles());
-        }
-        
+        }   
     }
     
-    public boolean condicionNivel() throws Exception{
+    public boolean condicionNivel() {
         int nivel = Integer.parseInt(nivelPreg.getText().trim());
         boolean permiso = true;
         Materia m = buscarMateria();
@@ -106,10 +99,10 @@ public class MenuAddQuestionsController implements Serializable {
     }
     
     public Materia buscarMateria() {
-        Materia mVerdadera = new Materia("","",0);
+        Materia mVerdadera = new Materia("","",0);        
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            Materia m;
-            while((m = (Materia)in.readObject()) != null){
+            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
+            for(Materia m: lstMaterias){
                 if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
                     mVerdadera = m;
                 }
@@ -122,7 +115,7 @@ public class MenuAddQuestionsController implements Serializable {
             ex.printStackTrace();
         }
         
-        return mVerdadera;  
+        return mVerdadera; 
     }
     
     @FXML

@@ -51,8 +51,8 @@ public class MenuDeleteQuestionController implements Serializable {
     
     public void importarMaterias() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            Materia m;
-            while((m = (Materia)in.readObject()) != null){
+            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
+            for(Materia m: lstMaterias){
                 materiaCMB.getItems().add(m.getNombre());
             }
         } catch (FileNotFoundException ex) {
@@ -65,10 +65,10 @@ public class MenuDeleteQuestionController implements Serializable {
     }
     
     public Materia buscarMateria() {
-        Materia mVerdadera = new Materia("","",0);
+        Materia mVerdadera = new Materia("","",0);        
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            Materia m;
-            while((m = (Materia)in.readObject()) != null){
+            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
+            for(Materia m: lstMaterias){
                 if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
                     mVerdadera = m;
                 }
@@ -81,7 +81,7 @@ public class MenuDeleteQuestionController implements Serializable {
             ex.printStackTrace();
         }
         
-        return mVerdadera;  
+        return mVerdadera;
     }
     
     public ArrayList<Pregunta> preguntas() {
