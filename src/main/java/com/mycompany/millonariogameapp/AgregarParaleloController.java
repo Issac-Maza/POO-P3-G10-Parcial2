@@ -78,41 +78,27 @@ public class AgregarParaleloController implements Initializable {
                     }
                 }
                 if (existe) {
-                existe();
+                mostrarAlerta("Paralelo Ya Existente","El paralelo ingresado ya existe.",Alert.AlertType.ERROR);
                 }else{
                 selectedMateria.getParalelos().add(pnuevo);
                 comboMaterias.setValue(null);
                 comboTermino.setValue(null);
                 textTerminoAcademico.setText(null);
-                guardado();
+                mostrarAlerta("Confirmación","Un nuevo paralelo ha sido creado.",Alert.AlertType.INFORMATION);
                 }    
             }else{
-                darAlerta();
+                mostrarAlerta("Información No Completada","No se ha elegido ninguna materia",Alert.AlertType.ERROR);
             }
         });
     }
-    private void darAlerta() {
-        Alert alert= new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Alerta de error");
-        alert.setHeaderText("Información No Completada");
-        alert.setContentText("No se ha elegido ninguna materia");
-        alert.showAndWait();
-    }
     
-    private void guardado() {
-        Alert alert= new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Confirmación");
-        alert.setHeaderText("Paralelo Creado");
-        alert.setContentText("Un nuevo paralelo ha sido creado.");
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
-    private void existe() {
-        Alert alert= new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Alerta de error");
-        alert.setHeaderText("Paralelo Ya Existente");
-        alert.setContentText("El paralelo ingresado ya existe.");
-        alert.showAndWait();
-    }    
+       
     
 }
