@@ -13,7 +13,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.NuevoJuegoController">
    <right>
-      <VBox fx:id="preguntasVB" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="189.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="189.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" prefHeight="22.0" prefWidth="347.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" text="Comodines">
                <font>
@@ -26,14 +26,14 @@
                   <Button mnemonicParsing="false" onAction="#comodinLlamada" style="-fx-background-color: yellow; -fx-border-color: black;" text="Llamada" />
                </children>
             </HBox>
-            <VBox alignment="TOP_CENTER" prefHeight="335.0" prefWidth="189.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" />
+            <VBox fx:id="preguntasVB" alignment="CENTER" prefHeight="335.0" prefWidth="189.0" spacing="10.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" />
          </children>
       </VBox>
    </right>
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="pregunta" alignment="CENTER" prefHeight="58.0" prefWidth="411.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" text="Texto" wrapText="true">
+            <Label fx:id="pregunta" alignment="CENTER" prefHeight="58.0" prefWidth="411.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" wrapText="true">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -48,19 +48,19 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="opcionA" mnemonicParsing="false" onAction="#seleccionA" prefHeight="88.0" prefWidth="206.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Button" wrapText="true">
+                  <Button fx:id="opcionA" mnemonicParsing="false" onAction="#seleccionA" prefHeight="88.0" prefWidth="206.0" style="-fx-background-color: yellow; -fx-border-color: black;" wrapText="true">
                      <font>
                         <Font size="10.0" />
                      </font></Button>
-                  <Button fx:id="opcionC" mnemonicParsing="false" onAction="#seleccionC" prefHeight="127.0" prefWidth="206.0" style="-fx-background-color: black; -fx-border-color: yellow;" text="Button" textFill="#e1ff00" wrapText="true" GridPane.rowIndex="1">
+                  <Button fx:id="opcionC" mnemonicParsing="false" onAction="#seleccionC" prefHeight="127.0" prefWidth="206.0" style="-fx-background-color: black; -fx-border-color: yellow;" textFill="#e1ff00" wrapText="true" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font></Button>
-                  <Button fx:id="opcionB" mnemonicParsing="false" onAction="#seleccionB" prefHeight="86.0" prefWidth="205.0" style="-fx-background-color: black; -fx-border-color: yellow;" text="Button" textFill="#fffd00" wrapText="true" GridPane.columnIndex="1">
+                  <Button fx:id="opcionB" mnemonicParsing="false" onAction="#seleccionB" prefHeight="86.0" prefWidth="205.0" style="-fx-background-color: black; -fx-border-color: yellow;" textFill="#fffd00" wrapText="true" GridPane.columnIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font></Button>
-                  <Button fx:id="opcionD" mnemonicParsing="false" onAction="#seleccionD" prefHeight="85.0" prefWidth="205.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Button" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="opcionD" mnemonicParsing="false" onAction="#seleccionD" prefHeight="85.0" prefWidth="205.0" style="-fx-background-color: yellow; -fx-border-color: black;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font></Button>
@@ -80,7 +80,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tiempo" alignment="CENTER" prefHeight="25.0" prefWidth="96.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="text">
+                  <TextField fx:id="tiempo" alignment="CENTER" prefHeight="25.0" prefWidth="96.0" style="-fx-background-color: yellow; -fx-border-color: black;">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>

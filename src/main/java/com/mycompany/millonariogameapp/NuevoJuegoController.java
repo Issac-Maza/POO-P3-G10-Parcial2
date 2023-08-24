@@ -155,13 +155,13 @@ public class NuevoJuegoController implements Serializable {
         }
 
         preguntasParaJuego = lstAjustes;
-        for(ArrayList<Pregunta> lst: preguntasParaJuego){
+       /* for(ArrayList<Pregunta> lst: preguntasParaJuego){
             for(Pregunta p: lst){
                 System.out.println(p.getEnunciado());
                 System.out.println(p.getRespuestaCorrecta());
                 System.out.println("");
             }
-        }    
+        } */   
     }
     
     public void contestoBien(){
@@ -214,11 +214,11 @@ public class NuevoJuegoController implements Serializable {
         else if (p.getPosiblesRespuestas().get(3).equals(p.getRespuestaCorrecta())) literalVerdadero = "d";
         
         if(numPregActual == 0){
-            preguntasVB.getChildren().get(numPregActual).setStyle("-fx-control-inner-background: yellow;");
+            preguntasVB.getChildren().get(numPregActual).setStyle("-fx-background-color: yellow;");
         }
         else{
-            preguntasVB.getChildren().get(numPregActual-1).setStyle("-fx-control-inner-background: green;");
-            preguntasVB.getChildren().get(numPregActual).setStyle("-fx-control-inner-background: yellow;");
+            preguntasVB.getChildren().get(numPregActual-1).setStyle("-fx-background-color: lightGreen;");
+            preguntasVB.getChildren().get(numPregActual).setStyle("-fx-background-color: yellow;");
         }
     }
     
