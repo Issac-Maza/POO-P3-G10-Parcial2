@@ -18,7 +18,7 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="fechasVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <VBox fx:id="fechasVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
                <children>
                   <Label alignment="CENTER" text="Fecha">
                      <font>
@@ -27,7 +27,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="participantesVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <VBox fx:id="participantesVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
                <children>
                   <Label text="Participante">
                      <font>
@@ -36,7 +36,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="nivelMaxVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <VBox fx:id="nivelMaxVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
                <children>
                   <Label text="Nivel Max">
                      <font>
@@ -45,7 +45,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="tiempoVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <VBox fx:id="tiempoVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
                <children>
                   <Label text="Tiempo">
                      <font>
@@ -54,7 +54,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="pregAlcVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <VBox fx:id="pregAlcVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
                <children>
                   <Label text="Preg. Cont.">
                      <font>
@@ -63,7 +63,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="contComodinVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <VBox fx:id="contComodinVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
                <children>
                   <Label text="Comodin">
                      <font>
@@ -71,7 +71,7 @@
                      </font></Label>
                </children>
             </VBox>
-            <VBox fx:id="premiosVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <VBox fx:id="premiosVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
                <children>
                   <Label text="Premio">
                      <font>

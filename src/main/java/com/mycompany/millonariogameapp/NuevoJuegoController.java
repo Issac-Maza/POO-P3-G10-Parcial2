@@ -386,7 +386,7 @@ public class NuevoJuegoController implements Serializable {
     public String fecha(){
         Calendar c = Calendar.getInstance();
         String dia = Integer.toString(c.get(Calendar.DATE));
-        String mes = Integer.toString(c.get(Calendar.MONTH));
+        String mes = Integer.toString(c.get(Calendar.MONTH)+1);
         String año = Integer.toString(c.get(Calendar.YEAR));
         
         return dia+"/"+mes+"/"+año;
