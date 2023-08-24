@@ -7,6 +7,7 @@ import com.mycompany.millonariogameapp.modelo.Paralelo;
 import com.mycompany.millonariogameapp.modelo.Pregunta;
 import com.mycompany.millonariogameapp.modelo.Reporte;
 import com.mycompany.millonariogameapp.modelo.TerminoAcademico;
+import java.io.FileInputStream;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 /**
@@ -22,20 +24,9 @@ import java.util.ArrayList;
 public class App extends Application {
     
     private static Scene scene;
-    public static ArrayList<Materia> materias;
-    public static ArrayList<Paralelo> paralelos;
-    public static ArrayList<Pregunta> preguntas;
-    public static ArrayList<Estudiante> estudiantes;
-    public static ArrayList<Juego> juegos;
-    public static ArrayList<Reporte> reportes;
-    public static ArrayList<TerminoAcademico> terminosAcademico;
-    public static String rutaMateria = "archivos/materias.txt";
-    public static String rutaParalelo = "archivos/paralelos.txt";
-    public static String rutaPregunta = "archivos/preguntas.txt";
-    public static String rutaEstudiante = "archivos/";
-    public static String rutaJuego = "archivos/juegos.txt";
-    public static String rutaReporte = "archivos/reportes.txt";
-    public static String rutaTerminoAcademico = "archivos/terminoAcademico.txt";
+    public static ArrayList<Materia> materias = new ArrayList<>();
+    public static ArrayList<Paralelo> paralelos= new ArrayList<>();   
+    public static ArrayList<TerminoAcademico> terminosAcademico= new ArrayList<>();
 
     /**
      * @return the scene
@@ -74,5 +65,46 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
+    
+    public void desealarizarMaterias(){
+        try (FileInputStream fileIn = new FileInputStream("archivos/materias.ser");
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            App.materias = (ArrayList<Materia>) in.readObject();
+            for(Materia m: App.materias ){
+                System.out.println(m);
+            }
+            
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void desealarizarTermino(){
+        try (FileInputStream fileIn = new FileInputStream("archivos/terminos.ser");
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            App.terminosAcademico = (ArrayList<TerminoAcademico>) in.readObject();
+            for(TerminoAcademico m: App.terminosAcademico ){
+                System.out.println(m);
+            }
+            
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void desealarizarParalelo(){
+        try (FileInputStream fileIn = new FileInputStream("archivos/paralelos.ser");
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            App.paralelos = (ArrayList<Paralelo>) in.readObject();
+            for(Paralelo m: App.paralelos ){
+                System.out.println(m);
+            }
+            
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
 
 }

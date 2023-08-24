@@ -16,9 +16,6 @@
       <Button fx:id="btnGuardar" layoutX="43.0" layoutY="331.0" mnemonicParsing="false" text="Guardar" />
       <ComboBox fx:id="comboMaterias" layoutX="163.0" layoutY="79.0" prefHeight="26.0" prefWidth="234.0" />
       <ComboBox fx:id="comboTermino" layoutX="163.0" layoutY="138.0" prefHeight="26.0" prefWidth="234.0" />
-      <Label layoutX="23.0" layoutY="248.0" text="Ruta de Archivo: " />
-      <Button fx:id="btnCargarArchivo" layoutX="163.0" layoutY="244.0" mnemonicParsing="false" text="Elegir Archivo" />
-      <TextField fx:id="labelRutaArchivo" layoutX="252.0" layoutY="244.0" />
       <Label layoutX="256.0" layoutY="33.0" text="Agregar Paralelo" />
    </children>
 </AnchorPane>

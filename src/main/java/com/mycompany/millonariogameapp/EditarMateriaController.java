@@ -71,7 +71,7 @@ public class EditarMateriaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         materias = FXCollections.observableArrayList();
         
-        File file = new File(App.rutaMateria);
+        File file = new File("archivos/materias.ser");
         if (file.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
                 materias.addAll((List<Materia>) ois.readObject());
@@ -141,6 +141,7 @@ public class EditarMateriaController implements Initializable {
 
     @FXML
     private void editarMateria(ActionEvent event) {
+        ArrayList<Materia> lista = (ArrayList<Materia>) materias.stream().collect(Collectors.toList());
         Materia mat = this.tablaMateria.getSelectionModel().getSelectedItem();
         
         if(mat == null){
@@ -165,10 +166,12 @@ public class EditarMateriaController implements Initializable {
                 
                 Materia aux = new Materia(codigo,nombre,nivel);
                 
-                if(App.materias.contains(aux)){
+                if(!lista.contains(aux)){
                     mat.setCodigo(codigo);
                     mat.setNombre(nombre);
                     mat.setCantidadNiveles(nivel);
+                    int indice = App.materias.indexOf(aux);
+                    App.materias.set(indice, aux);
                     
                     this.tablaMateria.refresh();
                     
@@ -195,13 +198,14 @@ public class EditarMateriaController implements Initializable {
     private void guardarListaEnArchivo(ObservableList<Materia> listaMaterias) {
         ArrayList<Materia> lista = (ArrayList<Materia>) listaMaterias.stream().collect(Collectors.toList());
         
-        try (ObjectOutputStream out  = new ObjectOutputStream(new FileOutputStream(App.rutaMateria))) {
-            out.writeObject(lista);
-            App.materias = lista;
+        
+        try (ObjectOutputStream out  = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))) {
+            out.writeObject(App.materias);
+            
             out.close();
             
 
-            System.out.println("Lista de materias guardada exitosamente en " + App.rutaMateria);
+            System.out.println("Lista de materias guardada exitosamente en " + "archivos/materias.ser");
         } catch (IOException e) {
             System.out.println("Error al guardar la lista de materias en el archivo: " + e.getMessage());
         }

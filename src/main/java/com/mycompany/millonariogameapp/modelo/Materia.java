@@ -51,14 +51,14 @@ public class Materia implements Serializable{
         this.cantidadNiveles = cantidadNiveles;
     }
     
-    public boolean equals(Object obj){
-        if( this == obj){
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if(obj != null || getClass() == obj.getClass()){
-            Materia subject = (Materia)obj;
-            return this.codigo == subject.codigo && this.nombre == subject.nombre;
-        }else{
+        if (obj != null && getClass() == obj.getClass()) {
+            Materia subject = (Materia) obj;
+            return this.codigo.equals(subject.codigo) && this.nombre.equals(subject.nombre);
+        } else {
             return false;
         }
     }
@@ -92,4 +92,11 @@ public class Materia implements Serializable{
     public void addPreguntas(ArrayList<Pregunta> preguntas){
         lstOrdenadasxNivel.add(preguntas);
     }
+
+    @Override
+    public String toString() {
+        return codigo +"_"+ nombre ;
+    }
+    
+    
 }

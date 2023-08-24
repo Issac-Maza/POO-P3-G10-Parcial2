@@ -71,7 +71,7 @@ public class IngresarMateriaController implements Initializable {
         materias = FXCollections.observableArrayList();
         
         
-        File file = new File(App.rutaMateria);
+        File file = new File("archivos/materias.ser");
         if (file.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
                 materias.addAll((List<Materia>) ois.readObject());
@@ -140,7 +140,8 @@ public class IngresarMateriaController implements Initializable {
         Materia materiaPD = new Materia(codigo,nombre,nivel);
         
         if(!this.materias.contains(materiaPD)){
-            this.materias.add(materiaPD);
+            App.materias.add(materiaPD);
+            this.materias.add(materiaPD);   
             this.tablaMateria.setItems(materias);
             mostrarAlerta("Materia ingresada", "La materia ha sido ingresada exitosamente.", Alert.AlertType.INFORMATION);
             
@@ -188,14 +189,15 @@ public class IngresarMateriaController implements Initializable {
     
     private void guardarListaEnArchivo(ObservableList<Materia> listaMaterias) {
         ArrayList<Materia> lista = (ArrayList<Materia>) listaMaterias.stream().collect(Collectors.toList());
+        App.materias = lista;
         
-        try (ObjectOutputStream out  = new ObjectOutputStream(new FileOutputStream(App.rutaMateria))) {
-            out.writeObject(lista);
-            App.materias = lista;
+        try (ObjectOutputStream out  = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))) {
+            out.writeObject(App.materias);
+            
             out.close();
             
 
-            System.out.println("Lista de materias guardada exitosamente en " + App.rutaMateria);
+            System.out.println("Lista de materias guardada exitosamente en " + "materias.ser");
         } catch (IOException e) {
             System.out.println("Error al guardar la lista de materias en el archivo: " + e.getMessage());
         }

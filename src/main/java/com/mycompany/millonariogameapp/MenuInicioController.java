@@ -33,7 +33,7 @@ public class MenuInicioController implements Serializable {
     @FXML
     private Button btnJuego;
     
-    Materia POO = new Materia("002","Programacion Orientada a Objetos",3);
+    Materia POO = new Materia("002","Programacion Orientada a Objetos",3);   
     TerminoAcademico t3 = new TerminoAcademico(2023,03);
     Paralelo P3 = new Paralelo(POO,t3,3);
     ArrayList<Materia> lstMaterias = new ArrayList<>();
@@ -45,12 +45,17 @@ public class MenuInicioController implements Serializable {
      */
 
     public void initialize(){
+        cargaPorDefecto();
+        App.materias.add(POO);
+        App.paralelos.add(P3);
+        App.terminosAcademico.add(t3);
         
+           
     }
     
     @FXML
     public void resetear(){
-        cargaPorDefecto(); 
+        cargaPorDefecto();       
         lstMaterias.add(POO);
         lstParalelos.add(P3);
         lstTerminos.add(t3);
@@ -124,8 +129,10 @@ public class MenuInicioController implements Serializable {
     }
     
     public void serializarMateria() {
+        
         try (ObjectOutputStream out1 = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))) {
-            out1.writeObject(lstMaterias);
+            
+            out1.writeObject(App.materias);
             out1.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -135,8 +142,9 @@ public class MenuInicioController implements Serializable {
     }
     
     public void serializarTermino() {
+        
         try (ObjectOutputStream out3 = new ObjectOutputStream(new FileOutputStream("archivos/terminos.ser"))) {
-            out3.writeObject(lstTerminos);
+            out3.writeObject(App.terminosAcademico);
             out3.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -146,8 +154,9 @@ public class MenuInicioController implements Serializable {
     }
     
     public void serializarParalelo() {
+        
         try (ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream("archivos/paralelos.ser"))) {
-            out2.writeObject(lstParalelos);
+            out2.writeObject(App.paralelos);
             out2.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -157,14 +166,18 @@ public class MenuInicioController implements Serializable {
     }
     
     public void serializarPreguntas() {
-        try (ObjectOutputStream out0 = new ObjectOutputStream(new FileOutputStream("archivos/"+POO.getCodigo()+".ser"))) {
-            out0.writeObject(POO.getLstOrdenadasxNivel());
-            out0.flush();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        for(Materia mate : App.materias){
+            try (ObjectOutputStream out0 = new ObjectOutputStream(new FileOutputStream("archivos/"+mate.getCodigo()+".ser"))) {
+                out0.writeObject(POO.getLstOrdenadasxNivel());
+                out0.flush();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            
         }
+        
     }
 
     @FXML
