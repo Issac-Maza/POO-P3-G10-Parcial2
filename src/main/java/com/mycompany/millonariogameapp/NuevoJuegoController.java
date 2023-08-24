@@ -48,7 +48,7 @@ public class NuevoJuegoController implements Serializable {
     @FXML
     private HBox contenedorPremio;
     @FXML
-    private Label tiempo;
+    private TextField tiempo;
     
     private Juego juego;
     private ArrayList<ArrayList<Pregunta>> preguntasParaJuego;
@@ -67,7 +67,7 @@ public class NuevoJuegoController implements Serializable {
     private boolean booleanGrupo;
     private String nombreComodin;
     private ArrayList<String> comodinesUsadosJuego;
-    private int tiempoI;
+    public int tiempoI;
     private boolean tiempoSigue;
     private int contadorComodines;
     private int segundosPasados;
@@ -221,95 +221,6 @@ public class NuevoJuegoController implements Serializable {
             preguntasVB.getChildren().get(numPregActual).setStyle("-fx-control-inner-background: yellow;");
         }
     }
-    
-    /*public void programaPrincipal2(){
-        for(ArrayList<Pregunta> arrayNivel:preguntasParaJuego){
-            if(correcto && noTerminado){
-                for(Pregunta p: arrayNivel){
-                    if(correcto){
-                        preguntaActual = p;
-                        cambioDePregunta2(p);
-                        int i = 60;
-                        for(i = 60; i>0; i--){
-                            tiempo.setText(""+i);
-                            try{
-                                if(correcto && i>0){
-                                   Thread.sleep(1000);
-                                }
-                                else{
-                                    mostrarAlerta(Alert.AlertType.INFORMATION,"Pregunta Incorrecta. Perdiste");
-                                    creacionReporte();
-                                    serializarReporte();
-                                    App.setRoot("menuInicio");
-                                }
-
-                            } catch (InterruptedException ex) {
-                                ex.printStackTrace();
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                        
-                        
-                        class Temporizador extends Thread{
-                            boolean tiempoAgotado = false;
-                            @Override
-                            public void run(){
-                                int i;
-                                for(i = 60; i>0; i--){
-                                    if(correcto){
-                                        tiempo.setText(""+i);
-                                        try{
-                                            Thread.sleep(1000);
-                                        } catch (InterruptedException ex) {
-                                            ex.printStackTrace();
-                                        }
-                                    }   
-                                }
-                                
-                                if(i == 0) tiempoAgotado = true;
-                            }
-                        }
-                        
-                        Temporizador temp = new Temporizador();
-                        temp.start();
-                        
-                        if(!correcto){
-                            try {
-                                mostrarAlerta(Alert.AlertType.INFORMATION,"Pregunta Incorrecta. Perdiste");
-                                creacionReporte();
-                                serializarReporte();
-                                App.setRoot("menuInicio");
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                        if(temp.tiempoAgotado){
-                            try {
-                                correcto = false;
-                                mostrarAlerta(Alert.AlertType.INFORMATION,"Se te acabo el tiempo. Perdiste");
-                                creacionReporte();
-                                serializarReporte();
-                                App.setRoot("menuInicio");
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-                            }
-                        } else {
-                            numPregActual++;
-                            puntaje += (nivelActual*10); 
-                        }
-                    } 
-                }
-            }
-            
-            if((numPregActual == numPregMax) && correcto){
-                mostrarAlerta(Alert.AlertType.INFORMATION,"GANASTE!!!!! \n Ahora el Profe eligira el premio");
-                creacionPremio();
-            } else{
-                nivelActual++;
-            }
-        }
-    }*/
     
     public void programaPrincipal3(){
         if(correcto && numPregMax != numPregActual){
@@ -498,7 +409,7 @@ public class NuevoJuegoController implements Serializable {
         @Override
         public void run(){
             do{
-                tiempo.setText(""+tiempoI);
+                tiempo.setText(String.valueOf(tiempoI));
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
@@ -511,9 +422,8 @@ public class NuevoJuegoController implements Serializable {
                 } else segundosPasados++;
 
                 tiempoI--; 
-                System.out.println(tiempoI);
+                //System.out.println(tiempoI);
                 if(tiempoI == 0){
-                    //mostrarAlerta(Alert.AlertType.INFORMATION,"Se acabo el tiempo");
                     deserializarReportes();
                     creacionReporte();
                     serializarReporte();

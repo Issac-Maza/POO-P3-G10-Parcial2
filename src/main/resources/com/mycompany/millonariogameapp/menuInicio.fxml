@@ -45,4 +45,7 @@
          </children>
       </VBox>
    </center>
+   <bottom>
+      <Button mnemonicParsing="false" onAction="#resetear" text="Resetear" BorderPane.alignment="CENTER_RIGHT" />
+   </bottom>
 </BorderPane>

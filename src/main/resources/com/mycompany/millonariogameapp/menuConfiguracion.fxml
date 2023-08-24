@@ -33,7 +33,7 @@
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnAdmPregunta" mnemonicParsing="false" onAction="#mostrarMenuPregunta" prefHeight="42.0" prefWidth="193.0" text="Administrar peguntas">
+            <Button fx:id="btnAdmPregunta" mnemonicParsing="false" onAction="#mostrarMenuPregunta" prefHeight="42.0" prefWidth="193.0" text="Administrar preguntas">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>

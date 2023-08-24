@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -86,6 +87,7 @@ public class MenuDeleteQuestionController implements Serializable {
     
     @FXML
     public void mostrarPreguntas() {
+        preguntasVB.getChildren().clear();
         buscarMateria();
         preguntas();
         combo = new ComboBox();
@@ -113,9 +115,10 @@ public class MenuDeleteQuestionController implements Serializable {
         int numSeleccionado = Integer.parseInt(combo.getValue());
         int numPregActual = 1;
         for(ArrayList<Pregunta> lst: lstMaterias.get(posMateria).getLstOrdenadasxNivel()){
-            for(Pregunta p: lst){
+            for(Pregunta p: lst) {
                 if(numPregActual == numSeleccionado){
                     lstMaterias.get(posMateria).getLstOrdenadasxNivel().get(posNivel).remove(p);
+                    System.out.println("Encontrado");
                 } else{
                     numPregActual++;
                 }
@@ -123,8 +126,7 @@ public class MenuDeleteQuestionController implements Serializable {
             posNivel++;
         }
         actualizarMateria();
-        importarMaterias();
-        preguntasVB.getChildren().clear();
+        importarMaterias(); 
     }
     
     public void actualizarMateria(){

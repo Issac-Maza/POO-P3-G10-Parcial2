@@ -37,6 +37,9 @@ public class MenuAddQuestionsController implements Serializable {
     private TextField rIncorrecta_2;
     @FXML
     private TextField rIncorrecta_3;
+    
+    private ArrayList<Materia> lstMaterias;
+    private int posMateria;
 
     /**
      * Initializes the controller class.
@@ -48,7 +51,7 @@ public class MenuAddQuestionsController implements Serializable {
     
     public void importarMaterias() {     
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
+            lstMaterias = (ArrayList<Materia>)in.readObject();
             for(Materia m: lstMaterias){
                 materiaCMB.getItems().add(m.getNombre());
             }
@@ -63,8 +66,8 @@ public class MenuAddQuestionsController implements Serializable {
     
     @FXML
     public void registrarPregunta() {
+        buscarMateria();
         boolean permiso = condicionNivel();
-        Materia materia = buscarMateria();
 
         if(permiso){
             String enunciado = pregunta.getText().trim();
@@ -76,46 +79,45 @@ public class MenuAddQuestionsController implements Serializable {
             
             Pregunta preg = new Pregunta(enunciado,nivel,respC,respI1,respI2,respI3);
             
-            materia.getLstOrdenadasxNivel().get(nivel-1).add(preg);
+            lstMaterias.get(posMateria).getLstOrdenadasxNivel().get(nivel-1).add(preg);
             
             mostrarAlerta(Alert.AlertType.INFORMATION,"La datos se ha guardado correctamente");
+            actualizarMateria();
             borrar();   
         }else{
             nivelPreg.setText(null);
-            mostrarAlerta(Alert.AlertType.ERROR, "Nivel invalido pruebe poner desde el 1 hasta el "+materia.getCantidadNiveles());
+            mostrarAlerta(Alert.AlertType.ERROR, "Nivel invalido pruebe poner desde el 1 hasta el "+lstMaterias.get(posMateria).getCantidadNiveles());
         }   
     }
     
     public boolean condicionNivel() {
         int nivel = Integer.parseInt(nivelPreg.getText().trim());
         boolean permiso = true;
-        Materia m = buscarMateria();
 
-        if(nivel > m.getCantidadNiveles() || nivel < 1){
+        if(nivel > lstMaterias.get(posMateria).getCantidadNiveles() || nivel < 1){
             permiso = false;
         }
         
         return permiso;
     }
     
-    public Materia buscarMateria() {
-        Materia mVerdadera = new Materia("","",0);        
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
-            ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
-            for(Materia m: lstMaterias){
-                if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())){
-                    mVerdadera = m;
-                }
-            }
+    public void buscarMateria() {
+        int cont = 0;
+        for(Materia m: lstMaterias){
+            if(m.getNombre().equalsIgnoreCase((String)materiaCMB.getValue())) posMateria = cont;
+            cont++;
+        }
+    }
+    
+    public void actualizarMateria(){
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))){
+            out.writeObject(lstMaterias);
+            out.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
         }
-        
-        return mVerdadera; 
     }
     
     @FXML

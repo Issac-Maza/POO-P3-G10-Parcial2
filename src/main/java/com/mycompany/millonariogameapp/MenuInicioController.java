@@ -45,6 +45,11 @@ public class MenuInicioController implements Serializable {
      */
 
     public void initialize(){
+        
+    }
+    
+    @FXML
+    public void resetear(){
         cargaPorDefecto(); 
         lstMaterias.add(POO);
         lstParalelos.add(P3);
@@ -53,7 +58,7 @@ public class MenuInicioController implements Serializable {
         serializarPreguntas();
         serializarParalelo();
         serializarTermino();
-    }    
+    }
 
     @FXML
     private void mostrarMenuConfiguraciones(ActionEvent event) throws IOException{
@@ -105,16 +110,17 @@ public class MenuInicioController implements Serializable {
         POO.getLstOrdenadasxNivel().get(2).add(p8_POO);
         POO.getLstOrdenadasxNivel().get(2).add(p9_POO);
         
-        P3.getEstudiantes().add(new Estudiante("202202552","LINO INDACOCHEA STEVEN MOISES","stemlino@espol.edu.ec"));
-        P3.getEstudiantes().add(new Estudiante("202001244","MAZA PUNINE ISSAC ALEXANDER","issamaza@espol.edu.ec"));
-        P3.getEstudiantes().add(new Estudiante("202203428","ROMERO ALMEIDA EMILIO JOSE","emjorome@espol.edu.ec"));
-        P3.getEstudiantes().add(new Estudiante("202104816","AZU PERLAZA NICOLE FERNANDA","nfazu@espol.edu.ec"));
-        P3.getEstudiantes().add(new Estudiante("202010278","ESPINOZA PINELA ANGELO ALEXANDER","angepine@espol.edu.ec"));
-        P3.getEstudiantes().add(new Estudiante("202109328","BASILIO ACEBO DANIELA MILENA","dmbasili@espol.edu.ec"));
-        P3.getEstudiantes().add(new Estudiante("202208260","ZARUMA GAME JOSHUA ANDRES","jazaruma@espol.edu.ec"));
-        P3.getEstudiantes().add(new Estudiante("202111589","RIVAS PINCAY EMMANUEL GERARDO","egrivas@espol.edu.ec"));
-        P3.getEstudiantes().add(new Estudiante("202107645","VARGAS ISA GENESIS DAYANNA","gdvargas@espol.edu.ec"));
-        P3.getEstudiantes().add(new Estudiante("202110136","ACELDO TORRES MARIA GRAZIA","maactorr@espol.edu.ec"));    
+        try(BufferedReader bf = new BufferedReader(new FileReader("archivos/estudiantes.txt"))){
+            String linea;
+            while((linea = bf.readLine()) != null){
+                String[] datos = linea.split(",");
+                P3.getEstudiantes().add(new Estudiante(datos[0],datos[1],datos[2]));
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
     }
     
     public void serializarMateria() {
@@ -160,8 +166,6 @@ public class MenuInicioController implements Serializable {
             ex.printStackTrace();
         }
     }
-    
-    
 
     @FXML
     private void salirDelAplicacion(ActionEvent event) throws IOException{
@@ -177,5 +181,4 @@ public class MenuInicioController implements Serializable {
         Platform.exit();
         System.exit(0);
     }
-    
 }
