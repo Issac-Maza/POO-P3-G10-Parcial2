@@ -18,6 +18,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * FXML Controller class
@@ -36,6 +38,10 @@ public class AgregarParaleloController implements Initializable {
     private Button btnGuardar;
     @FXML
     private ComboBox<TerminoAcademico> comboTermino;
+    @FXML
+    private Button btnCargarArchivo;
+    @FXML
+    private TextField labelRutaArchivo;
 
     /**
      * Initializes the controller class.
@@ -88,6 +94,23 @@ public class AgregarParaleloController implements Initializable {
                 }    
             }else{
                 mostrarAlerta("Información No Completada","No se ha elegido ninguna materia",Alert.AlertType.ERROR);
+            }
+        });
+        
+        btnCargarArchivo.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Seleccionar archivo de estudiantes");
+            fileChooser.getExtensionFilters().add(new ExtensionFilter("Archivos CSV", "*.csv"));
+            
+            // Mostrar el diálogo de selección de archivo
+            java.io.File selectedFile = fileChooser.showOpenDialog(null);
+            
+            if (selectedFile != null) {
+                String rutaArchivo = selectedFile.getPath();
+                labelRutaArchivo.setText(rutaArchivo);
+
+                // Aquí puedes copiar el archivo a la ruta definida usando la clase Files
+                // Por ejemplo: Files.copy(selectedFile.toPath(), Paths.get(rutaDefinida, nombreArchivo));
             }
         });
     }

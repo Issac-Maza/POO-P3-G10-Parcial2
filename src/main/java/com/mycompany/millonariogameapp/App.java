@@ -29,13 +29,13 @@ public class App extends Application {
     public static ArrayList<Juego> juegos;
     public static ArrayList<Reporte> reportes;
     public static ArrayList<TerminoAcademico> terminosAcademico;
-    public static String rutaMateria = "src/main/java/archivos/materias.txt";
-    public static String rutaParalelo = "src/main/java/archivos/paralelos.txt";
-    public static String rutaPregunta = "src/main/java/archivos/preguntas.txt";
-    public static String rutaEstudiante = "src/main/java/archivos/";
-    public static String rutaJuego = "src/main/java/archivos/juegos.txt";
-    public static String rutaReporte = "src/main/java/archivos/reportes.txt";
-    public static String rutaTerminoAcademico = "src/main/java/archivos/terminoAcademico.txt";
+    public static String rutaMateria = "archivos/materias.txt";
+    public static String rutaParalelo = "archivos/paralelos.txt";
+    public static String rutaPregunta = "archivos/preguntas.txt";
+    public static String rutaEstudiante = "archivos/";
+    public static String rutaJuego = "archivos/juegos.txt";
+    public static String rutaReporte = "archivos/reportes.txt";
+    public static String rutaTerminoAcademico = "archivos/terminoAcademico.txt";
 
     /**
      * @return the scene

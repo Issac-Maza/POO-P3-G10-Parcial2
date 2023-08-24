@@ -119,7 +119,7 @@ public class EditarMateriaController implements Initializable {
             try {
                 guardarListaEnArchivo(materias);
                 
-                App.setRoot("menuConfiguracion");
+                App.setRoot("menuMateriaYParalelo");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

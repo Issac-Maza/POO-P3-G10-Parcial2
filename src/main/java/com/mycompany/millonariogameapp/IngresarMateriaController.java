@@ -29,7 +29,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -71,6 +70,7 @@ public class IngresarMateriaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         materias = FXCollections.observableArrayList();
         
+        
         File file = new File(App.rutaMateria);
         if (file.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
@@ -80,8 +80,7 @@ public class IngresarMateriaController implements Initializable {
             }
         }
         
-        
-        
+
         tablaMateria.setItems(materias);
         
         this.columCodigo.setCellValueFactory(new PropertyValueFactory("codigo"));
@@ -116,16 +115,6 @@ public class IngresarMateriaController implements Initializable {
             return new ReadOnlyStringWrapper(respuesta);
         });
         // TODO
-        
-        btnVolver.setOnAction(eh->{
-            try {
-                guardarListaEnArchivo(materias);
-                
-                App.setRoot("menuConfiguracion");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
     }    
 
     @FXML
@@ -133,13 +122,20 @@ public class IngresarMateriaController implements Initializable {
         String codigo = textfieldcodigo.getText();
         String nombre = textfieldNombre.getText();
         String nivelText = textfieldNivel.getText();
-        Integer nivel = Integer.parseInt(textfieldNivel.getText());
+        //Integer nivel = Integer.parseInt(txtNivel.getText());
         
         if (codigo.isEmpty() || nombre.isEmpty() || nivelText.isEmpty()) {
             mostrarAlerta("Campos incompletos", "Por favor complete todos los campos.", Alert.AlertType.ERROR);
             return; // Sale del método sin guardar la materia
         }
 
+        int nivel;
+        try {
+            nivel = Integer.parseInt(textfieldNivel.getText());
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Formato incorrecto", "El nivel debe ser un número entero.", Alert.AlertType.ERROR);
+            return; // Sale del método sin guardar la materia
+        }
         
         Materia materiaPD = new Materia(codigo,nombre,nivel);
         
@@ -148,13 +144,27 @@ public class IngresarMateriaController implements Initializable {
             this.tablaMateria.setItems(materias);
             mostrarAlerta("Materia ingresada", "La materia ha sido ingresada exitosamente.", Alert.AlertType.INFORMATION);
             
+            
+            
+            textfieldcodigo.clear();
+            textfieldNombre.clear();
+            textfieldNivel.clear();
+            
         }else{
-            mostrarAlerta("Ya existe esa materia", "La materia que ha ingresado ya se registro.", Alert.AlertType.WARNING);
+            mostrarAlerta("Materia existente", "La materia ya existe en el sistema.", Alert.AlertType.ERROR);
+            
+            textfieldcodigo.clear();
+            textfieldNombre.clear();
+            textfieldNivel.clear();
+            return;
         }
+        
+        
+        /*btnGuardar.setOnAction(e -> {
+            
+        });*/
         // Limpiar los campos del formulario
-        textfieldcodigo.clear();
-        textfieldNombre.clear();
-        textfieldNivel.clear();
+        
     }
     
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
@@ -163,6 +173,17 @@ public class IngresarMateriaController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+    
+    
+
+    @FXML
+    private void cerrarPrograma(ActionEvent event) throws IOException {
+        
+        guardarListaEnArchivo(materias);
+
+        App.setRoot("menuMateriaYParalelo");
+  
     }
     
     private void guardarListaEnArchivo(ObservableList<Materia> listaMaterias) {

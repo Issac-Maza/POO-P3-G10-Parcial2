@@ -9,12 +9,16 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.AgregarParaleloController">
    <children>
       <Label layoutX="48.0" layoutY="83.0" text="Materia" />
-      <Label layoutX="15.0" layoutY="164.0" text="Termino Academico" />
-      <Label layoutX="47.0" layoutY="238.0" text="Parelelo" />
-      <TextField fx:id="textTerminoAcademico" layoutX="163.0" layoutY="233.0" prefHeight="26.0" prefWidth="150.0" />
+      <Label layoutX="14.0" layoutY="142.0" text="Termino Academico" />
+      <Label layoutX="47.0" layoutY="191.0" text="Parelelo" />
+      <TextField fx:id="textTerminoAcademico" layoutX="163.0" layoutY="195.0" prefHeight="26.0" prefWidth="234.0" />
       <Button fx:id="btnVolver" layoutX="43.0" layoutY="29.0" mnemonicParsing="false" text="Volver" />
       <Button fx:id="btnGuardar" layoutX="43.0" layoutY="331.0" mnemonicParsing="false" text="Guardar" />
-      <ComboBox fx:id="comboMaterias" layoutX="163.0" layoutY="79.0" prefWidth="150.0" />
-      <ComboBox fx:id="comboTermino" layoutX="163.0" layoutY="160.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboMaterias" layoutX="163.0" layoutY="79.0" prefHeight="26.0" prefWidth="234.0" />
+      <ComboBox fx:id="comboTermino" layoutX="163.0" layoutY="138.0" prefHeight="26.0" prefWidth="234.0" />
+      <Label layoutX="23.0" layoutY="248.0" text="Ruta de Archivo: " />
+      <Button fx:id="btnCargarArchivo" layoutX="163.0" layoutY="244.0" mnemonicParsing="false" text="Elegir Archivo" />
+      <TextField fx:id="labelRutaArchivo" layoutX="252.0" layoutY="244.0" />
+      <Label layoutX="256.0" layoutY="33.0" text="Agregar Paralelo" />
    </children>
 </AnchorPane>

@@ -45,17 +45,17 @@ public class MenuMateriaYParaleloController implements Initializable {
 
     @FXML
     private void editarMateria(ActionEvent event) throws IOException {
-        App.setRoot("menuConfiguracion");
+        App.setRoot("editarMateria");
     }
 
     @FXML
     private void addParalelo(ActionEvent event) throws IOException {
-        App.setRoot("menuConfiguracion");
+        App.setRoot("agregarParalelo");
     }
 
     @FXML
     private void deleteParalelo(ActionEvent event) throws IOException {
-        App.setRoot("menuConfiguracion");
+        App.setRoot("eliminarParalelo");
     }
 
     @FXML
