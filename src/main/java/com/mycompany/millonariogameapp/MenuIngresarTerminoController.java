@@ -16,6 +16,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.util.Calendar;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 /**
@@ -24,7 +26,6 @@ import javafx.scene.control.TextField;
  * @author USUARIO
  */
 public class MenuIngresarTerminoController implements Initializable {
-
 
     @FXML
     private TextField txtAnio;
@@ -39,7 +40,7 @@ public class MenuIngresarTerminoController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    static ArrayList<TerminoAcademico> lstTerminos= new ArrayList<>();
+    static ObservableList<TerminoAcademico> termMostrar= FXCollections.observableArrayList();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -54,8 +55,8 @@ public class MenuIngresarTerminoController implements Initializable {
             boolean bool=validarAnio(anio,numero);
             if(bool){
                 TerminoAcademico t= new TerminoAcademico(anio,numero);
-                if(!(lstTerminos.contains(t))){
-                    lstTerminos.add(t);
+                if(!(termMostrar.contains(t))){
+                    termMostrar.add(t);
                     Alert alert =new Alert(AlertType.INFORMATION);
                     alert.setTitle("Operación Exitosa");
                     alert.setContentText(null);
@@ -96,10 +97,13 @@ public class MenuIngresarTerminoController implements Initializable {
         App.setRoot("menuAdministrarTerminos");
     }
     
-    private boolean validarAnio(int anio,int numero){
+    static boolean validarAnio(int anio,int numero){
         Calendar fecha = Calendar.getInstance();
         if(anio>fecha.get(Calendar.YEAR))return false;
         if(!(numero>0 && numero<3)){return false;}
+        if(anio==2023 && numero==2){return false;}
+        if(anio<1958){return false;}
         return true;
     }
+    
 }

@@ -5,7 +5,6 @@
  */
 package com.mycompany.millonariogameapp;
 
-import static com.mycompany.millonariogameapp.MenuIngresarTerminoController.lstTerminos;
 import com.mycompany.millonariogameapp.modelo.TerminoAcademico;
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +14,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -43,19 +44,13 @@ public class MenuEditarTerminoController implements Initializable {
     private TableColumn colTermino;
     @FXML
     private Button btnGuardar;
-    
-    private ObservableList<TerminoAcademico> termMostrar;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        termMostrar=FXCollections.observableArrayList();
-        /*for(TerminoAcademico t: lstTerminos){
-            termMostrar.add(t);
-        }*/
+        tablaTerminos.setItems(MenuIngresarTerminoController.termMostrar);
         this.colAnio.setCellValueFactory(new PropertyValueFactory("anio"));
         this.colTermino.setCellValueFactory(new PropertyValueFactory("numero"));
     }    
@@ -76,7 +71,50 @@ public class MenuEditarTerminoController implements Initializable {
 
     @FXML
     private void guardarCambios(ActionEvent event) throws IOException {
-         
+         TerminoAcademico t=this.tablaTerminos.getSelectionModel().getSelectedItem();
+        if(t==null){
+            Alert alert=new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Debes seleccionar un término");
+        }else{
+            try{
+            int anio=Integer.parseInt(txtAnio.getText());
+            int numero=Integer.parseInt(txtTermino.getText());
+            boolean bool=MenuIngresarTerminoController.validarAnio(anio,numero);
+            TerminoAcademico newt=new TerminoAcademico(anio,numero);
+            if(bool){
+                if(!(MenuIngresarTerminoController.termMostrar.contains(newt))){
+                    MenuIngresarTerminoController.termMostrar.add(newt);
+                    MenuIngresarTerminoController.termMostrar.remove(t);
+                    Alert alert =new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Operación Exitosa");
+                    alert.setContentText(null);
+                    alert.setHeaderText("Se ha ingresado el Término correctamente");
+                    alert.showAndWait();
+                }else{
+                    Alert alert =new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("El Término ya existe");
+                    alert.setHeaderText(null);
+                    alert.showAndWait();
+                }
+            }else{
+                Alert alert =new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("No se ha ingresado el Término");
+                alert.setHeaderText("Valores no permitidos");
+                alert.showAndWait();
+            }
+        }catch(NumberFormatException e){
+            e.printStackTrace();
+            Alert alert =new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Ingrese correctamente los datos solicitados");
+            alert.setHeaderText("No se ha ingresado el Término");
+            alert.showAndWait();
+        }
     }
     
+}
 }

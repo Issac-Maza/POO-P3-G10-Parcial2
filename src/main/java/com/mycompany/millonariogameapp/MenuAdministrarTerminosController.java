@@ -47,7 +47,8 @@ public class MenuAdministrarTerminosController implements Initializable {
     }
 
     @FXML
-    private void configurarTermino(ActionEvent event) {
+    private void configurarTermino(ActionEvent event) throws IOException {
+        App.setRoot("configurarTermino");
     }
 
     @FXML
