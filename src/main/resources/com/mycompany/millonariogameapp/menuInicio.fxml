@@ -9,7 +9,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuInicioController">
    <top>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="52.0" prefWidth="74.0" text="Menú" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="52.0" prefWidth="370.0" text="Quien quiere ser millomario?" BorderPane.alignment="CENTER">
          <font>
             <Font size="26.0" />
          </font>

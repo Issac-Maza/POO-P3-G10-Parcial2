@@ -64,8 +64,8 @@ public class Paralelo implements Serializable{
     public String toString() {
         return "Paralelo{" + "materia= " + materia.getNombre() +"\n" 
                 + ", termino= " + termino.toString() +"\n" 
-                + ", numero= " + numero +"\n" 
-                + ", estudiantes= " + estudiantes +'}' + "\n";
+                + ", numero= " + numero +"\n" ;
+                //  + ", estudiantes= " + estudiantes +'}' + "\n";
     }
 
     @Override

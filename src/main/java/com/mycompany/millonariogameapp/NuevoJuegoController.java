@@ -284,7 +284,7 @@ public class NuevoJuegoController implements Serializable {
             contadorComodines += 1;
             booleanLlamada = false;
             nombreComodin = "Llamada";
-            mostrarAlerta(Alert.AlertType.INFORMATION,juego.getAcompañante().getNombre()+" esta seguro que la respuesta es el literal "+literalVerdadero);
+            mostrarAlerta(Alert.AlertType.INFORMATION,juego.getAcompañante().getNombre()+"\n esta seguro que la respuesta es el literal "+literalVerdadero);
         }
     }
     
@@ -317,7 +317,7 @@ public class NuevoJuegoController implements Serializable {
             contadorComodines += 1;
             booleanGrupo = false;
             nombreComodin = "Público";
-            mostrarAlerta(Alert.AlertType.INFORMATION,"Este es el porcentaje de personas que ha escogido cada opcion: "+porcMostrar.get(0)+" / "+porcMostrar.get(1)+" / "+porcMostrar.get(2)+" / "+porcMostrar.get(3));
+            mostrarAlerta(Alert.AlertType.INFORMATION,"Este es el porcentaje de personas que ha escogido cada \n opcion: "+porcMostrar.get(0)+" / "+porcMostrar.get(1)+" / "+porcMostrar.get(2)+" / "+porcMostrar.get(3));
         }
     }
     

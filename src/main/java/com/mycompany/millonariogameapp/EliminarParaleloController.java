@@ -45,7 +45,7 @@ public class EliminarParaleloController implements Initializable {
         paraleloObservableList =  FXCollections.observableArrayList();
         
         for(Paralelo p: App.paralelos){
-            
+            comboParalelos.getItems().add(p);
         }
         // TODO
         
@@ -66,6 +66,11 @@ public class EliminarParaleloController implements Initializable {
         });
         
         btnVolver.setOnAction(eh ->{
+            try {
+                App.setRoot("menuMateriaYParalelo");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
     
