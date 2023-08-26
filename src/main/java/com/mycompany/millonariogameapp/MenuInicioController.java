@@ -149,7 +149,6 @@ public class MenuInicioController implements Serializable {
     }
     
     public void serializarParalelo() {
-        
         try (ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream("archivos/paralelos.ser"))) {
             out2.writeObject(this.lstParalelos);
             out2.flush();

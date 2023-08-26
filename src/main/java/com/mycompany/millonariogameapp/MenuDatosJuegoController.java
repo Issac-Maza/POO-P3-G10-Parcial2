@@ -45,6 +45,7 @@ public class MenuDatosJuegoController implements Serializable {
     private Estudiante jugadorSecundario;
     public Juego juego;
     private ArrayList<Juego> lstJuegos;
+    private ArrayList<Materia> lstMaterias;
 
     /**
      * Initializes the controller class.
@@ -54,6 +55,7 @@ public class MenuDatosJuegoController implements Serializable {
         lstJuegos = new ArrayList<>();
         asignacionTermino();
         if(!termino.getText().equalsIgnoreCase("") && !termino.getText().equalsIgnoreCase(null)){
+            deserializarMaterias();
             deserializarJuego();
             importarParaleloMateria();
         }
@@ -115,7 +117,7 @@ public class MenuDatosJuegoController implements Serializable {
             for(Paralelo p: lstParalelos){
                 if((p.getNumero() == numP) && (p.getMateria().getNombre().equalsIgnoreCase(nomMat))){
                     paraleloSeleccionado = p;
-                    materiaSeleccionada = p.getMateria();
+                    materiaSeleccionada = lstMaterias.get(lstParalelos.indexOf(p));
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -256,6 +258,18 @@ public class MenuDatosJuegoController implements Serializable {
     public void deserializarJuego(){
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/juegos.ser"))){
             lstJuegos = (ArrayList<Juego>) in.readObject();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void deserializarMaterias(){
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))){
+            lstMaterias = (ArrayList<Materia>) in.readObject();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

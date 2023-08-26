@@ -5,6 +5,7 @@
  */
 package com.mycompany.millonariogameapp;
 
+import com.mycompany.millonariogameapp.modelo.Paralelo;
 import com.mycompany.millonariogameapp.modelo.TerminoAcademico;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -52,6 +53,7 @@ public class MenuEditarTerminoController implements Initializable {
     private Button btnGuardar;
     
     private ArrayList<TerminoAcademico> lstTerm;
+    private ArrayList<Paralelo> lstParalelos;
     private ObservableList<TerminoAcademico> termMostrar= FXCollections.observableArrayList();
 
     /**
@@ -60,6 +62,7 @@ public class MenuEditarTerminoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         deserializarTerminos();
+        deserializarParalelos();
         almacenarTerminos();
         tablaTerminos.setItems(termMostrar);
         this.colAnio.setCellValueFactory(new PropertyValueFactory("anio"));
@@ -96,13 +99,13 @@ public class MenuEditarTerminoController implements Initializable {
                 TerminoAcademico newt=new TerminoAcademico(anio,numero);
                 if(bool){
                     if(!(termMostrar.contains(newt))){
-                        /*lstTerm.add(newt);
-                        termMostrar.add(newt);
-                        lstTerm.remove(t);
-                        termMostrar.remove(t);*/
                         lstTerm.set(lstTerm.indexOf(t), newt);
                         termMostrar.set(termMostrar.indexOf(t), newt);
+                        for(Paralelo p: lstParalelos){
+                            if(p.getTermino().equals(t)) lstParalelos.get(lstParalelos.indexOf(p)).setTermino(newt);
+                        }
                         serializarTerminos();
+                        serializarParalelos();
                         tablaTerminos.setItems(termMostrar);
                         Alert alert =new Alert(AlertType.INFORMATION);
                         alert.setTitle("Operación Exitosa");
@@ -155,6 +158,29 @@ public class MenuEditarTerminoController implements Initializable {
     public void serializarTerminos(){
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/terminos.ser"))){
             out.writeObject(lstTerm);
+            out.flush();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+    }
+    
+    public void deserializarParalelos() {
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/paralelos.ser"))){
+            lstParalelos = (ArrayList<Paralelo>)in.readObject();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }   
+    }
+    
+    public void serializarParalelos(){
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/paralelos.ser"))){
+            out.writeObject(lstParalelos);
             out.flush();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
