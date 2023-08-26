@@ -34,7 +34,7 @@ public class MenuInicioController implements Serializable {
     private Button btnJuego;
     
     Materia POO = new Materia("002","Programacion Orientada a Objetos",3);   
-    TerminoAcademico t3 = new TerminoAcademico(2023,03);
+    TerminoAcademico t3 = new TerminoAcademico(2023,01);
     Paralelo P3 = new Paralelo(POO,t3,3);
     ArrayList<Materia> lstMaterias = new ArrayList<>();
     ArrayList<Paralelo> lstParalelos = new ArrayList<>();
@@ -45,17 +45,7 @@ public class MenuInicioController implements Serializable {
      */
 
     public void initialize(){
-        cargaPorDefecto();       
-        lstMaterias.add(POO);
-        lstParalelos.add(P3);
-        lstTerminos.add(t3);
-        serializarMateria();
-        serializarPreguntas();
-        serializarParalelo();
-        serializarTermino();
-        
-        
-           
+     
     }
     
     @FXML
@@ -171,7 +161,7 @@ public class MenuInicioController implements Serializable {
     }
     
     public void serializarPreguntas() {
-        for(Materia mate : lstMaterias){
+        for(Materia mate : this.lstMaterias){
             try (ObjectOutputStream out0 = new ObjectOutputStream(new FileOutputStream("archivos/"+mate.getCodigo()+".ser"))) {
                 out0.writeObject(POO.getLstOrdenadasxNivel());
                 out0.flush();

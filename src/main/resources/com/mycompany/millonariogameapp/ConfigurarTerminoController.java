@@ -6,9 +6,17 @@
 package com.mycompany.millonariogameapp;
 
 import com.mycompany.millonariogameapp.modelo.TerminoAcademico;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,23 +43,26 @@ public class ConfigurarTerminoController implements Initializable {
     private Button btnCargar;
     @FXML
     private Button btnvolver;
+    
+    private TerminoAcademico tSelec;
+    private ObservableList<TerminoAcademico> termMostrar= FXCollections.observableArrayList();
+    private ArrayList<TerminoAcademico> lstTerm;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        /*for(TerminoAcademico t: lstTerminos){
-            termMostrar.add(t);
-        }*/
-        tblTérminos.setItems(MenuIngresarTerminoController.termMostrar);
+        deserializarTerminos();
+        almacenarTerminos();
+        tblTérminos.setItems(termMostrar);
         this.colAnio.setCellValueFactory(new PropertyValueFactory("anio"));
         this.colPao.setCellValueFactory(new PropertyValueFactory("numero"));
     }    
     
     @FXML
     private void seleccionar(MouseEvent event) {
-        TerminoAcademico t=this.tblTérminos.getSelectionModel().getSelectedItem();
+        tSelec=this.tblTérminos.getSelectionModel().getSelectedItem();
     }
     
     @FXML
@@ -61,18 +72,19 @@ public class ConfigurarTerminoController implements Initializable {
 
     @FXML
     private void cargar(ActionEvent event) {
-        TerminoAcademico t=this.tblTérminos.getSelectionModel().getSelectedItem();
-        if(t==null){
+        tSelec = this.tblTérminos.getSelectionModel().getSelectedItem();
+        if(tSelec == null){
             
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setTitle("Error");
             alert.setContentText("Debes seleccionar un término");
         }else{
-            int anio=t.getAnio();
-            int numero=t.getNumero();
+            int anio=tSelec.getAnio();
+            int numero=tSelec.getNumero();
             if(MenuIngresarTerminoController.validarAnio(anio,numero)){
                 //se serializa el término para proceder a cargarlo
+                serializarTerminoParaJuego();
                 Alert alert =new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle(null);
                 alert.setContentText("Operación Existosa");
@@ -87,7 +99,33 @@ public class ConfigurarTerminoController implements Initializable {
             }
         }
     }
-
     
-
+    public void serializarTerminoParaJuego(){
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/terminoSeleccionado.ser"))){
+            out.writeObject(tSelec);
+            out.flush();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+    }
+    
+    public void deserializarTerminos() {
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/terminos.ser"))){
+            lstTerm = (ArrayList<TerminoAcademico>)in.readObject();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }   
+    }
+    
+    public void almacenarTerminos(){
+        for (TerminoAcademico t: lstTerm){
+            termMostrar.add(t);
+        }
+    }
 }

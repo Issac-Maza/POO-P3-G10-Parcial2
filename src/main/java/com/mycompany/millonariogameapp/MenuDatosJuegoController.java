@@ -53,7 +53,7 @@ public class MenuDatosJuegoController implements Serializable {
     public void initialize() {
         lstJuegos = new ArrayList<>();
         asignacionTermino();
-        if(!termino.getText().equalsIgnoreCase("")){
+        if(!termino.getText().equalsIgnoreCase("") && !termino.getText().equalsIgnoreCase(null)){
             deserializarJuego();
             importarParaleloMateria();
         }
@@ -71,9 +71,8 @@ public class MenuDatosJuegoController implements Serializable {
     
     @FXML
     public void asignacionTermino(){
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/terminos.ser"))){
-            ArrayList<TerminoAcademico> lstTerminos = (ArrayList<TerminoAcademico>) in.readObject();
-            terminoSeleccionado = lstTerminos.get(0);
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/terminoSeleccionado.ser"))){
+            terminoSeleccionado = (TerminoAcademico) in.readObject();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

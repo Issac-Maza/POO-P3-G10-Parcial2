@@ -10,14 +10,11 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.util.Calendar;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 /**
@@ -40,23 +37,24 @@ public class MenuIngresarTerminoController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    static ObservableList<TerminoAcademico> termMostrar= FXCollections.observableArrayList();
+    private ArrayList<TerminoAcademico> lstTerm;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        deserializarTerminos();
     }    
 
     @FXML
-    private void guardar(ActionEvent event) throws IOException{
+    private void guardar() {
         try{
             int anio=Integer.parseInt(txtAnio.getText());
             int numero=Integer.parseInt(txtNumero.getText());
             boolean bool=validarAnio(anio,numero);
             if(bool){
                 TerminoAcademico t= new TerminoAcademico(anio,numero);
-                if(!(termMostrar.contains(t))){
-                    termMostrar.add(t);
+                if(!(lstTerm.contains(t))){
+                    lstTerm.add(t);
+                    serializarTerminos();
                     Alert alert =new Alert(AlertType.INFORMATION);
                     alert.setTitle("Operación Exitosa");
                     alert.setContentText(null);
@@ -87,14 +85,18 @@ public class MenuIngresarTerminoController implements Initializable {
     }
 
     @FXML
-    private void borrar(ActionEvent event) throws IOException{
+    private void borrar() {
         txtNumero.clear();
         txtAnio.clear();
     }
 
     @FXML
-    private void volver(ActionEvent event) throws IOException{
-        App.setRoot("menuAdministrarTerminos");
+    private void volver() {
+        try {
+            App.setRoot("menuAdministrarTerminos");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     static boolean validarAnio(int anio,int numero){
@@ -106,4 +108,26 @@ public class MenuIngresarTerminoController implements Initializable {
         return true;
     }
     
+    public void deserializarTerminos() {
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/terminos.ser"))){
+            lstTerm = (ArrayList<TerminoAcademico>)in.readObject();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }   
+    }
+    
+    public void serializarTerminos(){
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/terminos.ser"))){
+            out.writeObject(lstTerm);
+            out.flush();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+    }   
 }
