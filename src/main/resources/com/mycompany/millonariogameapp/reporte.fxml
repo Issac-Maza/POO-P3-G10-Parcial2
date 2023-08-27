@@ -7,82 +7,82 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.ReporteController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.ReporteController">
    <top>
-      <Label text="Reporte de Juegos" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="751.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" text="Reporte de Juegos" BorderPane.alignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
    </top>
    <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="fechasVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+            <VBox fx:id="fechasVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
-                  <Label alignment="CENTER" text="Fecha">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="175.0" style="-fx-background-color: black;" text="Fecha" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="participantesVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+            <VBox fx:id="participantesVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
-                  <Label text="Participante">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="165.0" style="-fx-background-color: black;" text="Participante" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="nivelMaxVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+            <VBox fx:id="nivelMaxVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
-                  <Label text="Nivel Max">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="180.0" style="-fx-background-color: black;" text="Nivel Max" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="tiempoVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+            <VBox fx:id="tiempoVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
-                  <Label text="Tiempo">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="176.0" style="-fx-background-color: black;" text="Tiempo" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="pregAlcVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+            <VBox fx:id="pregAlcVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
-                  <Label text="Preg. Cont.">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="210.0" style="-fx-background-color: black;" text="Preg. Cont." textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="contComodinVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+            <VBox fx:id="contComodinVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
-                  <Label text="Comodin">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="225.0" style="-fx-background-color: black;" text="Comodin" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
                </children>
             </VBox>
-            <VBox fx:id="premiosVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+            <VBox fx:id="premiosVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
-                  <Label text="Premio">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="240.0" style="-fx-background-color: black;" text="Premio" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox fx:id="opcionesVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <VBox fx:id="opcionesVB" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
-                  <Label text="Opciones">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="181.0" style="-fx-background-color: black;" text="Opciones" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -93,6 +93,6 @@
       </HBox>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#regresarMenuAnterior" text="Regresar" BorderPane.alignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#regresarMenuAnterior" style="-fx-background-color: yellow; -fx-border-color: black;" text="Regresar" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

@@ -7,45 +7,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuInicioController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Green; -fx-border-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuInicioController">
    <top>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="52.0" prefWidth="370.0" text="Quien quiere ser millomario?" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="52.0" prefWidth="977.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" text="Quien quiere ser millomario?" BorderPane.alignment="CENTER">
          <font>
-            <Font size="26.0" />
+            <Font name="System Bold" size="26.0" />
          </font>
       </Label>
    </top>
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Escoja una opcion" textAlignment="CENTER">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <VBox.margin>
-                  <Insets bottom="30.0" top="-90.0" />
-               </VBox.margin>
-            </Label>
-            <Button fx:id="btnConfiguraciones" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarMenuConfiguraciones" text="Configuraciones">
+            <Button fx:id="btnConfiguraciones" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarMenuConfiguraciones" style="-fx-background-color: yellow; -fx-border-color: black;" text="Configuraciones">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnJuego" minWidth="100.0" mnemonicParsing="false" onAction="#NuevoJuego" text="Nuevo Juego">
+            <Button fx:id="btnJuego" minWidth="100.0" mnemonicParsing="false" onAction="#NuevoJuego" style="-fx-background-color: black; -fx-border-color: yellow;" text="Nuevo Juego" textFill="WHITE">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnReporte" minWidth="100.0" mnemonicParsing="false" onAction="#obtnerReporte" text="Reporte">
+            <Button fx:id="btnReporte" minWidth="100.0" mnemonicParsing="false" onAction="#obtnerReporte" style="-fx-background-color: yellow; -fx-border-color: black;" text="Reporte">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnSalir" minWidth="100.0" mnemonicParsing="false" onAction="#salirDelAplicacion" text="Salir" />
+            <Button fx:id="btnSalir" minWidth="100.0" mnemonicParsing="false" onAction="#salirDelAplicacion" style="-fx-background-color: black; -fx-border-color: yellow;" text="Salir" textFill="WHITE" />
          </children>
       </VBox>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#resetear" text="Resetear" BorderPane.alignment="CENTER_RIGHT" />
+      <Button mnemonicParsing="false" onAction="#resetear" style="-fx-background-color: yellow; -fx-border-color: black;" text="Resetear" BorderPane.alignment="CENTER_RIGHT" />
    </bottom>
 </BorderPane>

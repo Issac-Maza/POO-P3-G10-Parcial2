@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuDatosJuegoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: cyan; -fx-border-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuDatosJuegoController">
    <top>
-      <Label text="Datos para el Juego" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="719.0" style="-fx-background-color: pink; -fx-border-color: black;" text="Datos para el Juego" BorderPane.alignment="CENTER">
          <font>
-            <Font size="26.0" />
+            <Font name="System Bold" size="26.0" />
          </font>
       </Label>
    </top>
@@ -25,19 +25,19 @@
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#comenzarJuego" text="Comenzar" />
-                  <Button mnemonicParsing="false" onAction="#borrar" text="Borrar" />
+                  <Button mnemonicParsing="false" onAction="#comenzarJuego" style="-fx-background-color: pink; -fx-border-color: black;" text="Comenzar" />
+                  <Button mnemonicParsing="false" onAction="#regresarMenuAnterior" style="-fx-background-color: blue; -fx-border-color: black;" text="Regresar" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#borrar" style="-fx-background-color: pink; -fx-border-color: black;" text="Borrar" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#regresarMenuAnterior" text="Regresar" />
          </children>
       </VBox>
    </bottom>
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="207.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="10.0" prefWidth="391.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -47,14 +47,29 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Término Académico:" />
-            <Label text="Paralelo y Materia" GridPane.rowIndex="1" />
-            <Label text="Número de preguntas por nivel:" GridPane.rowIndex="2" />
-            <Label text="Jugador Participante:" GridPane.rowIndex="3" />
-            <Label text="Jugador Acompañante:" GridPane.rowIndex="4" />
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="307.0" text="Término Académico:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="255.0" text="Paralelo y Materia:" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="306.0" text="Número de preguntas por nivel:" wrapText="true" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label alignment="CENTER" prefHeight="59.0" prefWidth="308.0" text="Jugador Participante:" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label alignment="CENTER" prefHeight="59.0" prefWidth="296.0" text="Jugador Acompañante:" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <TextField fx:id="termino" maxWidth="-Infinity" onAction="#asignacionTermino" GridPane.columnIndex="1" />
             <TextField fx:id="numPregxNivel" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="276.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="167.0">
                      <children>
@@ -62,34 +77,24 @@
                         <ComboBox fx:id="participanteCMB" prefHeight="25.0" prefWidth="155.0" />
                      </children>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="169.0">
-                     <children>
-                        <Label text="Aleatorio" />
-                        <Button mnemonicParsing="false" onAction="#estudianteAleatorio" text="Aleatorio" />
-                     </children>
-                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#estudianteAleatorio" style="-fx-background-color: pink; -fx-border-color: black;" text="Aleatorio" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="155.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="59.0" prefWidth="170.0">
                      <children>
                         <Label text="Matrícula" />
-                        <ComboBox fx:id="acompCMB" prefWidth="150.0" />
+                        <ComboBox fx:id="acompCMB" prefHeight="25.0" prefWidth="157.0" />
                      </children>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="141.0">
-                     <children>
-                        <Label text="Aleatorio" />
-                        <Button mnemonicParsing="false" onAction="#estudianteAleatorio" text="Aleatorio" />
-                     </children>
-                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#estudianteAleatorio" style="-fx-background-color: blue; -fx-border-color: black;" text="Aleatorio" textFill="WHITE" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <ComboBox fx:id="paraleloMateriaCMB" onAction="#importarParaleloMateria" prefWidth="150.0" />
-                  <Button mnemonicParsing="false" onAction="#importarEstudianteMatricula" text="Cargar Estudiantes" />
+                  <Button mnemonicParsing="false" onAction="#importarEstudianteMatricula" style="-fx-background-color: blue; -fx-border-color: black;" text="Cargar Estudiantes" textFill="WHITE" />
                </children>
             </HBox>
          </children>

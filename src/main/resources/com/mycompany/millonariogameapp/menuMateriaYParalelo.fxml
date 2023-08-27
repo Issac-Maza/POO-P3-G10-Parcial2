@@ -7,43 +7,38 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuMateriaYParaleloController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: green; -fx-border-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuMateriaYParaleloController">
    <top>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="393.0" text="Administrar materias y paralelos" textAlignment="CENTER" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="38.0" prefWidth="705.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Administrar materias y paralelos" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
-            <Font size="26.0" />
+            <Font name="System Bold" size="26.0" />
          </font>
       </Label>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Escoja una opcion">
-               <VBox.margin>
-                  <Insets bottom="30.0" top="-50.0" />
-               </VBox.margin>
-            </Label>
-            <Button fx:id="btnIngresarMateria" mnemonicParsing="false" onAction="#ingresarMateria" prefHeight="26.0" prefWidth="106.0" text="Ingresar materia">
+            <Button fx:id="btnIngresarMateria" mnemonicParsing="false" onAction="#ingresarMateria" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Ingresar materia">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnEditarMateria" mnemonicParsing="false" onAction="#editarMateria" prefHeight="26.0" prefWidth="106.0" text="Editar materia">
+            <Button fx:id="btnEditarMateria" mnemonicParsing="false" onAction="#editarMateria" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Editar materia">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnAddParalelo" mnemonicParsing="false" onAction="#addParalelo" prefHeight="26.0" prefWidth="106.0" text="Agregar paralelo">
+            <Button fx:id="btnAddParalelo" mnemonicParsing="false" onAction="#addParalelo" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Agregar paralelo">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnDeleteParalelo" mnemonicParsing="false" onAction="#deleteParalelo" prefHeight="26.0" prefWidth="106.0" text="Eliminar paralelo">
+            <Button fx:id="btnDeleteParalelo" mnemonicParsing="false" onAction="#deleteParalelo" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Eliminar paralelo">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#regresarMenuAnterior" prefHeight="26.0" prefWidth="106.0" text="Volver" />
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#regresarMenuAnterior" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Volver" />
          </children>
       </VBox>
    </center>

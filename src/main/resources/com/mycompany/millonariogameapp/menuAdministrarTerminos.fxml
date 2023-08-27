@@ -7,39 +7,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuAdministrarTerminosController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: green; -fx-border-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuAdministrarTerminosController">
    <top>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="347.0" text="Administrar Termino Academico" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="51.0" prefWidth="741.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Administrar Termino Academico" BorderPane.alignment="CENTER">
          <font>
-            <Font size="24.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Label>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="378.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Escoja una opcion">
-               <VBox.margin>
-                  <Insets bottom="40.0" top="-70.0" />
-               </VBox.margin>
-            </Label>
-            <Button fx:id="btnIngresarTermino" mnemonicParsing="false" onAction="#ingresarTermino" prefHeight="26.0" prefWidth="120.0" text="Ingresar termino">
+            <Button fx:id="btnIngresarTermino" mnemonicParsing="false" onAction="#ingresarTermino" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Ingresar termino">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnEditarTermino" mnemonicParsing="false" onAction="#editarTermino" prefHeight="26.0" prefWidth="120.0" text="Editar termino">
+            <Button fx:id="btnEditarTermino" mnemonicParsing="false" onAction="#editarTermino" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Editar termino">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnConfigurarTermino" mnemonicParsing="false" onAction="#configurarTermino" text="Configurar Termino">
+            <Button fx:id="btnConfigurarTermino" mnemonicParsing="false" onAction="#configurarTermino" style="-fx-background-color: yellow; -fx-border-color: black;" text="Configurar Termino">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#regresarMenuAnterior" prefHeight="26.0" prefWidth="120.0" text="Volver" />
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#regresarMenuAnterior" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Volver" />
          </children>
       </VBox>
    </center>

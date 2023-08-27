@@ -144,8 +144,8 @@ public class MenuDatosJuegoController implements Serializable {
     public void importarEstudianteMatricula(){
         seleccionMateriaParalelo();
         for(Estudiante e: paraleloSeleccionado.getEstudiantes()){
-            participanteCMB.getItems().add(e.getnMatricula());
-            acompCMB.getItems().add(e.getnMatricula());
+            participanteCMB.getItems().add(e.getnMatricula()+" - "+e.getNombre());
+            acompCMB.getItems().add(e.getnMatricula()+" - "+e.getNombre());
         }
     }
     

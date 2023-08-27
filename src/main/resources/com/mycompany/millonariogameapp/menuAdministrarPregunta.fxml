@@ -7,39 +7,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuAdministrarPreguntaController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.millonariogameapp.MenuAdministrarPreguntaController">
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Escoja una opcion">
-               <VBox.margin>
-                  <Insets bottom="30.0" top="-90.0" />
-               </VBox.margin>
-            </Label>
-            <Button fx:id="btnVizulizarPreguntas" mnemonicParsing="false" onAction="#viewQuestions" text="Vizualizar preguntas">
+            <Button fx:id="btnVizulizarPreguntas" mnemonicParsing="false" onAction="#viewQuestions" style="-fx-background-color: yellow; -fx-border-color: black;" text="Vizualizar preguntas">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnAddQuestions" mnemonicParsing="false" onAction="#addQuestions" prefHeight="26.0" prefWidth="123.0" text="Agregar preguntas">
+            <Button fx:id="btnAddQuestions" mnemonicParsing="false" onAction="#addQuestions" prefHeight="26.0" prefWidth="123.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" text="Agregar preguntas">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnDeleteQuestion" mnemonicParsing="false" onAction="#deleteQuestions" prefHeight="26.0" prefWidth="123.0" text="Eliminar pregunta">
+            <Button fx:id="btnDeleteQuestion" mnemonicParsing="false" onAction="#deleteQuestions" prefHeight="26.0" prefWidth="123.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Eliminar pregunta">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#regresarMenuAnterior" prefHeight="26.0" prefWidth="123.0" text="Regresar" />
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#regresarMenuAnterior" prefHeight="26.0" prefWidth="123.0" style="-fx-background-color: lightGreen; -fx-border-color: black;" text="Regresar" />
          </children>
       </VBox>
    </center>
    <top>
-      <Label text="Administrar Preguntas" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="820.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Administrar Preguntas" BorderPane.alignment="CENTER">
          <font>
-            <Font size="26.0" />
+            <Font name="System Bold" size="26.0" />
          </font>
       </Label>
    </top>
