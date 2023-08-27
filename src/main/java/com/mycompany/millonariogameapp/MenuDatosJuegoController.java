@@ -151,16 +151,16 @@ public class MenuDatosJuegoController implements Serializable {
     
     public ArrayList<Estudiante> buscarEstudiantes(){
         ArrayList<Estudiante> lst = new ArrayList<>();
-        String codigo = (String)participanteCMB.getValue();
-        String codigo2 = (String)acompCMB.getValue();
-        if(!codigo.equalsIgnoreCase(codigo2)){
+        String[] codigo = ((String)participanteCMB.getValue()).split(" - ");
+        String[] codigo2 = ((String)acompCMB.getValue()).split(" - ");
+        if(!codigo[0].equalsIgnoreCase(codigo2[0])){
             for(Estudiante e: paraleloSeleccionado.getEstudiantes()){
-                if(codigo.equalsIgnoreCase(e.getnMatricula())){
+                if(codigo[0].equalsIgnoreCase(e.getnMatricula())){
                     lst.add(e);
                 }
             }
             for(Estudiante e: paraleloSeleccionado.getEstudiantes()){
-                if(codigo2.equalsIgnoreCase(e.getnMatricula())){
+                if(codigo2[0].equalsIgnoreCase(e.getnMatricula())){
                     lst.add(e);
                 }
             }
