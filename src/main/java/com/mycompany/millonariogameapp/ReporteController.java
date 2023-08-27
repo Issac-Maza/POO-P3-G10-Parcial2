@@ -46,21 +46,24 @@ public class ReporteController implements Serializable {
     @FXML
     private VBox opcionesVB;
     
+    //Atributo lista reportes
     private ArrayList<Reporte> lstReportes;
 
     /**
      * Initializes the controller class.
      */
     
+    //Se inicializa los metodos deseados
     public void initialize() {
         lstReportes = new ArrayList<>();
         deserializarReportes();
         rellenarVBs();
     }    
     
+    //Metodo que deseriliza todos los reportes
     public void deserializarReportes() {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/reportes.ser"))){
-            lstReportes = (ArrayList<Reporte>)in.readObject();
+            lstReportes = (ArrayList<Reporte>)in.readObject(); // asignacion al atributo
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -70,6 +73,7 @@ public class ReporteController implements Serializable {
         }   
     }
     
+    //Metodo para mostrar la informacion de los reportes
     public void rellenarVBs(){
         for(Reporte r: lstReportes){
             fechasVB.getChildren().add(new Label(r.getFecha()));
@@ -79,8 +83,8 @@ public class ReporteController implements Serializable {
             pregAlcVB.getChildren().add(new Label(""+r.getNumPregAlcanzada()));
             contComodinVB.getChildren().add(new Label(""+r.getContadorComodines()));
             premiosVB.getChildren().add(new Label(r.getPremio()));
-            Button b = new Button("Ver más");
-            b.setOnAction(eh -> {
+            Button b = new Button("Ver más"); //Creacion de un boton
+            b.setOnAction(eh -> { //Se le asigna un accion especifica junto al reporte del for
                 serializarReporteSeleccionado(r);
                 try {
                     App.setRoot("detalleJuego");
@@ -92,6 +96,7 @@ public class ReporteController implements Serializable {
         }
     }
     
+    //Metodo que serializa el reporte seleccionado
     public void serializarReporteSeleccionado(Reporte r){
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/reporteSeleccionado.ser"))){
             out.writeObject(r);
@@ -103,6 +108,7 @@ public class ReporteController implements Serializable {
         }
     }
     
+    //Metodo que regresa al menu anterior
     @FXML
     private void regresarMenuAnterior(ActionEvent event) throws IOException {
         App.setRoot("menuInicio");

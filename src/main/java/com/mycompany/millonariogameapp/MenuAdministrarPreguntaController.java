@@ -36,21 +36,25 @@ public class MenuAdministrarPreguntaController implements Initializable {
         // TODO
     }    
 
+    //Metodo que muestra el menu ver preguntas
     @FXML
     private void viewQuestions(ActionEvent event) throws IOException {
         App.setRoot("viewQuestions"); 
     }
 
+    //Metodo que muestra el menu añadir pregunta
     @FXML
     private void addQuestions(ActionEvent event) throws IOException {
         App.setRoot("addQuestions");
     }
 
+    //Metodo que muestra el menu eliminar pregunta
     @FXML
     private void deleteQuestions(ActionEvent event) throws IOException{
         App.setRoot("deleteQuestion"); 
     }
 
+    //Metodo regresa al menu anterior
     @FXML
     private void regresarMenuAnterior(ActionEvent event) throws IOException {
         App.setRoot("menuConfiguracion");

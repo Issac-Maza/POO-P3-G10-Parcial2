@@ -46,17 +46,19 @@ public class DetalleJuegoController implements Serializable {
     @FXML
     private VBox comodinesVB;
     
-    private Reporte reporte;
+    private Reporte reporte; //atributo reporte
 
     /**
      * Initializes the controller class.
      */
 
+    //Metodo que que inicializa los metodos
     public void initialize() {
         deserializarReporte();
         rellenarInfo();
     }    
     
+    //Metodo que deserializa el reporte seleccionado del menu anterior
     public void deserializarReporte(){
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/reporteSeleccionado.ser"))){
             reporte = (Reporte) in.readObject();
@@ -69,6 +71,7 @@ public class DetalleJuegoController implements Serializable {
         }
     }
     
+    //Metodo que muestra por pantalla la informacion del reporte seleccionado
     public void rellenarInfo(){
         fechaLbl.setText(reporte.getFecha());
         participanteLbl.setText(reporte.getEstudianteParticipante());
@@ -76,14 +79,17 @@ public class DetalleJuegoController implements Serializable {
         nivelMaxLbl.setText(""+reporte.getNivelMaximoAlcanzado());
         tiempoLbl.setText(reporte.getTiempoPasados());
         premioLbl.setText(reporte.getPremio());
-        //reporte.
+        
+        //atributos para controlar las preguntas y niveles
         int numPregunta = 1;
         int nivel = 1;
         int controlador = 1;
+        //for de los nombres de los comodines usados
         for(String comodin: reporte.getComodinesUsados()){
             enunciadosVB.getChildren().add(new Label("Pregunta "+numPregunta));
             comodinesVB.getChildren().add(new Label(comodin));
             nivelesVB.getChildren().add(new Label(""+nivel));
+            //Condicional para controlar las sgts preguntas y niveles
             if(reporte.getPregXNivel() == controlador){
                 nivel++;
                 controlador = 1;
@@ -92,6 +98,7 @@ public class DetalleJuegoController implements Serializable {
         }    
     }
     
+    //Metodo que regresa al menu anterior
     @FXML
     public void regresarMenuAnterior() throws IOException {
         App.setRoot("reporte");

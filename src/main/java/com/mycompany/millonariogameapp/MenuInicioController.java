@@ -33,6 +33,7 @@ public class MenuInicioController implements Serializable {
     @FXML
     private Button btnJuego;
     
+    //Atributos por default para el juego 
     Materia POO = new Materia("002","Programacion Orientada a Objetos",3);   
     TerminoAcademico t3 = new TerminoAcademico(2023,01);
     Paralelo P3 = new Paralelo(POO,t3,3);
@@ -48,6 +49,7 @@ public class MenuInicioController implements Serializable {
      
     }
     
+    //Metodo que carga los datos originales si se modifica
     @FXML
     public void resetear(){
         cargaPorDefecto();       
@@ -60,21 +62,25 @@ public class MenuInicioController implements Serializable {
         serializarTermino();
     }
 
+    //Metodo que muestra el menu configuraciones
     @FXML
     private void mostrarMenuConfiguraciones(ActionEvent event) throws IOException{
         App.setRoot("menuConfiguracion");
     }
 
+    //Metodo que muestra el menu datos juego
     @FXML
     private void NuevoJuego(ActionEvent event) throws IOException{
         App.setRoot("datosJuego");
     }
 
+    //Metodo que muestra el menu reporte
     @FXML
     private void obtnerReporte(ActionEvent event) throws IOException{
         App.setRoot("reporte");
     }
     
+    //Metodos que carga de las preguntas por default a los atributos, ademas del paralelo y sus estudiantes
     private void cargaPorDefecto(){
         //POO = new Materia("002","Programacion Orientada a Objetos",3);
         POO.creacionDeNiveles();
@@ -123,10 +129,9 @@ public class MenuInicioController implements Serializable {
         } 
     }
     
+    //Metodo que serializa la lista de materias
     public void serializarMateria() {
-        
         try (ObjectOutputStream out1 = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))) {
-            
             out1.writeObject(this.lstMaterias);
             out1.flush();
         } catch (FileNotFoundException ex) {
@@ -136,8 +141,8 @@ public class MenuInicioController implements Serializable {
         }
     }
     
+    //Metodo que serializa la lista de terminos
     public void serializarTermino() {
-        
         try (ObjectOutputStream out3 = new ObjectOutputStream(new FileOutputStream("archivos/terminos.ser"))) {
             out3.writeObject(this.lstTerminos);
             out3.flush();
@@ -148,6 +153,7 @@ public class MenuInicioController implements Serializable {
         } 
     }
     
+    //Metodo que serializa la lista de paralelos
     public void serializarParalelo() {
         try (ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream("archivos/paralelos.ser"))) {
             out2.writeObject(this.lstParalelos);
@@ -159,6 +165,7 @@ public class MenuInicioController implements Serializable {
         }
     }
     
+    //Metodo que serializa la lista de preguntas
     public void serializarPreguntas() {
         for(Materia mate : this.lstMaterias){
             try (ObjectOutputStream out0 = new ObjectOutputStream(new FileOutputStream("archivos/"+mate.getCodigo()+".ser"))) {
@@ -174,6 +181,7 @@ public class MenuInicioController implements Serializable {
         
     }
 
+    //Metodo que sale de la aplicacion
     @FXML
     private void salirDelAplicacion(ActionEvent event) throws IOException{
         // Crear un Alert de tipo INFORMATION

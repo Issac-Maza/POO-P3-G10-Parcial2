@@ -38,6 +38,7 @@ public class MenuAddQuestionsController implements Serializable {
     @FXML
     private TextField rIncorrecta_3;
     
+    //Atributos necesarios para la clase
     private ArrayList<Materia> lstMaterias;
     private int posMateria;
 
@@ -45,10 +46,12 @@ public class MenuAddQuestionsController implements Serializable {
      * Initializes the controller class.
      */
 
+    //Metodo que inicializa el metodo
     public void initialize() {
         importarMaterias();     
     }
     
+    //Metodo que llena el CMB de materias con los nombres de las materias del archivo materias
     public void importarMaterias() {     
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
             lstMaterias = (ArrayList<Materia>)in.readObject();
@@ -64,12 +67,13 @@ public class MenuAddQuestionsController implements Serializable {
         }
     }
     
+    //Metodo que crea la pregunta y la almacena y junto a las demas preguntas de la materia
     @FXML
     public void registrarPregunta() {
         buscarMateria();
         boolean permiso = condicionNivel();
 
-        if(permiso){
+        if(permiso){ //Condicional que veifica si el nivel ingresado es permitido
             String enunciado = pregunta.getText().trim();
             int nivel = Integer.parseInt(nivelPreg.getText().trim());
             String respC = rCorrecta.getText().trim();
@@ -90,6 +94,7 @@ public class MenuAddQuestionsController implements Serializable {
         }   
     }
     
+    //Metodo que verifica que el nivel ingresado es permitido
     public boolean condicionNivel() {
         int nivel = Integer.parseInt(nivelPreg.getText().trim());
         boolean permiso = true;
@@ -101,6 +106,7 @@ public class MenuAddQuestionsController implements Serializable {
         return permiso;
     }
     
+    //Metodo que encuentra la posicion de la materia seleccionada del CMB en la lista
     public void buscarMateria() {
         int cont = 0;
         for(Materia m: lstMaterias){
@@ -109,6 +115,7 @@ public class MenuAddQuestionsController implements Serializable {
         }
     }
     
+    //Metodo que serializa las materias junto a los cambios recientes
     public void actualizarMateria(){
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))){
             out.writeObject(lstMaterias);
@@ -120,6 +127,7 @@ public class MenuAddQuestionsController implements Serializable {
         }
     }
     
+    //Metodo que borra todo texto seleccionado o escrito
     @FXML
     public void borrar(){
         materiaCMB.setValue(null);
@@ -131,11 +139,13 @@ public class MenuAddQuestionsController implements Serializable {
         rIncorrecta_3.setText(null);
     }
     
+    //Metodo que regresa al menu anterior
     @FXML
     private void regresarMenuAnterior(ActionEvent event) throws IOException {
         App.setRoot("menuAdministrarPregunta");
     }
     
+    //Metodo que muestra una alerta
     public void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
         Alert alert = new Alert(tipo);
 

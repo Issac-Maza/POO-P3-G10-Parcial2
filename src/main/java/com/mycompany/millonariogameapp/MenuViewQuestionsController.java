@@ -33,10 +33,12 @@ public class MenuViewQuestionsController implements Serializable {
      * Initializes the controller class.
      */
 
+    //Metodo que inicializa el metodo
     public void initialize(){
         importarMaterias(); 
     }    
     
+    //Metodo que almacena el cmb el nombre de las materias
     public void importarMaterias() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
             ArrayList<Materia> lstMaterias = (ArrayList<Materia>)in.readObject();
@@ -53,6 +55,7 @@ public class MenuViewQuestionsController implements Serializable {
         
     }
     
+    //Metodo que muestra por pantalla las preguntas de la materia
     @FXML
     public void mostrarPreguntas(){
         int numPreg = 0;
@@ -70,6 +73,7 @@ public class MenuViewQuestionsController implements Serializable {
         }
     }
     
+    //Metodo que muestra una alerta
     public void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
         Alert alert = new Alert(tipo);
 
@@ -79,6 +83,7 @@ public class MenuViewQuestionsController implements Serializable {
         alert.showAndWait();
     }
     
+    //Metodo que busca la materia seleccionada del cmb
     public Materia buscarMateria(){
         Materia mVerdadera = new Materia("","",0);        
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("archivos/materias.ser"))) {
@@ -99,6 +104,7 @@ public class MenuViewQuestionsController implements Serializable {
         return mVerdadera;  
     }
     
+    //Metodo que regresa al menu anterior
     @FXML
     private void regresarMenuAnterior(ActionEvent event) throws IOException {
         App.setRoot("menuAdministrarPregunta");
