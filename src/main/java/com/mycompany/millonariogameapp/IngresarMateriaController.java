@@ -226,10 +226,8 @@ public class IngresarMateriaController implements Initializable {
         App.materias = lista;
         try (ObjectOutputStream out  = new ObjectOutputStream(new FileOutputStream("archivos/materias.ser"))) {
             out.writeObject(App.materias);
-            
+            //Cerramos el objectOutputStream
             out.close();
-            
-
             System.out.println("Lista de materias guardada exitosamente en " + "materias.ser");
         } catch (IOException e) {
             System.out.println("Error al guardar la lista de materias en el archivo: " + e.getMessage());
